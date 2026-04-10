@@ -187,7 +187,6 @@
   font-weight: 500;
   text-decoration: none;
   box-shadow: 0 1px 3px oklch(0 0 0 / 15%);
-  clip: rect(0 0 0 0);
   clip-path: inset(50%);
   width: 1px;
   height: 1px;
@@ -196,7 +195,6 @@
 }
 
 .skip-link:focus {
-  clip: auto;
   clip-path: none;
   width: auto;
   height: auto;
