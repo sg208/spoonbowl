@@ -19,7 +19,7 @@ const CuisineRecipesPage = () => {
   const queryClient = useQueryClient()
   const prefetchCuisinesIndex = usePrefetchCuisinesIndex()
 
-  const { data: allCuisines } = useQuery({
+  const { data: allCuisines, isFetched: cuisinesFetched } = useQuery({
     queryKey: ["cuisines"],
     queryFn: fetchCuisines,
   })
@@ -32,7 +32,7 @@ const CuisineRecipesPage = () => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["recipes", "cuisine", cuisine],
     queryFn: () => fetchRecipesByCuisine(cuisine),
-    enabled: Boolean(cuisine),
+    enabled: Boolean(cuisine) && cuisinesFetched,
   })
 
   const recipes = data?.recipes ?? []
@@ -210,6 +210,7 @@ const CuisineRecipesPage = () => {
                   to="/recipes/cuisine/$cuisine"
                   params={{ cuisine: cuisineToSlug(c) }}
                   onMouseEnter={() => prefetchCuisine(c)}
+                  onFocus={() => prefetchCuisine(c)}
                   className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <span aria-hidden="true">{getCuisineEmoji(c)}</span>
