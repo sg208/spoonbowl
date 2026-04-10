@@ -10,14 +10,15 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 ## Quick facts
 
-| Key               | Value                                                                                               |
-| ----------------- | --------------------------------------------------------------------------------------------------- |
-| **Stack**         | Vite + React 19 + TypeScript + Tailwind CSS v4                                                      |
-| **Router**        | TanStack Router — file-based routes in `src/routes/*`; generated tree in `src/routeTree.gen.ts`     |
-| **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                  |
-| **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json` |
-| **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                  |
-| **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                      |
+| Key               | Value                                                                                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stack**         | Vite + React 19 + TypeScript + Tailwind CSS v4                                                                                                                         |
+| **Router**        | TanStack Router — file-based routes in `src/routes/*`; generated tree in `src/routeTree.gen.ts`                                                                        |
+| **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                                                                                     |
+| **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json`                                                                    |
+| **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                                                                                     |
+| **Deploy**        | Production: **Cloudflare Pages** (see `README.md`); legal copy in `src/routes/privacy.tsx`, `src/routes/terms.tsx`, `src/routes/gdpr.tsx`, `src/routes/disclaimer.tsx` |
+| **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                                                         |
 
 **Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/use-recipe-queries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
 
@@ -25,20 +26,21 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 ## Commands
 
-| Script                       | What it does                                                  |
-| ---------------------------- | ------------------------------------------------------------- |
-| `npm run dev`                | Start dev server                                              |
-| `npm run build`              | Production build (`vite build` only — does **not** run `tsc`) |
-| `npm run preview`            | Serve the production build locally                            |
-| `npm run preview:4000`       | Preview on port 4000 (`--strictPort`)                         |
-| `npm run build:preview:4000` | Build then preview on port 4000                               |
-| `npm run typecheck`          | `tsc --noEmit`                                                |
-| `npm run check`              | `lint` + `typecheck` + `format:check` (good before CI / push) |
-| `npm run lint`               | ESLint (report only)                                          |
-| `npm run lint:fix`           | ESLint auto-fix                                               |
-| `npm run format`             | Prettier write                                                |
-| `npm run format:check`       | Prettier check (CI)                                           |
-| `npm run fix`                | `lint:fix` → `format` (use before committing)                 |
+| Script                       | What it does                                                               |
+| ---------------------------- | -------------------------------------------------------------------------- |
+| `npm run dev`                | Start dev server                                                           |
+| `npm run build`              | Production build (`vite build` only — does **not** run `tsc`)              |
+| `npm run preview`            | Build, then local preview via **Wrangler** (`wrangler dev`, `dist` assets) |
+| `npm run preview:4000`       | Preview on port 4000 (`vite preview`, `--strictPort`)                      |
+| `npm run build:preview:4000` | Build then preview on port 4000                                            |
+| `npm run deploy`             | Build then **`wrangler deploy`** (Cloudflare)                              |
+| `npm run typecheck`          | `tsc --noEmit`                                                             |
+| `npm run check`              | `lint` + `typecheck` + `format:check` (good before CI / push)              |
+| `npm run lint`               | ESLint (report only)                                                       |
+| `npm run lint:fix`           | ESLint auto-fix                                                            |
+| `npm run format`             | Prettier write                                                             |
+| `npm run format:check`       | Prettier check (CI)                                                        |
+| `npm run fix`                | `lint:fix` → `format` (use before committing)                              |
 
 ---
 
@@ -314,7 +316,7 @@ If you adopt `createRootRouteWithContext<{ queryClient: QueryClient }>()`, pass 
 
 - Service worker registration is via `vite-plugin-pwa` — do not hand-roll a custom SW unless you replace the plugin.
 - Adjust caching in `vite.config.ts` under `workbox.runtimeCaching`.
-- Test offline with `npm run preview` (dev server bypasses the SW).
+- Test offline with `npm run preview` (build + Wrangler) or `npm run build:preview:4000`; the dev server bypasses the SW.
 
 ### Linting & formatting
 

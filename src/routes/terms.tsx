@@ -13,7 +13,7 @@ const TermsPage = () => {
           Terms of Use
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Effective date: January 1, 2025 &middot; Last updated: January 1, 2025
+          Effective date: April 10, 2026 &middot; Last updated: April 10, 2026
         </p>
       </header>
 
@@ -160,6 +160,22 @@ const TermsPage = () => {
             Spoonbowl may contain links to third-party websites or services (such as DummyJSON). We
             are not responsible for the content, policies, or practices of any third-party website.
             Use of third-party services is at your own risk and subject to their terms.
+          </p>
+          <h3 className="font-semibold mt-5 mb-2">Infrastructure</h3>
+          <p className="text-muted-foreground leading-7">
+            The Service is hosted on <strong>Cloudflare Pages</strong> and delivered through
+            Cloudflare&apos;s network. Availability, security, and processing of technical
+            connection data are subject to{" "}
+            <a
+              href="https://www.cloudflare.com/privacypolicy/"
+              className="underline hover:text-foreground transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Cloudflare&apos;s policies
+            </a>
+            . Spoonbowl is not responsible for outages, delays, or issues caused by Cloudflare or
+            other infrastructure providers.
           </p>
         </section>
 

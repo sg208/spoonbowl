@@ -11,19 +11,22 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 | Server state | TanStack React Query — `src/lib/queryClient.ts`                              |
 | UI           | shadcn-style in `src/components/ui/*` — `components.json`, `npx shadcn add`  |
 | PWA          | `vite-plugin-pwa` — `vite.config.ts` Workbox                                 |
+| Hosting      | Production: **Cloudflare Pages** (see `README.md`)                           |
 | Alias        | `@` → `./src`                                                                |
 
 **Queries:** Many routes use inline `queryKey` arrays. Prefer key factories under `src/lib/keys/` when adding or refactoring queries.
 
 ## Commands
 
-| Script              | Purpose                              |
-| ------------------- | ------------------------------------ |
-| `npm run dev`       | Dev server                           |
-| `npm run build`     | Production build (no `tsc`)          |
-| `npm run typecheck` | `tsc --noEmit`                       |
-| `npm run check`     | lint + typecheck + format:check      |
-| `npm run fix`       | lint:fix then format — before commit |
+| Script              | Purpose                                 |
+| ------------------- | --------------------------------------- |
+| `npm run dev`       | Dev server                              |
+| `npm run build`     | Production build (no `tsc`)             |
+| `npm run preview`   | Build + Wrangler local preview (`dist`) |
+| `npm run deploy`    | Build + `wrangler deploy`               |
+| `npm run typecheck` | `tsc --noEmit`                          |
+| `npm run check`     | lint + typecheck + format:check         |
+| `npm run fix`       | lint:fix then format — before commit    |
 
 ## Key paths
 
