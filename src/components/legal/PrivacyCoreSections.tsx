@@ -4,6 +4,9 @@ export const PrivacyCoreSections = () => {
   return (
     <div className="prose-like space-y-8 text-foreground">
       <section aria-labelledby="privacy-intro">
+        <h2 id="privacy-intro" className="sr-only">
+          Introduction
+        </h2>
         <p className="text-muted-foreground leading-7">
           Spoonbowl (&quot;we,&quot; &quot;us,&quot; or &quot;our&quot;) explains how we handle
           information when you use this recipe site, including GDPR, CCPA/CPRA, and CalOPPA notices
