@@ -13,7 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Privacy:** merged former `/gdpr` page into `/privacy` (single policy + regional notices); `/gdpr` now redirects to `/privacy`. Footer and Terms §1 link only to Privacy Policy. Split body into `src/components/legal/PrivacyCoreSections.tsx` and `PrivacyRegionalNotices.tsx`. One Cloudflare privacy-policy link (in §3). Updated `PROJECT.md`, `README.md`, and `.github/copilot-instructions.md` to match.
+- **Privacy:** merged former `/gdpr` page into `/privacy` (single policy + regional notices); `/gdpr` now redirects to `/privacy`. Footer and Terms §1 link only to Privacy Policy. Split body into `src/components/legal/PrivacyCoreSections.tsx` and `src/components/legal/PrivacyRegionalNotices.tsx`. One Cloudflare privacy-policy link (in §3). Updated `PROJECT.md`, `README.md`, and `.github/copilot-instructions.md` to match.
 
 ## [0.0.5] - 2026-04-10
 
@@ -43,7 +43,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (v0.0.5) Fix 404 random recipe teaser React Query key to be stable (enables caching).
 - (v0.0.5) Cuisine browsing: only fetch cuisine recipes after cuisines list is fetched; prefetch cuisine results on keyboard focus (parity with hover).
 - Merged latest `origin/develop`: `npm run preview` is `build` then `wrangler dev`; `.gitignore` ignores Wrangler cache (`.wrangler`), `.dev.vars*`, and `.env*` (with `!.env.example` / `!.dev.vars.example` kept).
-- GDPR (`/gdpr`): CCPA categories table — mark IP and network-activity collection as **Yes** (Cloudflare edge logs only), consistent with edge logging disclosure elsewhere.
+- **GDPR (`/gdpr` — historical):** CCPA categories table on the former GDPR page — mark IP and network-activity collection as **Yes** (Cloudflare edge logs only), consistent with edge logging disclosure elsewhere. Content is now under `/privacy`; `/gdpr` redirects to `/privacy`.
 - `PROJECT.md`: Deploy row lists legal routes with full `src/routes/*.tsx` paths.
 
 [0.0.5]: https://github.com/sg208/spoonbowl/compare/v0.0.4...v0.0.5
