@@ -13,6 +13,7 @@ Recipe discovery **PWA** built with **Vite + React**, featuring fast navigation,
 
 ## Tech stack
 
+- **Production hosting**: **Cloudflare Pages** (static site + edge CDN)
 - **Vite** + **React 19**
 - **TanStack Router** (file-based routing in `src/routes/`)
 - **TanStack React Query** (server-state caching)
@@ -33,7 +34,8 @@ Open the printed local URL (typically `http://localhost:5173`).
 ```bash
 npm run dev        # start dev server
 npm run build      # production build
-npm run preview    # serve built app locally
+npm run preview    # build, then Wrangler local preview (dist)
+npm run deploy     # build, then wrangler deploy (Cloudflare)
 npm run typecheck  # TypeScript check (no emit)
 ```
 
@@ -46,7 +48,7 @@ These are defined via TanStack Router’s file-based routing:
 - `/recipes/tags` and `/recipes/tag/:tag` — browse by category
 - `/recipes/meal-types` and `/recipes/meal-type/:mealType` — browse by meal type
 - `/recipes/cuisines` and `/recipes/cuisine/:cuisine` — browse by cuisine
-- `/privacy`, `/terms`, `/disclaimer`, `/gdpr`, `/accessibility` — policy/accessibility pages
+- `/privacy`, `/terms`, `/disclaimer`, `/accessibility` — policy/accessibility pages (`/privacy` includes GDPR/CCPA/CalOPPA notices; `/gdpr` redirects to `/privacy`)
 
 ## Data source
 
