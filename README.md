@@ -3,7 +3,7 @@
 Recipe discovery **PWA** built with **Vite + React**, featuring fast navigation, caching, and a polished, accessible UI.
 
 - **Browse recipes** on the home feed and open rich recipe detail pages
-- **Explore by category (tags)** and **meal type**
+- **Explore by category (tags)**, **meal type**, and **cuisine**
 - **PWA + offline-friendly caching** for API responses and images
 - **Light/Dark/System** theme toggle
 
@@ -45,6 +45,7 @@ These are defined via TanStack Router’s file-based routing:
 - `/recipe/:recipeId/:slug` — recipe detail
 - `/recipes/tags` and `/recipes/tag/:tag` — browse by category
 - `/recipes/meal-types` and `/recipes/meal-type/:mealType` — browse by meal type
+- `/recipes/cuisines` and `/recipes/cuisine/:cuisine` — browse by cuisine
 - `/privacy`, `/terms`, `/disclaimer`, `/gdpr`, `/accessibility` — policy/accessibility pages
 
 ## Data source

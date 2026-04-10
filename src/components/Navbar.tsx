@@ -1,8 +1,9 @@
 import { Link } from "@tanstack/react-router"
-import { ChefHat, Menu, X, Tag, UtensilsCrossed } from "lucide-react"
+import { ChefHat, Globe, Menu, X, Tag, UtensilsCrossed } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
+import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
 
 const focusMainContent = () => {
   const main = document.getElementById("main-content")
@@ -11,6 +12,7 @@ const focusMainContent = () => {
 }
 
 export const Navbar = () => {
+  const prefetchCuisinesIndex = usePrefetchCuisinesIndex()
   const [open, setOpen] = useState(false)
   const menuButtonRef = useRef<HTMLButtonElement>(null)
   const firstMobileLinkRef = useRef<HTMLAnchorElement>(null)
@@ -86,6 +88,16 @@ export const Navbar = () => {
             <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
             Meal Types
           </Link>
+          <Link
+            to="/recipes/cuisines"
+            onMouseEnter={prefetchCuisinesIndex}
+            onFocus={prefetchCuisinesIndex}
+            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+            activeProps={{ className: "text-foreground" }}
+          >
+            <Globe className="h-3.5 w-3.5" aria-hidden="true" />
+            Cuisines
+          </Link>
         </nav>
 
         <div className="flex items-center gap-2">
@@ -144,6 +156,17 @@ export const Navbar = () => {
             >
               <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
               Meal Types
+            </Link>
+            <Link
+              to="/recipes/cuisines"
+              onClick={() => setOpen(false)}
+              onMouseEnter={prefetchCuisinesIndex}
+              onFocus={prefetchCuisinesIndex}
+              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+              activeProps={{ className: "text-foreground bg-accent" }}
+            >
+              <Globe className="h-3.5 w-3.5" aria-hidden="true" />
+              Cuisines
             </Link>
           </div>
         </div>

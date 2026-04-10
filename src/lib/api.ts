@@ -24,6 +24,15 @@ export interface RecipesResponse {
   limit: number
 }
 
+export type RecipeCuisineSummary = Pick<Recipe, "id" | "name" | "cuisine">
+
+interface RecipesCuisineSelectResponse {
+  recipes: RecipeCuisineSummary[]
+  total: number
+  skip: number
+  limit: number
+}
+
 const BASE_URL = "https://dummyjson.com/recipes"
 
 export const fetchRecipes = async (limit = 50, skip = 0): Promise<RecipesResponse> => {
@@ -78,4 +87,26 @@ export const fetchRecipesByMealType = async (mealType: string): Promise<RecipesR
   const res = await fetch(`${BASE_URL}/meal-type/${encodeURIComponent(mealType)}`)
   if (!res.ok) throw new Error(`Failed to fetch recipes for meal type: ${mealType}`)
   return res.json()
+}
+
+export const fetchCuisines = async (): Promise<string[]> => {
+  const res = await fetch(`${BASE_URL}?limit=0&select=id,name,cuisine`)
+  if (!res.ok) throw new Error("Failed to fetch cuisines")
+  const data: RecipesCuisineSelectResponse = await res.json()
+  const cuisines = new Set<string>()
+  for (const recipe of data.recipes) {
+    if (recipe.cuisine) cuisines.add(recipe.cuisine)
+  }
+  return Array.from(cuisines).sort()
+}
+
+export const fetchRecipesByCuisine = async (cuisine: string): Promise<RecipesResponse> => {
+  const data = await fetchAllRecipes()
+  const recipes = data.recipes.filter((r) => r.cuisine === cuisine)
+  return {
+    recipes,
+    total: recipes.length,
+    skip: 0,
+    limit: recipes.length,
+  }
 }

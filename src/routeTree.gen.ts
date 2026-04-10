@@ -17,8 +17,10 @@ import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecipesTagsIndexRouteImport } from './routes/recipes/tags/index'
 import { Route as RecipesMealTypesIndexRouteImport } from './routes/recipes/meal-types/index'
+import { Route as RecipesCuisinesIndexRouteImport } from './routes/recipes/cuisines/index'
 import { Route as RecipesTagTagRouteImport } from './routes/recipes/tag/$tag'
 import { Route as RecipesMealTypeMealTypeRouteImport } from './routes/recipes/meal-type/$mealType'
+import { Route as RecipesCuisineCuisineRouteImport } from './routes/recipes/cuisine/$cuisine'
 import { Route as RecipeRecipeIdSlugRouteImport } from './routes/recipe/$recipeId/$slug'
 
 const TermsRoute = TermsRouteImport.update({
@@ -61,6 +63,11 @@ const RecipesMealTypesIndexRoute = RecipesMealTypesIndexRouteImport.update({
   path: '/recipes/meal-types/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesCuisinesIndexRoute = RecipesCuisinesIndexRouteImport.update({
+  id: '/recipes/cuisines/',
+  path: '/recipes/cuisines/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecipesTagTagRoute = RecipesTagTagRouteImport.update({
   id: '/recipes/tag/$tag',
   path: '/recipes/tag/$tag',
@@ -69,6 +76,11 @@ const RecipesTagTagRoute = RecipesTagTagRouteImport.update({
 const RecipesMealTypeMealTypeRoute = RecipesMealTypeMealTypeRouteImport.update({
   id: '/recipes/meal-type/$mealType',
   path: '/recipes/meal-type/$mealType',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RecipesCuisineCuisineRoute = RecipesCuisineCuisineRouteImport.update({
+  id: '/recipes/cuisine/$cuisine',
+  path: '/recipes/cuisine/$cuisine',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RecipeRecipeIdSlugRoute = RecipeRecipeIdSlugRouteImport.update({
@@ -85,8 +97,10 @@ export interface FileRoutesByFullPath {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/recipe/$recipeId/$slug': typeof RecipeRecipeIdSlugRoute
+  '/recipes/cuisine/$cuisine': typeof RecipesCuisineCuisineRoute
   '/recipes/meal-type/$mealType': typeof RecipesMealTypeMealTypeRoute
   '/recipes/tag/$tag': typeof RecipesTagTagRoute
+  '/recipes/cuisines/': typeof RecipesCuisinesIndexRoute
   '/recipes/meal-types/': typeof RecipesMealTypesIndexRoute
   '/recipes/tags/': typeof RecipesTagsIndexRoute
 }
@@ -98,8 +112,10 @@ export interface FileRoutesByTo {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/recipe/$recipeId/$slug': typeof RecipeRecipeIdSlugRoute
+  '/recipes/cuisine/$cuisine': typeof RecipesCuisineCuisineRoute
   '/recipes/meal-type/$mealType': typeof RecipesMealTypeMealTypeRoute
   '/recipes/tag/$tag': typeof RecipesTagTagRoute
+  '/recipes/cuisines': typeof RecipesCuisinesIndexRoute
   '/recipes/meal-types': typeof RecipesMealTypesIndexRoute
   '/recipes/tags': typeof RecipesTagsIndexRoute
 }
@@ -112,8 +128,10 @@ export interface FileRoutesById {
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
   '/recipe/$recipeId/$slug': typeof RecipeRecipeIdSlugRoute
+  '/recipes/cuisine/$cuisine': typeof RecipesCuisineCuisineRoute
   '/recipes/meal-type/$mealType': typeof RecipesMealTypeMealTypeRoute
   '/recipes/tag/$tag': typeof RecipesTagTagRoute
+  '/recipes/cuisines/': typeof RecipesCuisinesIndexRoute
   '/recipes/meal-types/': typeof RecipesMealTypesIndexRoute
   '/recipes/tags/': typeof RecipesTagsIndexRoute
 }
@@ -127,8 +145,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/recipe/$recipeId/$slug'
+    | '/recipes/cuisine/$cuisine'
     | '/recipes/meal-type/$mealType'
     | '/recipes/tag/$tag'
+    | '/recipes/cuisines/'
     | '/recipes/meal-types/'
     | '/recipes/tags/'
   fileRoutesByTo: FileRoutesByTo
@@ -140,8 +160,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/recipe/$recipeId/$slug'
+    | '/recipes/cuisine/$cuisine'
     | '/recipes/meal-type/$mealType'
     | '/recipes/tag/$tag'
+    | '/recipes/cuisines'
     | '/recipes/meal-types'
     | '/recipes/tags'
   id:
@@ -153,8 +175,10 @@ export interface FileRouteTypes {
     | '/privacy'
     | '/terms'
     | '/recipe/$recipeId/$slug'
+    | '/recipes/cuisine/$cuisine'
     | '/recipes/meal-type/$mealType'
     | '/recipes/tag/$tag'
+    | '/recipes/cuisines/'
     | '/recipes/meal-types/'
     | '/recipes/tags/'
   fileRoutesById: FileRoutesById
@@ -167,8 +191,10 @@ export interface RootRouteChildren {
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
   RecipeRecipeIdSlugRoute: typeof RecipeRecipeIdSlugRoute
+  RecipesCuisineCuisineRoute: typeof RecipesCuisineCuisineRoute
   RecipesMealTypeMealTypeRoute: typeof RecipesMealTypeMealTypeRoute
   RecipesTagTagRoute: typeof RecipesTagTagRoute
+  RecipesCuisinesIndexRoute: typeof RecipesCuisinesIndexRoute
   RecipesMealTypesIndexRoute: typeof RecipesMealTypesIndexRoute
   RecipesTagsIndexRoute: typeof RecipesTagsIndexRoute
 }
@@ -231,6 +257,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecipesMealTypesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recipes/cuisines/': {
+      id: '/recipes/cuisines/'
+      path: '/recipes/cuisines'
+      fullPath: '/recipes/cuisines/'
+      preLoaderRoute: typeof RecipesCuisinesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recipes/tag/$tag': {
       id: '/recipes/tag/$tag'
       path: '/recipes/tag/$tag'
@@ -243,6 +276,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/meal-type/$mealType'
       fullPath: '/recipes/meal-type/$mealType'
       preLoaderRoute: typeof RecipesMealTypeMealTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/cuisine/$cuisine': {
+      id: '/recipes/cuisine/$cuisine'
+      path: '/recipes/cuisine/$cuisine'
+      fullPath: '/recipes/cuisine/$cuisine'
+      preLoaderRoute: typeof RecipesCuisineCuisineRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipe/$recipeId/$slug': {
@@ -263,8 +303,10 @@ const rootRouteChildren: RootRouteChildren = {
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,
   RecipeRecipeIdSlugRoute: RecipeRecipeIdSlugRoute,
+  RecipesCuisineCuisineRoute: RecipesCuisineCuisineRoute,
   RecipesMealTypeMealTypeRoute: RecipesMealTypeMealTypeRoute,
   RecipesTagTagRoute: RecipesTagTagRoute,
+  RecipesCuisinesIndexRoute: RecipesCuisinesIndexRoute,
   RecipesMealTypesIndexRoute: RecipesMealTypesIndexRoute,
   RecipesTagsIndexRoute: RecipesTagsIndexRoute,
 }

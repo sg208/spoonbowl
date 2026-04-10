@@ -64,6 +64,10 @@ Default reference for planning: paths, conventions, “where is X?”.
     │       │   └── index.tsx
     │       ├── meal-type/
     │       │   └── $mealType.tsx
+    │       ├── cuisines/
+    │       │   └── index.tsx
+    │       ├── cuisine/
+    │       │   └── $cuisine.tsx
     │       ├── tags/
     │       │   └── index.tsx
     │       └── tag/
@@ -82,7 +86,8 @@ Default reference for planning: paths, conventions, “where is X?”.
     │       ├── ... shadcn-style primitives (Button, Dialog, Select, etc.)
     │       └── sonner.tsx             # toaster wrapper
     ├── hooks/
-    │   └── use-mobile.ts
+    │   ├── use-mobile.ts
+    │   └── use-prefetch-cuisines-index.ts
     └── lib/
         ├── api.ts                     # typed fetch wrappers (DummyJSON recipes)
         ├── queryClient.ts             # React Query defaults (staleTime/gcTime/retry)
@@ -90,6 +95,7 @@ Default reference for planning: paths, conventions, “where is X?”.
         ├── utils.ts                   # cn() / class merging utilities
         ├── headings.ts
         ├── mealTypeUtils.ts
+        ├── cuisineUtils.ts
         └── tagUtils.ts
 ```
 
