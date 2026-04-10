@@ -1,0 +1,37 @@
+export const NOT_FOUND_MESSAGES = [
+  "This page is still half-baked.",
+  "Looks like this route was eaten by a hungry developer.",
+  "We couldn't find that recipe for your URL.",
+  "This URL is not on the menu.",
+  "Kitchen's closed on this path.",
+  "Oops—this page is still in the oven.",
+  "Nothing here but crumbs.",
+  "This route didn't rise.",
+  "Wrong kitchen. Right appetite.",
+  "Lost in the sauce—and we mean the URL.",
+  "This page is under-seasoned with existence.",
+  "404: no recipe for this address.",
+  "Your fork took a wrong turn.",
+  "We whisked every aisle—still nothing.",
+  "This page folded like a bad soufflé.",
+  "No mise en place for this link.",
+  "The pantry is empty at this path.",
+  "Burnt link—try another course.",
+  "This URL is raw—it needs a real page.",
+  "Chop chop—this isn't a valid route.",
+  "Taste test failed: link not found.",
+  "Simmer down—this page isn't cooking.",
+  "The fridge light doesn't work here.",
+  "Wrong spice rack—head home.",
+  "Plate not found.",
+  "This shortcut is a stale breadcrumb.",
+  "Chef's kiss isn't for this URL.",
+  "You can't julienne this path.",
+  "Order up—this page is not on the ticket.",
+  "The secret ingredient was… a missing page.",
+] as const
+
+export const pickRandomNotFoundMessage = (): string => {
+  const index = Math.floor(Math.random() * NOT_FOUND_MESSAGES.length)
+  return NOT_FOUND_MESSAGES[index]!
+}
