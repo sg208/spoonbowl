@@ -1,8 +1,12 @@
 import { Link } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
 import { Clock, Star, Users, ChefHat } from "lucide-react"
+import { fetchRecipe } from "@/lib/api"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Recipe } from "@/lib/api"
+import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import { slugify } from "@/lib/utils"
 
 interface RecipeCardProps {
@@ -16,12 +20,23 @@ const difficultyColors = {
 }
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
+  const queryClient = useQueryClient()
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+
+  const prefetchRecipe = () => {
+    queryClient.prefetchQuery({
+      queryKey: recipeDetailKeys.detail(recipe.id),
+      queryFn: () => fetchRecipe(recipe.id),
+      staleTime: STALE_TIME_5M_MS,
+    })
+  }
 
   return (
     <Link
       to="/recipe/$recipeId/$slug"
       params={{ recipeId: String(recipe.id), slug: slugify(recipe.name) }}
+      onMouseEnter={prefetchRecipe}
+      onFocus={prefetchRecipe}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl"
       aria-label={`View recipe: ${recipe.name}, ${recipe.cuisine} cuisine, ${recipe.difficulty} difficulty, ${totalTime} minutes total`}
     >

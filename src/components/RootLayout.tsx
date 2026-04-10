@@ -1,6 +1,7 @@
 import { Outlet } from "@tanstack/react-router"
 import { Footer } from "@/components/Footer"
 import { Navbar } from "@/components/Navbar"
+import { RouteAnnouncer } from "@/components/RouteAnnouncer"
 import { Toaster } from "@/components/ui/sonner"
 
 export const RootLayout = () => (
@@ -11,5 +12,6 @@ export const RootLayout = () => (
     </main>
     <Footer />
     <Toaster />
+    <RouteAnnouncer />
   </div>
 )
