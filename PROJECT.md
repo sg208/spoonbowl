@@ -2,6 +2,10 @@
 
 Repository mini-memory and shared context for planning, onboarding, and **AI-assisted development** (IDE-integrated assistants and similar tools). Humans should treat it the same way: paths, conventions, and where to change things.
 
+**GitHub Copilot:** a condensed mirror for repository-wide instructions lives in [`.github/copilot-instructions.md`](.github/copilot-instructions.md) (stays under Copilot code review’s character limit). **This file (`PROJECT.md`) is canonical** for the full tree, tables, and TanStack patterns.
+
+**Maintenance:** When you change architecture, commands, or major conventions here, update [`.github/copilot-instructions.md`](.github/copilot-instructions.md) so the short mirror stays aligned.
+
 ---
 
 ## Quick facts
