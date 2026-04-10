@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- CodeRabbit (`.coderabbit.yaml`): `auto_review.base_branches` includes `develop` so PRs into `develop` get automatic reviews (the repo default branch is still always in scope).
 - CodeRabbit (`.coderabbit.yaml`): enable `request_changes_workflow` so reviews can request changes via the GitHub workflow.
 - `PROJECT.md`: cross-links to `.github/copilot-instructions.md` and a maintenance note to keep the condensed Copilot mirror aligned when architecture or conventions change.
 - `PROJECT.md`: expanded repo mini-memory for onboarding and AI-assisted work — command table, “where to change X”, TanStack Router/Query conventions, shadcn/Tailwind/PWA notes.
