@@ -101,15 +101,16 @@ const MealTypeRecipesPage = () => {
             >
               {pageTitle}
             </h1>
-            <p className="mt-2 text-muted-foreground leading-7 max-w-2xl">
-              {description}
-            </p>
+            <p className="mt-2 text-muted-foreground leading-7 max-w-2xl">{description}</p>
           </div>
         </div>
       </header>
 
       {isError && (
-        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-8 text-center">
+        <div
+          role="alert"
+          className="rounded-xl border border-destructive/30 bg-destructive/5 p-8 text-center"
+        >
           <ChefHat className="h-10 w-10 text-muted-foreground mx-auto mb-3" aria-hidden="true" />
           <p className="text-destructive font-medium">Failed to load recipes for "{mealType}"</p>
           <p className="text-sm text-muted-foreground mt-1">Please try again.</p>
@@ -127,17 +128,19 @@ const MealTypeRecipesPage = () => {
           >
             {isLoading
               ? Array.from({ length: 8 }).map((_, i) => <RecipeCardSkeleton key={i} />)
-              : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)
-            }
+              : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
           </div>
 
           {!isLoading && recipes.length === 0 && (
-            <div className="flex flex-col items-center justify-center py-20 text-center" role="status">
+            <div
+              className="flex flex-col items-center justify-center py-20 text-center"
+              role="status"
+            >
               <ChefHat className="h-14 w-14 text-muted-foreground mb-4" aria-hidden="true" />
-              <h2 className="text-lg font-semibold text-foreground">No recipes found for "{mealType}"</h2>
-              <p className="text-muted-foreground mt-1 text-sm">
-                Try exploring other meal types.
-              </p>
+              <h2 className="text-lg font-semibold text-foreground">
+                No recipes found for "{mealType}"
+              </h2>
+              <p className="text-muted-foreground mt-1 text-sm">Try exploring other meal types.</p>
               <Button asChild variant="outline" className="mt-5 gap-2">
                 <Link to="/recipes/meal-types/">
                   <ArrowLeft className="h-4 w-4" aria-hidden="true" />
@@ -154,16 +157,13 @@ const MealTypeRecipesPage = () => {
           className="mt-12 rounded-2xl bg-secondary/50 border border-border p-6"
           aria-labelledby="seo-meta-heading"
         >
-          <h2
-            id="seo-meta-heading"
-            className="text-base font-semibold text-foreground mb-2"
-          >
+          <h2 id="seo-meta-heading" className="text-base font-semibold text-foreground mb-2">
             About {pageTitle}
           </h2>
           <p className="text-sm text-muted-foreground leading-relaxed">
-            {description} Browse all {data?.total} {pageTitle.toLowerCase()} on Spoonbowl — each with
-            full ingredients lists, step-by-step instructions, prep and cook times, serving sizes, and
-            calorie counts.
+            {description} Browse all {data?.total} {pageTitle.toLowerCase()} on Spoonbowl — each
+            with full ingredients lists, step-by-step instructions, prep and cook times, serving
+            sizes, and calorie counts.
           </p>
           <div className="mt-4 flex flex-wrap gap-2" aria-label="Related recipe names">
             {recipes.slice(0, 6).map((r) => (
@@ -182,7 +182,10 @@ const MealTypeRecipesPage = () => {
 
       {allTypes && allTypes.length > 1 && (
         <section className="mt-8" aria-labelledby="other-types-heading">
-          <h2 id="other-types-heading" className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+          <h2
+            id="other-types-heading"
+            className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-3"
+          >
             Other Meal Types
           </h2>
           <div className="flex flex-wrap gap-2">

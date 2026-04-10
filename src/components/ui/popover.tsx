@@ -3,15 +3,11 @@ import { Popover as PopoverPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-const Popover = ({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Root>) => {
+const Popover = ({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Root>) => {
   return <PopoverPrimitive.Root data-slot="popover" {...props} />
 }
 
-const PopoverTrigger = ({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Trigger>) => {
+const PopoverTrigger = ({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Trigger>) => {
   return <PopoverPrimitive.Trigger data-slot="popover-trigger" {...props} />
 }
 
@@ -37,9 +33,7 @@ const PopoverContent = ({
   )
 }
 
-const PopoverAnchor = ({
-  ...props
-}: React.ComponentProps<typeof PopoverPrimitive.Anchor>) => {
+const PopoverAnchor = ({ ...props }: React.ComponentProps<typeof PopoverPrimitive.Anchor>) => {
   return <PopoverPrimitive.Anchor data-slot="popover-anchor" {...props} />
 }
 
@@ -54,19 +48,10 @@ const PopoverHeader = ({ className, ...props }: React.ComponentProps<"div">) => 
 }
 
 const PopoverTitle = ({ className, ...props }: React.ComponentProps<"h2">) => {
-  return (
-    <div
-      data-slot="popover-title"
-      className={cn("font-medium", className)}
-      {...props}
-    />
-  )
+  return <div data-slot="popover-title" className={cn("font-medium", className)} {...props} />
 }
 
-const PopoverDescription = ({
-  className,
-  ...props
-}: React.ComponentProps<"p">) => {
+const PopoverDescription = ({ className, ...props }: React.ComponentProps<"p">) => {
   return (
     <p
       data-slot="popover-description"

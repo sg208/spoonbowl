@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as GdprRouteImport } from './routes/gdpr'
+import { Route as DisclaimerRouteImport } from './routes/disclaimer'
 import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecipesTagsIndexRouteImport } from './routes/recipes/tags/index'
@@ -33,6 +34,11 @@ const PrivacyRoute = PrivacyRouteImport.update({
 const GdprRoute = GdprRouteImport.update({
   id: '/gdpr',
   path: '/gdpr',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DisclaimerRoute = DisclaimerRouteImport.update({
+  id: '/disclaimer',
+  path: '/disclaimer',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AccessibilityRoute = AccessibilityRouteImport.update({
@@ -74,6 +80,7 @@ const RecipeRecipeIdSlugRoute = RecipeRecipeIdSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/accessibility': typeof AccessibilityRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/gdpr': typeof GdprRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/accessibility': typeof AccessibilityRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/gdpr': typeof GdprRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -99,6 +107,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/accessibility': typeof AccessibilityRoute
+  '/disclaimer': typeof DisclaimerRoute
   '/gdpr': typeof GdprRoute
   '/privacy': typeof PrivacyRoute
   '/terms': typeof TermsRoute
@@ -113,6 +122,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/accessibility'
+    | '/disclaimer'
     | '/gdpr'
     | '/privacy'
     | '/terms'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/accessibility'
+    | '/disclaimer'
     | '/gdpr'
     | '/privacy'
     | '/terms'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/accessibility'
+    | '/disclaimer'
     | '/gdpr'
     | '/privacy'
     | '/terms'
@@ -150,6 +162,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AccessibilityRoute: typeof AccessibilityRoute
+  DisclaimerRoute: typeof DisclaimerRoute
   GdprRoute: typeof GdprRoute
   PrivacyRoute: typeof PrivacyRoute
   TermsRoute: typeof TermsRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/gdpr'
       fullPath: '/gdpr'
       preLoaderRoute: typeof GdprRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/disclaimer': {
+      id: '/disclaimer'
+      path: '/disclaimer'
+      fullPath: '/disclaimer'
+      preLoaderRoute: typeof DisclaimerRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/accessibility': {
@@ -238,6 +258,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AccessibilityRoute: AccessibilityRoute,
+  DisclaimerRoute: DisclaimerRoute,
   GdprRoute: GdprRoute,
   PrivacyRoute: PrivacyRoute,
   TermsRoute: TermsRoute,

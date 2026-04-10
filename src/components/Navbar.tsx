@@ -1,17 +1,53 @@
 import { Link } from "@tanstack/react-router"
 import { ChefHat, Menu, X, Tag, UtensilsCrossed } from "lucide-react"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
 
+const focusMainContent = () => {
+  const main = document.getElementById("main-content")
+  main?.focus()
+  main?.scrollIntoView({ block: "start" })
+}
+
 export const Navbar = () => {
   const [open, setOpen] = useState(false)
+  const menuButtonRef = useRef<HTMLButtonElement>(null)
+  const firstMobileLinkRef = useRef<HTMLAnchorElement>(null)
+
+  useEffect(() => {
+    if (!open) return
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false)
+        menuButtonRef.current?.focus()
+      }
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [open])
+
+  useEffect(() => {
+    if (open) {
+      firstMobileLinkRef.current?.focus()
+    }
+  }, [open])
 
   return (
     <header
       className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 pt-safe"
       role="banner"
     >
+      <a
+        href="#main-content"
+        className="skip-link"
+        onClick={(event) => {
+          event.preventDefault()
+          focusMainContent()
+        }}
+      >
+        Skip to main content
+      </a>
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link
           to="/"
@@ -19,14 +55,13 @@ export const Navbar = () => {
           aria-label="Spoonbowl - Go to homepage"
         >
           <ChefHat className="h-6 w-6 text-primary" aria-hidden="true" />
-          <span className="text-primary">Spoon</span>
-          <span>bowl</span>
+          <span className="whitespace-nowrap">
+            <span className="text-primary">Spoon</span>
+            <span>bowl</span>
+          </span>
         </Link>
 
-        <nav
-          className="hidden md:flex items-center gap-1"
-          aria-label="Main navigation"
-        >
+        <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
           <Link
             to="/"
             className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
@@ -56,6 +91,7 @@ export const Navbar = () => {
         <div className="flex items-center gap-2">
           <ModeToggle />
           <Button
+            ref={menuButtonRef}
             variant="ghost"
             size="icon"
             className="md:hidden"
@@ -64,7 +100,11 @@ export const Navbar = () => {
             aria-controls="mobile-menu"
             onClick={() => setOpen(!open)}
           >
-            {open ? <X className="h-5 w-5" aria-hidden="true" /> : <Menu className="h-5 w-5" aria-hidden="true" />}
+            {open ? (
+              <X className="h-5 w-5" aria-hidden="true" />
+            ) : (
+              <Menu className="h-5 w-5" aria-hidden="true" />
+            )}
           </Button>
         </div>
       </div>
@@ -78,6 +118,7 @@ export const Navbar = () => {
         >
           <div className="px-4 py-2 space-y-1">
             <Link
+              ref={firstMobileLinkRef}
               to="/"
               onClick={() => setOpen(false)}
               className="flex px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"

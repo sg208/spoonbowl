@@ -14,7 +14,11 @@ const RecipeDetailPage = () => {
   const { recipeId } = Route.useParams()
   const id = Number(recipeId)
 
-  const { data: recipe, isLoading, isError } = useQuery({
+  const {
+    data: recipe,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["recipe", id],
     queryFn: () => fetchRecipe(id),
     enabled: !isNaN(id),
@@ -67,7 +71,9 @@ const RecipeDetailPage = () => {
           <div className="flex items-center gap-2 flex-wrap mb-3">
             <Badge variant="outline">{recipe.cuisine}</Badge>
             {recipe.mealType.map((type) => (
-              <Badge key={type} variant="secondary">{type}</Badge>
+              <Badge key={type} variant="secondary">
+                {type}
+              </Badge>
             ))}
           </div>
           <h1
@@ -92,7 +98,7 @@ const RecipeDetailPage = () => {
         <div className="relative aspect-[16/8] sm:aspect-[16/7] overflow-hidden rounded-2xl bg-muted">
           <img
             src={recipe.image}
-            alt={`Photo of ${recipe.name}`}
+            alt={recipe.name}
             className="h-full w-full object-cover"
             loading="eager"
             decoding="async"
@@ -106,14 +112,18 @@ const RecipeDetailPage = () => {
                 <Clock className="h-3.5 w-3.5" aria-hidden="true" />
                 Prep Time
               </dt>
-              <dd className="text-sm font-semibold text-foreground">{recipe.prepTimeMinutes} min</dd>
+              <dd className="text-sm font-semibold text-foreground">
+                {recipe.prepTimeMinutes} min
+              </dd>
             </div>
             <div className="flex flex-col gap-1">
               <dt className="text-xs text-muted-foreground flex items-center gap-1">
                 <Flame className="h-3.5 w-3.5" aria-hidden="true" />
                 Cook Time
               </dt>
-              <dd className="text-sm font-semibold text-foreground">{recipe.cookTimeMinutes} min</dd>
+              <dd className="text-sm font-semibold text-foreground">
+                {recipe.cookTimeMinutes} min
+              </dd>
             </div>
             <div className="flex flex-col gap-1">
               <dt className="text-xs text-muted-foreground flex items-center gap-1">
@@ -124,7 +134,10 @@ const RecipeDetailPage = () => {
             </div>
             <div className="flex flex-col gap-1">
               <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <Star className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber" aria-hidden="true" />
+                <Star
+                  className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber"
+                  aria-hidden="true"
+                />
                 Rating
               </dt>
               <dd className="text-sm font-semibold text-foreground">
@@ -147,16 +160,15 @@ const RecipeDetailPage = () => {
             </div>
             <div className="flex flex-col gap-1">
               <dt className="text-xs text-muted-foreground">Calories</dt>
-              <dd className="text-sm font-semibold text-foreground">{recipe.caloriesPerServing} / serving</dd>
+              <dd className="text-sm font-semibold text-foreground">
+                {recipe.caloriesPerServing} / serving
+              </dd>
             </div>
           </dl>
         </section>
 
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <section
-            className="lg:col-span-1"
-            aria-labelledby="ingredients-heading"
-          >
+          <section className="lg:col-span-1" aria-labelledby="ingredients-heading">
             <h2
               id="ingredients-heading"
               className="text-xl font-bold tracking-tight text-foreground mb-4"
@@ -165,10 +177,7 @@ const RecipeDetailPage = () => {
             </h2>
             <ul className="space-y-2.5" role="list">
               {recipe.ingredients.map((ingredient, index) => (
-                <li
-                  key={index}
-                  className="flex items-start gap-2.5 text-sm text-foreground"
-                >
+                <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
                   <span
                     className="mt-0.5 h-4 w-4 shrink-0 rounded-full bg-primary/15 text-primary flex items-center justify-center text-[10px] font-bold"
                     aria-hidden="true"
@@ -183,10 +192,7 @@ const RecipeDetailPage = () => {
 
           <Separator className="lg:hidden" />
 
-          <section
-            className="lg:col-span-2"
-            aria-labelledby="instructions-heading"
-          >
+          <section className="lg:col-span-2" aria-labelledby="instructions-heading">
             <h2
               id="instructions-heading"
               className="text-xl font-bold tracking-tight text-foreground mb-4"

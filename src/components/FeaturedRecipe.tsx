@@ -26,7 +26,10 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
             loading="eager"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent lg:bg-gradient-to-r" aria-hidden="true" />
+          <div
+            className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent lg:bg-gradient-to-r"
+            aria-hidden="true"
+          />
           <div className="absolute top-3 left-3">
             <Badge className="bg-primary text-primary-foreground font-semibold gap-1">
               <Flame className="h-3 w-3" aria-hidden="true" />
@@ -85,11 +88,17 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
             </div>
             <div className="flex flex-col gap-0.5">
               <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <Star className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber" aria-hidden="true" />
+                <Star
+                  className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber"
+                  aria-hidden="true"
+                />
                 Rating
               </dt>
               <dd className="text-sm font-semibold text-foreground">
-                {recipe.rating.toFixed(1)} <span className="font-normal text-muted-foreground text-xs">({recipe.reviewCount})</span>
+                {recipe.rating.toFixed(1)}{" "}
+                <span className="font-normal text-muted-foreground text-xs">
+                  ({recipe.reviewCount})
+                </span>
               </dd>
             </div>
             <div className="flex flex-col gap-0.5">
@@ -99,7 +108,10 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
           </dl>
 
           <div className="flex items-center gap-2 flex-wrap">
-            <Button asChild className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2">
+            <Button
+              asChild
+              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2"
+            >
               <Link
                 to="/recipe/$recipeId/$slug"
                 params={{ recipeId: String(recipe.id), slug: slugify(recipe.name) }}

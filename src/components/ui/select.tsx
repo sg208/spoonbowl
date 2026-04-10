@@ -1,26 +1,24 @@
 "use client"
 
 import * as React from "react"
-import { Check as CheckIcon, ChevronDown as ChevronDownIcon, ChevronUp as ChevronUpIcon } from "lucide-react"
+import {
+  Check as CheckIcon,
+  ChevronDown as ChevronDownIcon,
+  ChevronUp as ChevronUpIcon,
+} from "lucide-react"
 import { Select as SelectPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-const Select = ({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Root>) => {
+const Select = ({ ...props }: React.ComponentProps<typeof SelectPrimitive.Root>) => {
   return <SelectPrimitive.Root data-slot="select" {...props} />
 }
 
-const SelectGroup = ({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Group>) => {
+const SelectGroup = ({ ...props }: React.ComponentProps<typeof SelectPrimitive.Group>) => {
   return <SelectPrimitive.Group data-slot="select-group" {...props} />
 }
 
-const SelectValue = ({
-  ...props
-}: React.ComponentProps<typeof SelectPrimitive.Value>) => {
+const SelectValue = ({ ...props }: React.ComponentProps<typeof SelectPrimitive.Value>) => {
   return <SelectPrimitive.Value data-slot="select-value" {...props} />
 }
 
@@ -147,10 +145,7 @@ const SelectScrollUpButton = ({
   return (
     <SelectPrimitive.ScrollUpButton
       data-slot="select-scroll-up-button"
-      className={cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      )}
+      className={cn("flex cursor-default items-center justify-center py-1", className)}
       {...props}
     >
       <ChevronUpIcon className="size-4" />
@@ -165,10 +160,7 @@ const SelectScrollDownButton = ({
   return (
     <SelectPrimitive.ScrollDownButton
       data-slot="select-scroll-down-button"
-      className={cn(
-        "flex cursor-default items-center justify-center py-1",
-        className
-      )}
+      className={cn("flex cursor-default items-center justify-center py-1", className)}
       {...props}
     >
       <ChevronDownIcon className="size-4" />

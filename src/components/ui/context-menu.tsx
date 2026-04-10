@@ -1,56 +1,45 @@
 "use client"
 
 import * as React from "react"
-import { Check as CheckIcon, ChevronRight as ChevronRightIcon, Circle as CircleIcon } from "lucide-react"
+import {
+  Check as CheckIcon,
+  ChevronRight as ChevronRightIcon,
+  Circle as CircleIcon,
+} from "lucide-react"
 import { ContextMenu as ContextMenuPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-const ContextMenu = ({
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Root>) => {
+const ContextMenu = ({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Root>) => {
   return <ContextMenuPrimitive.Root data-slot="context-menu" {...props} />
 }
 
 const ContextMenuTrigger = ({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Trigger>) => {
-  return (
-    <ContextMenuPrimitive.Trigger data-slot="context-menu-trigger" {...props} />
-  )
+  return <ContextMenuPrimitive.Trigger data-slot="context-menu-trigger" {...props} />
 }
 
 const ContextMenuGroup = ({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Group>) => {
-  return (
-    <ContextMenuPrimitive.Group data-slot="context-menu-group" {...props} />
-  )
+  return <ContextMenuPrimitive.Group data-slot="context-menu-group" {...props} />
 }
 
 const ContextMenuPortal = ({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.Portal>) => {
-  return (
-    <ContextMenuPrimitive.Portal data-slot="context-menu-portal" {...props} />
-  )
+  return <ContextMenuPrimitive.Portal data-slot="context-menu-portal" {...props} />
 }
 
-const ContextMenuSub = ({
-  ...props
-}: React.ComponentProps<typeof ContextMenuPrimitive.Sub>) => {
+const ContextMenuSub = ({ ...props }: React.ComponentProps<typeof ContextMenuPrimitive.Sub>) => {
   return <ContextMenuPrimitive.Sub data-slot="context-menu-sub" {...props} />
 }
 
 const ContextMenuRadioGroup = ({
   ...props
 }: React.ComponentProps<typeof ContextMenuPrimitive.RadioGroup>) => {
-  return (
-    <ContextMenuPrimitive.RadioGroup
-      data-slot="context-menu-radio-group"
-      {...props}
-    />
-  )
+  return <ContextMenuPrimitive.RadioGroup data-slot="context-menu-radio-group" {...props} />
 }
 
 const ContextMenuSubTrigger = ({
@@ -195,10 +184,7 @@ const ContextMenuLabel = ({
     <ContextMenuPrimitive.Label
       data-slot="context-menu-label"
       data-inset={inset}
-      className={cn(
-        "px-2 py-1.5 text-sm font-medium text-foreground data-[inset]:pl-8",
-        className
-      )}
+      className={cn("px-2 py-1.5 text-sm font-medium text-foreground data-[inset]:pl-8", className)}
       {...props}
     />
   )
@@ -217,17 +203,11 @@ const ContextMenuSeparator = ({
   )
 }
 
-const ContextMenuShortcut = ({
-  className,
-  ...props
-}: React.ComponentProps<"span">) => {
+const ContextMenuShortcut = ({ className, ...props }: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="context-menu-shortcut"
-      className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground",
-        className
-      )}
+      className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
       {...props}
     />
   )

@@ -115,7 +115,8 @@
   --secondary: oklch(0.26 0.03 45);
   --secondary-foreground: oklch(0.96 0.01 85);
   --muted: oklch(0.26 0.03 45);
-  --muted-foreground: oklch(0.65 0.04 60);
+  /* Slightly brighter than 0.65 for ~4.5:1 on dark background (body text secondary) */
+  --muted-foreground: oklch(0.72 0.04 60);
   --accent: oklch(0.3 0.06 140);
   --accent-foreground: oklch(0.85 0.1 140);
   --destructive: oklch(0.7 0.2 22.216);
@@ -153,6 +154,56 @@
     padding-left: env(safe-area-inset-left);
     padding-right: env(safe-area-inset-right);
   }
+}
+
+/* WCAG 2.3.3: respect reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* 2.4.1 Skip link: off-screen until keyboard focus */
+.skip-link {
+  position: absolute;
+  left: 0.75rem;
+  top: 0.75rem;
+  z-index: 100;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  background: var(--background);
+  color: var(--foreground);
+  font-size: 0.875rem;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 1px 3px oklch(0 0 0 / 15%);
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.skip-link:focus {
+  clip: auto;
+  clip-path: none;
+  width: auto;
+  height: auto;
+  overflow: visible;
+  white-space: normal;
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
 }
 
 /* Safe area utilities */

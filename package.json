@@ -1,13 +1,21 @@
 {
-  "name": "shadcn-ui-template",
+  "name": "spoonbowl",
   "private": true,
-  "version": "0.0.1",
+  "version": "0.0.2",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "fix": "npm run lint:fix && npm run format",
+    "check": "npm run lint && npm run typecheck && npm run format:check",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "preview:4000": "vite preview --port 4000 --strictPort",
+    "build:preview:4000": "vite build && vite preview --port 4000 --strictPort"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -41,11 +49,21 @@
     "zod": "^4.3.6"
   },
   "devDependencies": {
+    "@eslint/js": "^9.39.4",
     "@types/node": "^24.12.0",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vitejs/plugin-react": "^5.2.0",
+    "eslint": "^9.39.4",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.0.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "globals": "^17.4.0",
+    "prettier": "^3.8.2",
     "typescript": "~5.9.3",
+    "typescript-eslint": "^8.58.1",
     "vite": "^7.3.1"
   }
 }

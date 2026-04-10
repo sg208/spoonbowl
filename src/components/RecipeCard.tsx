@@ -25,7 +25,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl"
       aria-label={`View recipe: ${recipe.name}, ${recipe.cuisine} cuisine, ${recipe.difficulty} difficulty, ${totalTime} minutes total`}
     >
-      <Card className="overflow-hidden h-full border-border transition-all duration-200 group-hover:shadow-md group-hover:-translate-y-0.5">
+      <Card className="overflow-hidden h-full border-border p-0 gap-0 transition-all duration-200 group-hover:shadow-md group-hover:-translate-y-0.5">
         <div className="relative aspect-[4/3] overflow-hidden bg-muted">
           <img
             src={recipe.image}
@@ -56,15 +56,24 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
           </h3>
 
           <div className="mt-3 flex items-center justify-between text-xs text-muted-foreground">
-            <div className="flex items-center gap-1" aria-label={`Total time: ${totalTime} minutes`}>
+            <div
+              className="flex items-center gap-1"
+              aria-label={`Total time: ${totalTime} minutes`}
+            >
               <Clock className="h-3.5 w-3.5" aria-hidden="true" />
               <span>{totalTime} min</span>
             </div>
-            <div className="flex items-center gap-1" aria-label={`Serves ${recipe.servings} people`}>
+            <div
+              className="flex items-center gap-1"
+              aria-label={`Serves ${recipe.servings} people`}
+            >
               <Users className="h-3.5 w-3.5" aria-hidden="true" />
               <span>{recipe.servings} servings</span>
             </div>
-            <div className="flex items-center gap-1" aria-label={`Rating: ${recipe.rating} out of 5`}>
+            <div
+              className="flex items-center gap-1"
+              aria-label={`Rating: ${recipe.rating} out of 5`}
+            >
               <Star className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber" aria-hidden="true" />
               <span>{recipe.rating.toFixed(1)}</span>
             </div>
@@ -90,7 +99,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
 
 export const RecipeCardSkeleton = () => {
   return (
-    <Card className="overflow-hidden h-full border-border" aria-hidden="true">
+    <Card className="overflow-hidden h-full border-border p-0 gap-0" aria-hidden="true">
       <div className="aspect-[4/3] bg-muted animate-pulse" />
       <CardContent className="p-4 space-y-3">
         <div className="h-3 w-16 bg-muted rounded animate-pulse" />
