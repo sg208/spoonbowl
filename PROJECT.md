@@ -49,7 +49,7 @@ Default reference for planning: paths, conventions, “where is X?”.
     ├── index.css
     ├── routeTree.gen.ts              # generated; don't edit (will be overwritten)
     ├── routes/
-    │   ├── __root.tsx                # root layout: Navbar/Footer/Outlet + Toaster
+    │   ├── __root.tsx                # root route: RootLayout + notFoundComponent
     │   ├── index.tsx
     │   ├── accessibility.tsx
     │   ├── gdpr.tsx
@@ -69,6 +69,9 @@ Default reference for planning: paths, conventions, “where is X?”.
     │       └── tag/
     │           └── $tag.tsx
     ├── components/
+    │   ├── RootLayout.tsx             # app shell: Navbar/Footer/Outlet + Toaster
+    │   ├── NotFoundPage.tsx
+    │   ├── NotFoundRandomRecipe.tsx
     │   ├── Navbar.tsx
     │   ├── Footer.tsx
     │   ├── FeaturedRecipe.tsx
@@ -83,6 +86,7 @@ Default reference for planning: paths, conventions, “where is X?”.
     └── lib/
         ├── api.ts                     # typed fetch wrappers (DummyJSON recipes)
         ├── queryClient.ts             # React Query defaults (staleTime/gcTime/retry)
+        ├── not-found-messages.ts      # 404 copy pool + random picker
         ├── utils.ts                   # cn() / class merging utilities
         ├── headings.ts
         ├── mealTypeUtils.ts
@@ -91,7 +95,7 @@ Default reference for planning: paths, conventions, “where is X?”.
 
 ## Where to change X (token-saver map)
 
-- **App shell / layout**: `src/routes/__root.tsx`
+- **App shell / layout**: `src/components/RootLayout.tsx` (wired from `src/routes/__root.tsx`)
 - **Top navigation**: `src/components/Navbar.tsx`
 - **Footer**: `src/components/Footer.tsx`
 - **Theme / dark mode**: `src/components/theme-provider.tsx`, `src/components/mode-toggle.tsx`
