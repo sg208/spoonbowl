@@ -48,7 +48,7 @@ These are defined via TanStack Router’s file-based routing:
 - `/recipes/tags` and `/recipes/tag/:tag` — browse by category
 - `/recipes/meal-types` and `/recipes/meal-type/:mealType` — browse by meal type
 - `/recipes/cuisines` and `/recipes/cuisine/:cuisine` — browse by cuisine
-- `/privacy`, `/terms`, `/disclaimer`, `/gdpr`, `/accessibility` — policy/accessibility pages
+- `/privacy`, `/terms`, `/disclaimer`, `/accessibility` — policy/accessibility pages (`/privacy` includes GDPR/CCPA/CalOPPA notices; `/gdpr` redirects to `/privacy`)
 
 ## Data source
 

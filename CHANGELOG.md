@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+
+- **Privacy:** merged former `/gdpr` page into `/privacy` (single policy + regional notices); `/gdpr` now redirects to `/privacy`. Footer and Terms §1 link only to Privacy Policy. Split body into `src/components/legal/PrivacyCoreSections.tsx` and `PrivacyRegionalNotices.tsx`. One Cloudflare privacy-policy link (in §3). Updated `PROJECT.md`, `README.md`, and `.github/copilot-instructions.md` to match.
+
 ## [0.0.5] - 2026-04-10
 
 ### Added

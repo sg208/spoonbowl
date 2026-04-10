@@ -78,14 +78,6 @@ export const Footer = () => {
                   Disclaimer
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/gdpr"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  GDPR &amp; CCPA
-                </Link>
-              </li>
             </ul>
           </nav>
 

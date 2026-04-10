@@ -38,14 +38,15 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 ## Where to change (short)
 
-| Area                 | Location                                     |
-| -------------------- | -------------------------------------------- |
-| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx` |
-| New route            | `src/routes/**`                              |
-| Recipe UI            | `RecipeCard.tsx`, `FeaturedRecipe.tsx`       |
-| Domain helpers       | `src/lib/headings.ts`, `*Utils.ts`           |
-| Styles / tokens      | `src/index.css`                              |
-| PWA caching          | `vite.config.ts`                             |
+| Area                 | Location                                                         |
+| -------------------- | ---------------------------------------------------------------- |
+| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx`                     |
+| Legal / privacy copy | `routes/privacy.tsx`, `components/legal/*`; `/gdpr` → `/privacy` |
+| New route            | `src/routes/**`                                                  |
+| Recipe UI            | `RecipeCard.tsx`, `FeaturedRecipe.tsx`                           |
+| Domain helpers       | `src/lib/headings.ts`, `*Utils.ts`                               |
+| Styles / tokens      | `src/index.css`                                                  |
+| PWA caching          | `vite.config.ts`                                                 |
 
 ## Guardrails
 

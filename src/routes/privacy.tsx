@@ -1,9 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { PrivacyCoreSections } from "@/components/legal/PrivacyCoreSections"
+import { PrivacyRegionalNotices } from "@/components/legal/PrivacyRegionalNotices"
 import { Separator } from "@/components/ui/separator"
-
-export const Route = createFileRoute("/privacy")({
-  component: PrivacyPage,
-})
 
 const PrivacyPage = () => {
   return (
@@ -15,191 +13,51 @@ const PrivacyPage = () => {
         <p className="mt-3 text-muted-foreground">
           Effective date: April 10, 2026 &middot; Last updated: April 10, 2026
         </p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Includes notices for GDPR (EU/EEA), California (CCPA/CPRA), and CalOPPA where applicable.
+        </p>
       </header>
 
+      <PrivacyCoreSections />
+
+      <Separator className="my-8" />
+
+      <PrivacyRegionalNotices />
+
+      <Separator className="my-8" />
+
       <div className="prose-like space-y-8 text-foreground">
-        <section aria-labelledby="privacy-intro">
-          <p className="text-muted-foreground leading-7">
-            Spoonbowl ("we," "us," or "our") is committed to protecting your privacy. This Privacy
-            Policy explains how we collect, use, disclose, and safeguard information when you visit
-            our website and use our recipe discovery service.
-          </p>
-        </section>
-
-        <Separator />
-
-        <section aria-labelledby="information-collected">
-          <h2 id="information-collected" className="text-xl font-bold tracking-tight mb-3">
-            1. Information We Collect
-          </h2>
-          <h3 className="font-semibold mt-4 mb-2">Information You Provide</h3>
-          <p className="text-muted-foreground leading-7">
-            Spoonbowl does not require account registration or collect any personally identifiable
-            information. You can browse and explore all recipes without providing any personal data.
-          </p>
-          <h3 className="font-semibold mt-4 mb-2">Automatically Collected Information</h3>
-          <p className="text-muted-foreground leading-7">
-            When you access our website, we may automatically collect standard log data, including:
-          </p>
-          <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
-            <li>Browser type and version</li>
-            <li>Operating system</li>
-            <li>Referring URLs</li>
-            <li>Pages visited and time spent</li>
-            <li>IP address (anonymized where possible)</li>
-          </ul>
-          <h3 className="font-semibold mt-4 mb-2">Local Storage &amp; Cookies</h3>
-          <p className="text-muted-foreground leading-7">
-            We use browser localStorage to remember your theme preference (light/dark mode). This
-            data is stored entirely on your device and is never transmitted to our servers. We do
-            not use tracking cookies or third-party advertising cookies.
-          </p>
-        </section>
-
-        <Separator />
-
-        <section aria-labelledby="how-we-use">
-          <h2 id="how-we-use" className="text-xl font-bold tracking-tight mb-3">
-            2. How We Use Information
-          </h2>
-          <p className="text-muted-foreground leading-7">Any data collected is used solely to:</p>
-          <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
-            <li>Operate and maintain the website</li>
-            <li>Improve user experience and website performance</li>
-            <li>Diagnose technical issues</li>
-            <li>Ensure security and prevent abuse</li>
-          </ul>
-          <p className="text-muted-foreground leading-7 mt-3">
-            We do not sell, rent, or trade your information to third parties for marketing purposes.
-          </p>
-        </section>
-
-        <Separator />
-
-        <section aria-labelledby="third-parties">
-          <h2 id="third-parties" className="text-xl font-bold tracking-tight mb-3">
-            3. Third-Party Services
-          </h2>
-          <p className="text-muted-foreground leading-7 mb-4">
-            Spoonbowl uses the following third-party services:
-          </p>
-
-          <div className="space-y-4">
-            <div className="rounded-lg border border-border p-4 bg-card">
-              <h3 className="font-semibold mb-1">DummyJSON API</h3>
-              <p className="text-sm text-muted-foreground">
-                We use DummyJSON (dummyjson.com) to provide recipe data. When you load recipes, your
-                browser makes requests to their servers. DummyJSON is a public API and its use is
-                governed by their own terms. No personal data is sent with these requests.
-              </p>
-            </div>
-            <div className="rounded-lg border border-border p-4 bg-card">
-              <h3 className="font-semibold mb-1">Content Delivery Networks (CDN)</h3>
-              <p className="text-sm text-muted-foreground">
-                Recipe images are served from DummyJSON's CDN (cdn.dummyjson.com). Your IP address
-                may be visible to their CDN when loading images. We have no control over CDN logging
-                practices.
-              </p>
-            </div>
-            <div className="rounded-lg border border-border p-4 bg-card">
-              <h3 className="font-semibold mb-1">Hosting — Cloudflare Pages</h3>
-              <p className="text-sm text-muted-foreground">
-                This website is hosted on <strong>Cloudflare Pages</strong> and delivered through{" "}
-                <strong>Cloudflare&apos;s global network</strong>. When you load pages or assets
-                from spoonbowl.app, Cloudflare may process connection metadata such as your IP
-                address, requested URL, timestamps, and related technical data as described in{" "}
-                <a
-                  href="https://www.cloudflare.com/privacypolicy/"
-                  className="underline hover:text-foreground transition-colors"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  Cloudflare&apos;s Privacy Policy
-                </a>
-                . We do not control Cloudflare&apos;s logging or retention practices.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        <Separator />
-
-        <section aria-labelledby="data-storage">
-          <h2 id="data-storage" className="text-xl font-bold tracking-tight mb-3">
-            4. How Data Is Stored
-          </h2>
-          <p className="text-muted-foreground leading-7">
-            Spoonbowl stores no personal user data on our servers. The only data stored client-side
-            (on your device) includes:
-          </p>
-          <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
-            <li>
-              <strong>Theme preference</strong>: stored in localStorage as a simple string ("light",
-              "dark", or "system")
-            </li>
-            <li>
-              <strong>Service Worker cache</strong>: recipe data and images may be cached locally by
-              our PWA service worker to improve performance and offline access. This cache is stored
-              on your device and can be cleared through your browser settings.
-            </li>
-          </ul>
-          <p className="text-muted-foreground leading-7 mt-3">
-            You can clear all local data by clearing your browser's site data at any time.
-          </p>
-        </section>
-
-        <Separator />
-
-        <section aria-labelledby="your-rights">
-          <h2 id="your-rights" className="text-xl font-bold tracking-tight mb-3">
-            5. Your Rights
-          </h2>
-          <p className="text-muted-foreground leading-7">
-            Since we do not collect or store personal information, there is minimal personal data to
-            manage. However, you have the right to:
-          </p>
-          <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
-            <li>
-              Clear all locally stored data (theme preferences, cache) via your browser settings
-            </li>
-            <li>Browse our site without any form of account</li>
-            <li>
-              Request information about what data Cloudflare may hold in connection with serving
-              this site (see Cloudflare&apos;s privacy policy)
-            </li>
-          </ul>
-        </section>
-
-        <Separator />
-
         <section aria-labelledby="children-privacy">
           <h2 id="children-privacy" className="text-xl font-bold tracking-tight mb-3">
-            6. Children's Privacy
+            10. Children&apos;s privacy
           </h2>
           <p className="text-muted-foreground leading-7">
-            Spoonbowl does not knowingly collect personal data from children under 13 years of age.
-            Our service is a general-audience recipe site with no registration features.
+            We do not knowingly collect personal data from children under 13. The site is
+            general-audience recipe browsing without registration.
           </p>
         </section>
-
-        <Separator />
 
         <section aria-labelledby="contact-privacy">
           <h2 id="contact-privacy" className="text-xl font-bold tracking-tight mb-3">
-            7. Contact Us
+            11. Contact
           </h2>
           <p className="text-muted-foreground leading-7">
-            If you have questions about this Privacy Policy, please contact us at{" "}
+            Questions or requests about this policy or your privacy rights:{" "}
             <a
               href="mailto:privacy@spoonbowl.app"
               className="underline hover:text-foreground transition-colors"
             >
               privacy@spoonbowl.app
             </a>
-            .
+            . We aim to respond within a reasonable time and within typical GDPR (about 30 days) and
+            CCPA (about 45 days) timelines where they apply.
           </p>
         </section>
       </div>
     </div>
   )
 }
+
+export const Route = createFileRoute("/privacy")({
+  component: PrivacyPage,
+})

@@ -38,11 +38,8 @@ const TermsPage = () => {
             <Link to="/privacy" className="underline hover:text-foreground transition-colors">
               Privacy Policy
             </Link>{" "}
-            and{" "}
-            <Link to="/gdpr" className="underline hover:text-foreground transition-colors">
-              GDPR &amp; CCPA Compliance
-            </Link>{" "}
-            page. These Terms apply to all visitors and users of the Service.
+            (including regional privacy notices). These Terms apply to all visitors and users of the
+            Service.
           </p>
         </section>
 

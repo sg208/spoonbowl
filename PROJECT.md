@@ -10,15 +10,15 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 ## Quick facts
 
-| Key               | Value                                                                                                                                                                  |
-| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Stack**         | Vite + React 19 + TypeScript + Tailwind CSS v4                                                                                                                         |
-| **Router**        | TanStack Router — file-based routes in `src/routes/*`; generated tree in `src/routeTree.gen.ts`                                                                        |
-| **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                                                                                     |
-| **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json`                                                                    |
-| **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                                                                                     |
-| **Deploy**        | Production: **Cloudflare Pages** (see `README.md`); legal copy in `src/routes/privacy.tsx`, `src/routes/terms.tsx`, `src/routes/gdpr.tsx`, `src/routes/disclaimer.tsx` |
-| **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                                                         |
+| Key               | Value                                                                                                                                                                                                                               |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stack**         | Vite + React 19 + TypeScript + Tailwind CSS v4                                                                                                                                                                                      |
+| **Router**        | TanStack Router — file-based routes in `src/routes/*`; generated tree in `src/routeTree.gen.ts`                                                                                                                                     |
+| **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                                                                                                                                                  |
+| **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json`                                                                                                                                 |
+| **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                                                                                                                                                  |
+| **Deploy**        | Production: **Cloudflare Pages** (see `README.md`); legal copy in `src/routes/privacy.tsx` (includes GDPR/CCPA/CalOPPA notices), `src/routes/terms.tsx`, `src/routes/disclaimer.tsx`; `src/routes/gdpr.tsx` redirects to `/privacy` |
+| **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                                                                                                                      |
 
 **Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/use-recipe-queries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
 
@@ -74,7 +74,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │   ├── __root.tsx                # root route: RootLayout + notFoundComponent
     │   ├── index.tsx
     │   ├── accessibility.tsx
-    │   ├── gdpr.tsx
+    │   ├── gdpr.tsx                # redirect → /privacy (bookmarks)
     │   ├── privacy.tsx
     │   ├── disclaimer.tsx
     │   ├── terms.tsx
@@ -99,6 +99,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │   ├── NotFoundPage.tsx
     │   ├── NotFoundRandomRecipe.tsx
     │   ├── cuisine/                 # cuisine listing page sections (breadcrumb, header, grid, SEO)
+    │   ├── legal/                   # privacy policy sections (PrivacyCoreSections, PrivacyRegionalNotices)
     │   ├── Navbar.tsx
     │   ├── Footer.tsx
     │   ├── FeaturedRecipe.tsx
@@ -134,6 +135,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 | App shell / layout                                                    | `src/components/RootLayout.tsx` (wired from `src/routes/__root.tsx`)                                                                                  |
 | Top navigation                                                        | `src/components/Navbar.tsx`                                                                                                                           |
 | Footer                                                                | `src/components/Footer.tsx`                                                                                                                           |
+| Privacy policy (incl. regional notices)                               | `src/routes/privacy.tsx`, `src/components/legal/*`                                                                                                    |
 | Theme / dark mode                                                     | `src/components/theme-provider.tsx`, `src/components/mode-toggle.tsx`                                                                                 |
 | New page / route                                                      | Add a file under `src/routes/**` (tree regenerates into `src/routeTree.gen.ts`)                                                                       |
 | Recipe cards / list UI                                                | `src/components/RecipeCard.tsx`, `src/components/FeaturedRecipe.tsx`                                                                                  |
