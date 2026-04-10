@@ -13,9 +13,10 @@
     "fix": "npm run lint:fix && npm run format",
     "check": "npm run lint && npm run typecheck && npm run format:check",
     "typecheck": "tsc --noEmit",
-    "preview": "vite preview",
+    "preview": "npm run build && wrangler dev",
     "preview:4000": "vite preview --port 4000 --strictPort",
-    "build:preview:4000": "vite build && vite preview --port 4000 --strictPort"
+    "build:preview:4000": "vite build && vite preview --port 4000 --strictPort",
+    "deploy": "npm run build && wrangler deploy"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -64,6 +65,7 @@
     "prettier": "^3.8.2",
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.58.1",
-    "vite": "^7.3.1"
+    "vite": "^7.3.1",
+    "wrangler": "^4.81.1"
   }
 }
