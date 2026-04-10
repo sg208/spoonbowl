@@ -1,15 +1,16 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, notFound } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
-import { fetchRecipesByCuisine } from "@/lib/api"
+import { fetchRecipesByCuisine, fetchCuisines } from "@/lib/api"
 import {
   getCuisineEmoji,
   getCuisineDescription,
   cuisineToPageTitle,
   slugToCuisine,
+  cuisineToSlug,
 } from "@/lib/cuisineUtils"
-import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { recipeKeys, recipeMetaKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
-import { useCuisines, useRecipesByCuisine } from "@/hooks/use-recipe-queries"
+import { useRecipesByCuisine } from "@/hooks/use-recipe-queries"
 import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
 import { CuisineRecipesBreadcrumb } from "@/components/cuisine/CuisineRecipesBreadcrumb"
 import { CuisineRecipesHeader } from "@/components/cuisine/CuisineRecipesHeader"
@@ -17,21 +18,15 @@ import { CuisineRecipesErrorGrid } from "@/components/cuisine/CuisineRecipesErro
 import { CuisineRecipesSeoAndRelated } from "@/components/cuisine/CuisineRecipesSeoAndRelated"
 
 const CuisineRecipesPage = () => {
-  const { cuisine: cuisineSlug } = Route.useParams()
+  const { cuisine, allCuisines } = Route.useLoaderData()
   const queryClient = useQueryClient()
   const prefetchCuisinesIndex = usePrefetchCuisinesIndex()
 
-  const { data: allCuisines, isFetched: cuisinesFetched } = useCuisines()
-
-  const cuisine = slugToCuisine(cuisineSlug, allCuisines)
   const pageTitle = cuisineToPageTitle(cuisine)
   const description = getCuisineDescription(cuisine)
   const emoji = getCuisineEmoji(cuisine)
 
-  const { data, isLoading, isError } = useRecipesByCuisine(
-    cuisine,
-    Boolean(cuisine) && cuisinesFetched
-  )
+  const { data, isLoading, isError } = useRecipesByCuisine(cuisine, true)
 
   const recipes = data?.recipes ?? []
 
@@ -83,5 +78,17 @@ const CuisineRecipesPage = () => {
 }
 
 export const Route = createFileRoute("/recipes/cuisine/$cuisine")({
+  loader: async ({ context, params }) => {
+    const cuisineSlug = params.cuisine
+    const allCuisines = await context.queryClient.ensureQueryData({
+      queryKey: recipeMetaKeys.cuisines(),
+      queryFn: fetchCuisines,
+    })
+    if (!allCuisines.some((c) => cuisineToSlug(c) === cuisineSlug)) {
+      throw notFound()
+    }
+    const cuisine = slugToCuisine(cuisineSlug, allCuisines)
+    return { cuisine, allCuisines }
+  },
   component: CuisineRecipesPage,
 })

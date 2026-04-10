@@ -16,6 +16,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Cuisine recipe route (`/recipes/cuisine/$cuisine`): route `loader` loads the cuisines list with `ensureQueryData`, validates the `:cuisine` slug, and throws `notFound()` for unknown slugs; the page uses `Route.useLoaderData()` for `cuisine` and `allCuisines` (no client `useCuisines` gate before fetching recipes).
+- `CuisineRecipesSeoAndRelated`: SEO paragraph uses `total ?? recipes.length` when the API omits `total`.
+- `PROJECT.md`: “where to change” table — correct `NotFoundRandomRecipe` path under `src/components/`.
 - Merged `origin/develop` into this branch; resolved overlapping `CHANGELOG` entries for CodeRabbit/Copilot work and React Query / TanStack Router / cuisine refactors from `develop`.
 - CodeRabbit (`.coderabbit.yaml`): `auto_review.base_branches` includes `develop` so PRs into `develop` get automatic reviews (the repo default branch is still always in scope).
 - CodeRabbit (`.coderabbit.yaml`): enable `request_changes_workflow` so reviews can request changes via the GitHub workflow.

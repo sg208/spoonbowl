@@ -50,9 +50,7 @@ export const CuisineRecipesErrorGrid = ({
             aria-label={`${pageTitle} recipe grid`}
           >
             {isLoading
-              ? Array.from({ length: 8 }).map((_, index) => (
-                  <RecipeCardSkeleton key={index} />
-                ))
+              ? Array.from({ length: 8 }).map((_, index) => <RecipeCardSkeleton key={index} />)
               : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
           </div>
         )}

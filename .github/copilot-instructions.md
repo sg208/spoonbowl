@@ -46,7 +46,7 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 ## Guardrails
 
-- **Router:** `<Link>` / `useNavigate` for in-app navigation; search params as source of truth for filters. Optional: `validateSearch`, `loader`, `ensureQueryData` on new routes.
+- **Router:** `<Link>` / `useNavigate` for in-app navigation; search params as source of truth for filters. Optional: `validateSearch`, `loader`, `ensureQueryData`; invalid `params` → `throw notFound()` in the loader when the UI should 404.
 - **Data:** React Query for server state; no `useEffect`+`useState` fetch for that.
 - **TS:** No `enum` (use const or unions); no bare `any`.
 - **Components:** ~120 lines/file soft cap; a11y before layout polish; `event` not `e` for DOM.

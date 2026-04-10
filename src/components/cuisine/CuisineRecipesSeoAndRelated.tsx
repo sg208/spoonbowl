@@ -41,9 +41,9 @@ export const CuisineRecipesSeoAndRelated = ({
           About {pageTitle}
         </h2>
         <p className="text-sm text-muted-foreground leading-relaxed">
-          {description} Browse all {total} {pageTitle.toLowerCase()} on Spoonbowl — each with full
-          ingredients lists, step-by-step instructions, prep and cook times, serving sizes, and
-          calorie counts.
+          {description} Browse all {total ?? recipes.length} {pageTitle.toLowerCase()} on Spoonbowl
+          — each with full ingredients lists, step-by-step instructions, prep and cook times,
+          serving sizes, and calorie counts.
         </p>
         <div className="mt-4 flex flex-wrap gap-2" aria-label="Related recipe names">
           {recipes.slice(0, 6).map((r) => (

@@ -135,7 +135,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 | Theme / dark mode                                                     | `src/components/theme-provider.tsx`, `src/components/mode-toggle.tsx`                                                                                 |
 | New page / route                                                      | Add a file under `src/routes/**` (tree regenerates into `src/routeTree.gen.ts`)                                                                       |
 | Recipe cards / list UI                                                | `src/components/RecipeCard.tsx`, `src/components/FeaturedRecipe.tsx`                                                                                  |
-| 404 page / random recipe                                              | `src/components/NotFoundPage.tsx`, `NotFoundRandomRecipe.tsx`, copy pool `src/lib/not-found-messages.ts`                                              |
+| 404 page / random recipe                                              | `src/components/NotFoundPage.tsx`, `src/components/NotFoundRandomRecipe.tsx`, copy pool `src/lib/not-found-messages.ts`                               |
 | Domain helpers (headings, filters, labels)                            | `src/lib/headings.ts`, `mealTypeUtils.ts`, `cuisineUtils.ts`, `tagUtils.ts`                                                                           |
 | API calls                                                             | `src/lib/api.ts` — add a typed wrapper; avoid scattering `fetch` in components                                                                        |
 | React Query defaults / shared recipe queries                          | `src/lib/queryClient.ts`, `src/lib/keys/recipeKeys.ts`, `src/hooks/use-recipe-queries.ts`                                                             |
@@ -275,6 +275,7 @@ Override per-query when a resource must be fresher (e.g. `staleTime: 0`).
 
 ### TanStack Router — route conventions
 
+- **Dynamic params:** when a bad slug or id should show the app 404, validate in a `loader` and `throw notFound()` (e.g. `/recipes/cuisine/$cuisine` loads cuisines via `ensureQueryData` + `recipeMetaKeys.cuisines()`, checks `cuisineToSlug`, then resolves `cuisine` for the component).
 - **Links:** use `<Link to="…" params={…} search={…} />` for internal navigation — not raw `<a href>` for in-app routes.
 - **Programmatic:** `useNavigate()` with a fully typed destination.
 - **Search params:** source of truth for filters/pagination; sync with `navigate({ search: … })`. Avoid duplicating URL state in `useState` when it belongs in the URL.
