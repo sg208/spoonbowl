@@ -1,17 +1,17 @@
 import { useQuery } from "@tanstack/react-query"
-import { useState } from "react"
+import { Fragment, useMemo } from "react"
 import { RecipeCard, RecipeCardSkeleton, EmptyRecipes } from "@/components/RecipeCard"
 import { fetchAllRecipes } from "@/lib/api"
 
 const NotFoundRandomRecipe = () => {
-  const [sessionId] = useState(() => crypto.randomUUID())
+  const clientSessionId = useMemo(() => crypto.randomUUID(), [])
 
   const {
     data: recipe,
     isLoading,
     isError,
   } = useQuery({
-    queryKey: ["not-found", "random-recipe", sessionId],
+    queryKey: ["not-found", "random-recipe"],
     queryFn: async () => {
       const res = await fetchAllRecipes()
       if (res.recipes.length === 0) return null
@@ -22,7 +22,7 @@ const NotFoundRandomRecipe = () => {
 
   if (isLoading) {
     return (
-      <div className="mx-auto grid max-w-sm grid-cols-1">
+      <div key={clientSessionId} className="mx-auto grid max-w-sm grid-cols-1">
         <RecipeCardSkeleton />
       </div>
     )
@@ -30,18 +30,22 @@ const NotFoundRandomRecipe = () => {
 
   if (isError) {
     return (
-      <div className="py-6 text-center text-sm text-destructive" role="alert">
+      <div key={clientSessionId} className="py-6 text-center text-sm text-destructive" role="alert">
         Failed to load a recipe. Please try again.
       </div>
     )
   }
 
   if (!recipe) {
-    return <EmptyRecipes />
+    return (
+      <Fragment key={clientSessionId}>
+        <EmptyRecipes />
+      </Fragment>
+    )
   }
 
   return (
-    <div className="mx-auto grid max-w-sm grid-cols-1">
+    <div key={clientSessionId} className="mx-auto grid max-w-sm grid-cols-1">
       <RecipeCard recipe={recipe} />
     </div>
   )

@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - TanStack Router: enable `scrollRestoration` on `createRouter` instead of the deprecated `<ScrollRestoration />` component.
+- (v0.0.5) Fix 404 random recipe teaser React Query key to be stable (enables caching).
 
 [0.0.5]: https://github.com/sg208/spoonbowl/compare/v0.0.4...v0.0.5
 
