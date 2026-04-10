@@ -5,6 +5,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.0.3] - 2026-04-10
+
+### Removed
+
+- Bolt.new references: `.bolt/config.json`, README demo link, and default Bolt OG/Twitter image URLs in `index.html`.
+
+### Changed
+
+- Privacy policy “Hosting Provider” section uses generic deployment/CDN language instead of naming a specific host.
+- `PopoverTitle` renders as `<h2>` for correct heading semantics in popovers.
+
+[0.0.3]: https://github.com/sg208/spoonbowl/compare/v0.0.2...v0.0.3
+
 ## [0.0.2] - 2026-04-10
 
 ### Added

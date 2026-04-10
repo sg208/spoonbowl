@@ -10,7 +10,6 @@ Recipe discovery **PWA** built with **Vite + React**, featuring fast navigation,
 ## Demo
 
 - **Live demo**: (add link)
-- **Bolt**: `https://bolt.new/~/sb1-cennd1pf`
 
 ## Tech stack
 

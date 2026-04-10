@@ -104,17 +104,10 @@ const PrivacyPage = () => {
             <div className="rounded-lg border border-border p-4 bg-card">
               <h3 className="font-semibold mb-1">Hosting Provider</h3>
               <p className="text-sm text-muted-foreground">
-                Our website is hosted on Bolt.new's infrastructure. Bolt.new may collect standard
-                server logs as outlined in{" "}
-                <a
-                  href="https://bolt.new/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-foreground transition-colors"
-                >
-                  their Privacy Policy
-                </a>
-                .
+                Depending on where this site is deployed, your hosting provider or CDN may collect
+                standard connection and server logs (for example IP address, request time, and
+                status). We do not control that provider&apos;s logging practices; check their
+                privacy notice for details.
               </p>
             </div>
           </div>
