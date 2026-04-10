@@ -68,7 +68,7 @@ export const useRecipeDetail = (id: number) =>
   useQuery({
     queryKey: recipeDetailKeys.detail(id),
     queryFn: () => fetchRecipe(id),
-    enabled: !Number.isNaN(id),
+    enabled: Number.isInteger(id) && id > 0,
   })
 
 export const useNotFoundRandomRecipe = () =>
