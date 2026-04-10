@@ -83,10 +83,7 @@ const AvatarGroup = ({ className, ...props }: React.ComponentProps<"div">) => {
   )
 }
 
-const AvatarGroupCount = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+const AvatarGroupCount = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="avatar-group-count"
@@ -99,11 +96,4 @@ const AvatarGroupCount = ({
   )
 }
 
-export {
-  Avatar,
-  AvatarImage,
-  AvatarFallback,
-  AvatarBadge,
-  AvatarGroup,
-  AvatarGroupCount,
-}
+export { Avatar, AvatarImage, AvatarFallback, AvatarBadge, AvatarGroup, AvatarGroupCount }

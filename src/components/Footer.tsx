@@ -19,8 +19,10 @@ export const Footer = () => {
               aria-label="Spoonbowl homepage"
             >
               <ChefHat className="h-6 w-6 text-primary" aria-hidden="true" />
-              <span className="text-primary">Spoon</span>
-              <span>bowl</span>
+              <span className="whitespace-nowrap">
+                <span className="text-primary">Spoon</span>
+                <span>bowl</span>
+              </span>
             </Link>
             <p className="mt-3 text-sm text-muted-foreground max-w-xs">
               Discover delicious recipes from around the world. Cook with joy, eat with love.
@@ -28,12 +30,12 @@ export const Footer = () => {
           </div>
 
           <nav aria-label="Browse links">
-            <h2 className="text-sm font-semibold text-foreground mb-3">Browse</h2>
+            <p className="text-sm font-semibold text-foreground mb-3">Browse</p>
             <ul className="space-y-2" role="list">
               <li>
                 <Link
                   to="/"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                 >
                   All Recipes
                 </Link>
@@ -41,7 +43,7 @@ export const Footer = () => {
               <li>
                 <Link
                   to="/recipes/tags/"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                 >
                   Recipes by Category
                 </Link>
@@ -50,12 +52,12 @@ export const Footer = () => {
           </nav>
 
           <nav aria-label="Legal links">
-            <h2 className="text-sm font-semibold text-foreground mb-3">Legal</h2>
+            <p className="text-sm font-semibold text-foreground mb-3">Legal</p>
             <ul className="space-y-2" role="list">
               <li>
                 <Link
                   to="/privacy"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                 >
                   Privacy Policy
                 </Link>
@@ -63,15 +65,23 @@ export const Footer = () => {
               <li>
                 <Link
                   to="/terms"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                 >
                   Terms of Use
                 </Link>
               </li>
               <li>
                 <Link
+                  to="/disclaimer"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                >
+                  Disclaimer
+                </Link>
+              </li>
+              <li>
+                <Link
                   to="/gdpr"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                 >
                   GDPR &amp; CCPA
                 </Link>
@@ -80,12 +90,12 @@ export const Footer = () => {
           </nav>
 
           <nav aria-label="Accessibility and info links">
-            <h2 className="text-sm font-semibold text-foreground mb-3">Accessibility</h2>
+            <p className="text-sm font-semibold text-foreground mb-3">Accessibility</p>
             <ul className="space-y-2" role="list">
               <li>
                 <Link
                   to="/accessibility"
-                  className="text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
                 >
                   Accessibility Statement
                 </Link>

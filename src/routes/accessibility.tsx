@@ -18,9 +18,7 @@ const AccessibilityPage = () => {
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Accessibility Statement
         </h1>
-        <p className="mt-3 text-muted-foreground">
-          Published: January 1, 2025
-        </p>
+        <p className="mt-3 text-muted-foreground">Last updated: April 10, 2026</p>
       </header>
 
       <div className="space-y-8 text-foreground">
@@ -29,9 +27,9 @@ const AccessibilityPage = () => {
             Our Commitment
           </h2>
           <p className="text-muted-foreground leading-7">
-            Spoonbowl is committed to making its website accessible to all users, including those with
-            disabilities. We aim to comply with the Web Content Accessibility Guidelines (WCAG) 2.1 and 2.2
-            at Level AA, issued by the World Wide Web Consortium (W3C).
+            Spoonbowl is committed to making its website accessible to all users, including those
+            with disabilities. We aim to comply with the Web Content Accessibility Guidelines (WCAG)
+            2.1 and 2.2 at Level AA, issued by the World Wide Web Consortium (W3C).
           </p>
         </section>
 
@@ -42,9 +40,10 @@ const AccessibilityPage = () => {
             Conformance Status
           </h2>
           <p className="text-muted-foreground leading-7">
-            Spoonbowl is <strong>partially conformant</strong> with WCAG 2.1 and 2.2 Level AA. Partial
-            conformance means that some parts of the content do not fully conform to all the accessibility
-            standard requirements. We are actively working to achieve full conformance.
+            Spoonbowl is <strong>partially conformant</strong> with WCAG 2.1 and 2.2 Level AA.
+            Partial conformance means that some parts of the content do not fully conform to all the
+            accessibility standard requirements. We are actively working to achieve full
+            conformance.
           </p>
         </section>
 
@@ -68,43 +67,51 @@ const AccessibilityPage = () => {
               <code className="text-xs bg-muted px-1 py-0.5 rounded">article</code>).
             </li>
             <li>
-              <strong>Keyboard Navigation</strong>: All interactive elements are reachable and operable
-              using a keyboard alone.
+              <strong>Keyboard Navigation</strong>: All interactive elements are reachable and
+              operable using a keyboard alone.
             </li>
             <li>
-              <strong>Focus Indicators</strong>: Visible focus outlines are provided for all interactive
-              elements to assist keyboard users.
+              <strong>Focus Indicators</strong>: Visible focus outlines are provided for all
+              interactive elements to assist keyboard users.
             </li>
             <li>
-              <strong>ARIA Labels</strong>: Descriptive ARIA labels and roles are applied where native
-              HTML semantics are insufficient.
+              <strong>ARIA Labels</strong>: Descriptive ARIA labels and roles are applied where
+              native HTML semantics are insufficient.
             </li>
             <li>
               <strong>Alt Text</strong>: All meaningful images include descriptive alternative text.
               Decorative images use empty alt attributes.
             </li>
             <li>
-              <strong>Color Contrast</strong>: Text and interactive elements meet or exceed WCAG 2.1 AA
-              contrast ratios (4.5:1 for normal text, 3:1 for large text).
+              <strong>Color Contrast</strong>: Primary text and interactive components are styled to
+              meet WCAG 2.1 AA contrast targets (4.5:1 for normal text, 3:1 for large text). We
+              review theme tokens periodically; report contrast issues if you encounter them.
             </li>
             <li>
-              <strong>Resizable Text</strong>: Text can be resized up to 200% without loss of content or
-              functionality.
+              <strong>Resizable Text</strong>: Text can be resized up to 200% without loss of
+              content or functionality.
             </li>
             <li>
-              <strong>Responsive Design</strong>: The website adapts to various screen sizes and orientations.
+              <strong>Responsive Design</strong>: The website adapts to various screen sizes and
+              orientations.
             </li>
             <li>
-              <strong>Dark Mode</strong>: A high-contrast dark mode is available to reduce eye strain.
+              <strong>Dark Mode</strong>: A high-contrast dark mode is available to reduce eye
+              strain.
             </li>
             <li>
-              <strong>Skip Links</strong>: Main content skip links allow keyboard users to bypass navigation.
+              <strong>Skip Link</strong>: A &quot;Skip to main content&quot; link is available as
+              the first focusable control in the page header so keyboard users can bypass repeated
+              navigation.
             </li>
             <li>
-              <strong>ARIA Live Regions</strong>: Dynamic content changes are announced to screen readers.
+              <strong>ARIA Live Regions</strong>: Where content updates dynamically (for example,
+              the recipe count on the home page), we use polite live regions so assistive
+              technologies can announce changes.
             </li>
             <li>
-              <strong>Loading States</strong>: Screen readers are informed when content is loading via
+              <strong>Loading States</strong>: Screen readers are informed when content is loading
+              via
               <code className="text-xs bg-muted px-1 py-0.5 rounded">aria-busy</code> attributes.
             </li>
           </ul>
@@ -121,13 +128,13 @@ const AccessibilityPage = () => {
           </p>
           <ul className="list-disc pl-6 space-y-2 text-muted-foreground">
             <li>
-              Some third-party recipe images from DummyJSON may not have optimally descriptive alt text
-              beyond the recipe name. We supplement with the recipe name where the content provider does
-              not supply descriptions.
+              Some third-party recipe images from DummyJSON may not have optimally descriptive alt
+              text beyond the recipe name. We supplement with the recipe name where the content
+              provider does not supply descriptions.
             </li>
             <li>
-              The recipe card grid layout may present navigation challenges for screen reader users with
-              very large numbers of results. We provide count information to help orient users.
+              The recipe card grid layout may present navigation challenges for screen reader users
+              with very large numbers of results. We provide count information to help orient users.
             </li>
           </ul>
         </section>
@@ -150,8 +157,8 @@ const AccessibilityPage = () => {
           </ul>
           <h3 className="font-semibold mt-5 mb-2">Browser Compatibility</h3>
           <p className="text-muted-foreground leading-7">
-            We support the latest two versions of major browsers: Chrome, Firefox, Safari, Edge. Mobile
-            browsers on iOS and Android are also supported.
+            We support the latest two versions of major browsers: Chrome, Firefox, Safari, Edge.
+            Mobile browsers on iOS and Android are also supported.
           </p>
           <h3 className="font-semibold mt-5 mb-2">Assistive Technology</h3>
           <p className="text-muted-foreground leading-7">
@@ -198,9 +205,9 @@ const AccessibilityPage = () => {
             Enforcement Procedure
           </h2>
           <p className="text-muted-foreground leading-7">
-            If you are not satisfied with our response to your accessibility concerns, you may contact
-            relevant enforcement bodies in your jurisdiction. In the EU, you may contact your national
-            disability authority or equal treatment body.
+            If you are not satisfied with our response to your accessibility concerns, you may
+            contact relevant enforcement bodies in your jurisdiction. In the EU, you may contact
+            your national disability authority or equal treatment body.
           </p>
         </section>
       </div>

@@ -12,8 +12,10 @@ const MEAL_TYPE_EMOJIS: Record<string, string> = {
 }
 
 const MEAL_TYPE_DESCRIPTIONS: Record<string, string> = {
-  Breakfast: "Start your day right with delicious breakfast recipes. From quick weekday options to leisurely weekend spreads.",
-  Lunch: "Satisfying midday meals from hearty sandwiches to light salads. Perfect for the midday break.",
+  Breakfast:
+    "Start your day right with delicious breakfast recipes. From quick weekday options to leisurely weekend spreads.",
+  Lunch:
+    "Satisfying midday meals from hearty sandwiches to light salads. Perfect for the midday break.",
   Dinner: "End your day with a great meal. From weeknight staples to weekend showstoppers.",
   Brunch: "The best of both worlds. Enjoy these leisurely late-morning recipes on weekends.",
   Snack: "Quick bites and nibbles for any time of day. Perfect between meals.",

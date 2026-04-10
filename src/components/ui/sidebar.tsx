@@ -18,12 +18,7 @@ import {
   SheetTitle,
 } from "@/components/ui/sheet"
 import { Skeleton } from "@/components/ui/skeleton"
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip"
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"
 const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7
@@ -96,10 +91,7 @@ const SidebarProvider = ({
   // Adds a keyboard shortcut to toggle the sidebar.
   React.useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (
-        event.key === SIDEBAR_KEYBOARD_SHORTCUT &&
-        (event.metaKey || event.ctrlKey)
-      ) {
+      if (event.key === SIDEBAR_KEYBOARD_SHORTCUT && (event.metaKey || event.ctrlKey)) {
         event.preventDefault()
         toggleSidebar()
       }
@@ -253,11 +245,7 @@ const Sidebar = ({
   )
 }
 
-const SidebarTrigger = ({
-  className,
-  onClick,
-  ...props
-}: React.ComponentProps<typeof Button>) => {
+const SidebarTrigger = ({ className, onClick, ...props }: React.ComponentProps<typeof Button>) => {
   const { toggleSidebar } = useSidebar()
 
   return (
@@ -318,10 +306,7 @@ const SidebarInset = ({ className, ...props }: React.ComponentProps<"main">) => 
   )
 }
 
-const SidebarInput = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof Input>) => {
+const SidebarInput = ({ className, ...props }: React.ComponentProps<typeof Input>) => {
   return (
     <Input
       data-slot="sidebar-input"
@@ -354,10 +339,7 @@ const SidebarFooter = ({ className, ...props }: React.ComponentProps<"div">) => 
   )
 }
 
-const SidebarSeparator = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof Separator>) => {
+const SidebarSeparator = ({ className, ...props }: React.ComponentProps<typeof Separator>) => {
   return (
     <Separator
       data-slot="sidebar-separator"
@@ -437,10 +419,7 @@ const SidebarGroupAction = ({
   )
 }
 
-const SidebarGroupContent = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+const SidebarGroupContent = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="sidebar-group-content"
@@ -577,10 +556,7 @@ const SidebarMenuAction = ({
   )
 }
 
-const SidebarMenuBadge = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+const SidebarMenuBadge = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="sidebar-menu-badge"
@@ -618,12 +594,7 @@ const SidebarMenuSkeleton = ({
       className={cn("flex h-8 items-center gap-2 rounded-md px-2", className)}
       {...props}
     >
-      {showIcon && (
-        <Skeleton
-          className="size-4 rounded-md"
-          data-sidebar="menu-skeleton-icon"
-        />
-      )}
+      {showIcon && <Skeleton className="size-4 rounded-md" data-sidebar="menu-skeleton-icon" />}
       <Skeleton
         className="h-4 max-w-(--skeleton-width) flex-1"
         data-sidebar="menu-skeleton-text"
@@ -652,10 +623,7 @@ const SidebarMenuSub = ({ className, ...props }: React.ComponentProps<"ul">) => 
   )
 }
 
-const SidebarMenuSubItem = ({
-  className,
-  ...props
-}: React.ComponentProps<"li">) => {
+const SidebarMenuSubItem = ({ className, ...props }: React.ComponentProps<"li">) => {
   return (
     <li
       data-slot="sidebar-menu-sub-item"

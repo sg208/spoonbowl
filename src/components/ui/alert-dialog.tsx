@@ -4,26 +4,20 @@ import { AlertDialog as AlertDialogPrimitive } from "radix-ui"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
-const AlertDialog = ({
-  ...props
-}: React.ComponentProps<typeof AlertDialogPrimitive.Root>) => {
+const AlertDialog = ({ ...props }: React.ComponentProps<typeof AlertDialogPrimitive.Root>) => {
   return <AlertDialogPrimitive.Root data-slot="alert-dialog" {...props} />
 }
 
 const AlertDialogTrigger = ({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Trigger>) => {
-  return (
-    <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
-  )
+  return <AlertDialogPrimitive.Trigger data-slot="alert-dialog-trigger" {...props} />
 }
 
 const AlertDialogPortal = ({
   ...props
 }: React.ComponentProps<typeof AlertDialogPrimitive.Portal>) => {
-  return (
-    <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
-  )
+  return <AlertDialogPrimitive.Portal data-slot="alert-dialog-portal" {...props} />
 }
 
 const AlertDialogOverlay = ({
@@ -65,10 +59,7 @@ const AlertDialogContent = ({
   )
 }
 
-const AlertDialogHeader = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+const AlertDialogHeader = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="alert-dialog-header"
@@ -81,10 +72,7 @@ const AlertDialogHeader = ({
   )
 }
 
-const AlertDialogFooter = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+const AlertDialogFooter = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="alert-dialog-footer"
@@ -126,10 +114,7 @@ const AlertDialogDescription = ({
   )
 }
 
-const AlertDialogMedia = ({
-  className,
-  ...props
-}: React.ComponentProps<"div">) => {
+const AlertDialogMedia = ({ className, ...props }: React.ComponentProps<"div">) => {
   return (
     <div
       data-slot="alert-dialog-media"

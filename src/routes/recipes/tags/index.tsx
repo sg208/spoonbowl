@@ -2,13 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { useQuery } from "@tanstack/react-query"
 import { Tag, ChefHat, ArrowRight } from "lucide-react"
 import { fetchTags } from "@/lib/api"
-import {
-  tagToPageTitle,
-  tagToDescription,
-  sortTagsAlphabetically,
-  getTagEmoji,
-  tagToSlug,
-} from "@/lib/tagUtils"
+import { tagToPageTitle, sortTagsAlphabetically, getTagEmoji, tagToSlug } from "@/lib/tagUtils"
 import { Badge } from "@/components/ui/badge"
 
 export const Route = createFileRoute("/recipes/tags/")({
@@ -16,7 +10,11 @@ export const Route = createFileRoute("/recipes/tags/")({
 })
 
 const TagsIndexPage = () => {
-  const { data: tags, isLoading, isError } = useQuery({
+  const {
+    data: tags,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["tags"],
     queryFn: fetchTags,
   })
@@ -40,8 +38,8 @@ const TagsIndexPage = () => {
           Recipes by Category
         </h1>
         <p className="mt-3 text-lg text-muted-foreground max-w-2xl">
-          Explore every cuisine, ingredient, and cooking style. Find exactly what you're craving — from
-          quick weeknight stir-fries to weekend Italian feasts.
+          Explore every cuisine, ingredient, and cooking style. Find exactly what you're craving —
+          from quick weeknight stir-fries to weekend Italian feasts.
         </p>
         {!isLoading && tags && (
           <p className="mt-2 text-sm text-muted-foreground" aria-live="polite">
@@ -51,7 +49,10 @@ const TagsIndexPage = () => {
       </header>
 
       {isError && (
-        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center text-destructive">
+        <div
+          role="alert"
+          className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center text-destructive"
+        >
           Failed to load categories. Please refresh the page.
         </div>
       )}
@@ -95,9 +96,7 @@ const TagsIndexPage = () => {
                         <p className="font-semibold text-sm text-card-foreground group-hover:text-primary transition-colors truncate">
                           {tagToPageTitle(tag)}
                         </p>
-                        <p className="text-xs text-muted-foreground truncate mt-0.5">
-                          {tag}
-                        </p>
+                        <p className="text-xs text-muted-foreground truncate mt-0.5">{tag}</p>
                       </div>
                       <ArrowRight
                         className="h-4 w-4 shrink-0 text-muted-foreground/50 group-hover:text-primary group-hover:translate-x-0.5 transition-all"
@@ -124,10 +123,7 @@ const TagsIndexPage = () => {
         className="mt-16 rounded-2xl bg-secondary/60 border border-border p-8 text-center"
         aria-labelledby="seo-section-heading"
       >
-        <h2
-          id="seo-section-heading"
-          className="text-xl font-bold tracking-tight text-foreground"
-        >
+        <h2 id="seo-section-heading" className="text-xl font-bold tracking-tight text-foreground">
           All Recipe Categories on Spoonbowl
         </h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-xl mx-auto">
@@ -167,7 +163,10 @@ const TagsGridSkeleton = () => {
             <div className="h-3 w-4 bg-muted rounded animate-pulse" />
             <div className="flex-1 h-px bg-border" />
           </div>
-          <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4" role="list">
+          <ul
+            className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+            role="list"
+          >
             {Array.from({ length: 4 }).map((_, i) => (
               <li key={i}>
                 <div className="flex items-center gap-3 rounded-xl border border-border bg-card p-4">

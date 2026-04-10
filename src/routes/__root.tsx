@@ -3,10 +3,6 @@ import { Navbar } from "@/components/Navbar"
 import { Footer } from "@/components/Footer"
 import { Toaster } from "@/components/ui/sonner"
 
-export const Route = createRootRoute({
-  component: RootLayout,
-})
-
 const RootLayout = () => {
   return (
     <div className="flex min-h-svh flex-col">
@@ -20,3 +16,7 @@ const RootLayout = () => {
     </div>
   )
 }
+
+export const Route = createRootRoute({
+  component: RootLayout,
+})

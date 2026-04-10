@@ -20,9 +20,9 @@ const PrivacyPage = () => {
       <div className="prose-like space-y-8 text-foreground">
         <section aria-labelledby="privacy-intro">
           <p className="text-muted-foreground leading-7">
-            Spoonbowl ("we," "us," or "our") is committed to protecting your privacy. This Privacy Policy explains
-            how we collect, use, disclose, and safeguard information when you visit our website and use our recipe
-            discovery service.
+            Spoonbowl ("we," "us," or "our") is committed to protecting your privacy. This Privacy
+            Policy explains how we collect, use, disclose, and safeguard information when you visit
+            our website and use our recipe discovery service.
           </p>
         </section>
 
@@ -34,8 +34,8 @@ const PrivacyPage = () => {
           </h2>
           <h3 className="font-semibold mt-4 mb-2">Information You Provide</h3>
           <p className="text-muted-foreground leading-7">
-            Spoonbowl does not require account registration or collect any personally identifiable information. You
-            can browse and explore all recipes without providing any personal data.
+            Spoonbowl does not require account registration or collect any personally identifiable
+            information. You can browse and explore all recipes without providing any personal data.
           </p>
           <h3 className="font-semibold mt-4 mb-2">Automatically Collected Information</h3>
           <p className="text-muted-foreground leading-7">
@@ -50,9 +50,9 @@ const PrivacyPage = () => {
           </ul>
           <h3 className="font-semibold mt-4 mb-2">Local Storage &amp; Cookies</h3>
           <p className="text-muted-foreground leading-7">
-            We use browser localStorage to remember your theme preference (light/dark mode). This data is stored
-            entirely on your device and is never transmitted to our servers. We do not use tracking cookies or
-            third-party advertising cookies.
+            We use browser localStorage to remember your theme preference (light/dark mode). This
+            data is stored entirely on your device and is never transmitted to our servers. We do
+            not use tracking cookies or third-party advertising cookies.
           </p>
         </section>
 
@@ -62,9 +62,7 @@ const PrivacyPage = () => {
           <h2 id="how-we-use" className="text-xl font-bold tracking-tight mb-3">
             2. How We Use Information
           </h2>
-          <p className="text-muted-foreground leading-7">
-            Any data collected is used solely to:
-          </p>
+          <p className="text-muted-foreground leading-7">Any data collected is used solely to:</p>
           <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
             <li>Operate and maintain the website</li>
             <li>Improve user experience and website performance</li>
@@ -90,32 +88,26 @@ const PrivacyPage = () => {
             <div className="rounded-lg border border-border p-4 bg-card">
               <h3 className="font-semibold mb-1">DummyJSON API</h3>
               <p className="text-sm text-muted-foreground">
-                We use DummyJSON (dummyjson.com) to provide recipe data. When you load recipes, your browser
-                makes requests to their servers. DummyJSON is a public API and its use is governed by their
-                own terms. No personal data is sent with these requests.
+                We use DummyJSON (dummyjson.com) to provide recipe data. When you load recipes, your
+                browser makes requests to their servers. DummyJSON is a public API and its use is
+                governed by their own terms. No personal data is sent with these requests.
               </p>
             </div>
             <div className="rounded-lg border border-border p-4 bg-card">
               <h3 className="font-semibold mb-1">Content Delivery Networks (CDN)</h3>
               <p className="text-sm text-muted-foreground">
-                Recipe images are served from DummyJSON's CDN (cdn.dummyjson.com). Your IP address may be
-                visible to their CDN when loading images. We have no control over CDN logging practices.
+                Recipe images are served from DummyJSON's CDN (cdn.dummyjson.com). Your IP address
+                may be visible to their CDN when loading images. We have no control over CDN logging
+                practices.
               </p>
             </div>
             <div className="rounded-lg border border-border p-4 bg-card">
               <h3 className="font-semibold mb-1">Hosting Provider</h3>
               <p className="text-sm text-muted-foreground">
-                Our website is hosted on Bolt.new's infrastructure. Bolt.new may collect standard server logs
-                as outlined in{" "}
-                <a
-                  href="https://bolt.new/privacy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="underline hover:text-foreground transition-colors"
-                >
-                  their Privacy Policy
-                </a>
-                .
+                Depending on where this site is deployed, your hosting provider or CDN may collect
+                standard connection and server logs (for example IP address, request time, and
+                status). We do not control that provider&apos;s logging practices; check their
+                privacy notice for details.
               </p>
             </div>
           </div>
@@ -133,12 +125,13 @@ const PrivacyPage = () => {
           </p>
           <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
             <li>
-              <strong>Theme preference</strong>: stored in localStorage as a simple string ("light", "dark", or "system")
+              <strong>Theme preference</strong>: stored in localStorage as a simple string ("light",
+              "dark", or "system")
             </li>
             <li>
-              <strong>Service Worker cache</strong>: recipe data and images may be cached locally by our PWA service
-              worker to improve performance and offline access. This cache is stored on your device and can be
-              cleared through your browser settings.
+              <strong>Service Worker cache</strong>: recipe data and images may be cached locally by
+              our PWA service worker to improve performance and offline access. This cache is stored
+              on your device and can be cleared through your browser settings.
             </li>
           </ul>
           <p className="text-muted-foreground leading-7 mt-3">
@@ -153,11 +146,13 @@ const PrivacyPage = () => {
             5. Your Rights
           </h2>
           <p className="text-muted-foreground leading-7">
-            Since we do not collect or store personal information, there is minimal personal data to manage.
-            However, you have the right to:
+            Since we do not collect or store personal information, there is minimal personal data to
+            manage. However, you have the right to:
           </p>
           <ul className="list-disc pl-6 mt-2 space-y-1 text-muted-foreground">
-            <li>Clear all locally stored data (theme preferences, cache) via your browser settings</li>
+            <li>
+              Clear all locally stored data (theme preferences, cache) via your browser settings
+            </li>
             <li>Browse our site without any form of account</li>
             <li>Request information about what data our hosting provider may hold</li>
           </ul>
@@ -170,8 +165,8 @@ const PrivacyPage = () => {
             6. Children's Privacy
           </h2>
           <p className="text-muted-foreground leading-7">
-            Spoonbowl does not knowingly collect personal data from children under 13 years of age. Our service
-            is a general-audience recipe site with no registration features.
+            Spoonbowl does not knowingly collect personal data from children under 13 years of age.
+            Our service is a general-audience recipe site with no registration features.
           </p>
         </section>
 

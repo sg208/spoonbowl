@@ -62,11 +62,7 @@ const BreadcrumbPage = ({ className, ...props }: React.ComponentProps<"span">) =
   )
 }
 
-const BreadcrumbSeparator = ({
-  children,
-  className,
-  ...props
-}: React.ComponentProps<"li">) => {
+const BreadcrumbSeparator = ({ children, className, ...props }: React.ComponentProps<"li">) => {
   return (
     <li
       data-slot="breadcrumb-separator"
@@ -80,10 +76,7 @@ const BreadcrumbSeparator = ({
   )
 }
 
-const BreadcrumbEllipsis = ({
-  className,
-  ...props
-}: React.ComponentProps<"span">) => {
+const BreadcrumbEllipsis = ({ className, ...props }: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="breadcrumb-ellipsis"

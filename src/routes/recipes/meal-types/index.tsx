@@ -16,7 +16,11 @@ export const Route = createFileRoute("/recipes/meal-types/")({
 
 const MealTypesIndexPage = () => {
   const queryClient = useQueryClient()
-  const { data: mealTypes, isLoading, isError } = useQuery({
+  const {
+    data: mealTypes,
+    isLoading,
+    isError,
+  } = useQuery({
     queryKey: ["meal-types"],
     queryFn: fetchMealTypes,
   })
@@ -56,7 +60,10 @@ const MealTypesIndexPage = () => {
       </header>
 
       {isError && (
-        <div role="alert" className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center text-destructive">
+        <div
+          role="alert"
+          className="rounded-xl border border-destructive/30 bg-destructive/5 p-6 text-center text-destructive"
+        >
           Failed to load meal types. Please refresh the page.
         </div>
       )}
@@ -115,10 +122,7 @@ const MealTypesIndexPage = () => {
         className="mt-16 rounded-2xl bg-secondary/60 border border-border p-8 text-center"
         aria-labelledby="seo-section-heading"
       >
-        <h2
-          id="seo-section-heading"
-          className="text-xl font-bold tracking-tight text-foreground"
-        >
+        <h2 id="seo-section-heading" className="text-xl font-bold tracking-tight text-foreground">
           All Meal Types on Spoonbowl
         </h2>
         <p className="mt-2 text-sm text-muted-foreground max-w-xl mx-auto">

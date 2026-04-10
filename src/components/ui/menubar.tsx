@@ -1,13 +1,14 @@
 import * as React from "react"
-import { Check as CheckIcon, ChevronRight as ChevronRightIcon, Circle as CircleIcon } from "lucide-react"
+import {
+  Check as CheckIcon,
+  ChevronRight as ChevronRightIcon,
+  Circle as CircleIcon,
+} from "lucide-react"
 import { Menubar as MenubarPrimitive } from "radix-ui"
 
 import { cn } from "@/lib/utils"
 
-const Menubar = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Root>) => {
+const Menubar = ({ className, ...props }: React.ComponentProps<typeof MenubarPrimitive.Root>) => {
   return (
     <MenubarPrimitive.Root
       data-slot="menubar"
@@ -20,30 +21,22 @@ const Menubar = ({
   )
 }
 
-const MenubarMenu = ({
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Menu>) => {
+const MenubarMenu = ({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Menu>) => {
   return <MenubarPrimitive.Menu data-slot="menubar-menu" {...props} />
 }
 
-const MenubarGroup = ({
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Group>) => {
+const MenubarGroup = ({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Group>) => {
   return <MenubarPrimitive.Group data-slot="menubar-group" {...props} />
 }
 
-const MenubarPortal = ({
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Portal>) => {
+const MenubarPortal = ({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Portal>) => {
   return <MenubarPrimitive.Portal data-slot="menubar-portal" {...props} />
 }
 
 const MenubarRadioGroup = ({
   ...props
 }: React.ComponentProps<typeof MenubarPrimitive.RadioGroup>) => {
-  return (
-    <MenubarPrimitive.RadioGroup data-slot="menubar-radio-group" {...props} />
-  )
+  return <MenubarPrimitive.RadioGroup data-slot="menubar-radio-group" {...props} />
 }
 
 const MenubarTrigger = ({
@@ -170,10 +163,7 @@ const MenubarLabel = ({
     <MenubarPrimitive.Label
       data-slot="menubar-label"
       data-inset={inset}
-      className={cn(
-        "px-2 py-1.5 text-sm font-medium data-[inset]:pl-8",
-        className
-      )}
+      className={cn("px-2 py-1.5 text-sm font-medium data-[inset]:pl-8", className)}
       {...props}
     />
   )
@@ -192,25 +182,17 @@ const MenubarSeparator = ({
   )
 }
 
-const MenubarShortcut = ({
-  className,
-  ...props
-}: React.ComponentProps<"span">) => {
+const MenubarShortcut = ({ className, ...props }: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="menubar-shortcut"
-      className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground",
-        className
-      )}
+      className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
       {...props}
     />
   )
 }
 
-const MenubarSub = ({
-  ...props
-}: React.ComponentProps<typeof MenubarPrimitive.Sub>) => {
+const MenubarSub = ({ ...props }: React.ComponentProps<typeof MenubarPrimitive.Sub>) => {
   return <MenubarPrimitive.Sub data-slot="menubar-sub" {...props} />
 }
 

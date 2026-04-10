@@ -8,21 +8,15 @@ const Sheet = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Root>) =
   return <SheetPrimitive.Root data-slot="sheet" {...props} />
 }
 
-const SheetTrigger = ({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Trigger>) => {
+const SheetTrigger = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Trigger>) => {
   return <SheetPrimitive.Trigger data-slot="sheet-trigger" {...props} />
 }
 
-const SheetClose = ({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Close>) => {
+const SheetClose = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Close>) => {
   return <SheetPrimitive.Close data-slot="sheet-close" {...props} />
 }
 
-const SheetPortal = ({
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Portal>) => {
+const SheetPortal = ({ ...props }: React.ComponentProps<typeof SheetPrimitive.Portal>) => {
   return <SheetPrimitive.Portal data-slot="sheet-portal" {...props} />
 }
 
@@ -103,10 +97,7 @@ const SheetFooter = ({ className, ...props }: React.ComponentProps<"div">) => {
   )
 }
 
-const SheetTitle = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof SheetPrimitive.Title>) => {
+const SheetTitle = ({ className, ...props }: React.ComponentProps<typeof SheetPrimitive.Title>) => {
   return (
     <SheetPrimitive.Title
       data-slot="sheet-title"

@@ -13,10 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 
-const Command = ({
-  className,
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive>) => {
+const Command = ({ className, ...props }: React.ComponentProps<typeof CommandPrimitive>) => {
   return (
     <CommandPrimitive
       data-slot="command"
@@ -65,10 +62,7 @@ const CommandInput = ({
   ...props
 }: React.ComponentProps<typeof CommandPrimitive.Input>) => {
   return (
-    <div
-      data-slot="command-input-wrapper"
-      className="flex h-9 items-center gap-2 border-b px-3"
-    >
+    <div data-slot="command-input-wrapper" className="flex h-9 items-center gap-2 border-b px-3">
       <SearchIcon className="size-4 shrink-0 opacity-50" />
       <CommandPrimitive.Input
         data-slot="command-input"
@@ -89,18 +83,13 @@ const CommandList = ({
   return (
     <CommandPrimitive.List
       data-slot="command-list"
-      className={cn(
-        "max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto",
-        className
-      )}
+      className={cn("max-h-[300px] scroll-py-1 overflow-x-hidden overflow-y-auto", className)}
       {...props}
     />
   )
 }
 
-const CommandEmpty = ({
-  ...props
-}: React.ComponentProps<typeof CommandPrimitive.Empty>) => {
+const CommandEmpty = ({ ...props }: React.ComponentProps<typeof CommandPrimitive.Empty>) => {
   return (
     <CommandPrimitive.Empty
       data-slot="command-empty"
@@ -155,17 +144,11 @@ const CommandItem = ({
   )
 }
 
-const CommandShortcut = ({
-  className,
-  ...props
-}: React.ComponentProps<"span">) => {
+const CommandShortcut = ({ className, ...props }: React.ComponentProps<"span">) => {
   return (
     <span
       data-slot="command-shortcut"
-      className={cn(
-        "ml-auto text-xs tracking-widest text-muted-foreground",
-        className
-      )}
+      className={cn("ml-auto text-xs tracking-widest text-muted-foreground", className)}
       {...props}
     />
   )
