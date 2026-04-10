@@ -95,7 +95,8 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │       └── tag/
     │           └── $tag.tsx
     ├── components/
-    │   ├── RootLayout.tsx             # app shell: Navbar/Footer/Outlet + Toaster
+    │   ├── RootLayout.tsx             # app shell: Navbar/Footer/Outlet + Toaster + RouteAnnouncer
+    │   ├── RouteAnnouncer.tsx         # aria-live route-change announcer (SPA a11y)
     │   ├── NotFoundPage.tsx
     │   ├── NotFoundRandomRecipe.tsx
     │   ├── cuisine/                 # cuisine listing page sections (breadcrumb, header, grid, SEO)
@@ -133,6 +134,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 | What                                                                  | Where                                                                                                                                                 |
 | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
 | App shell / layout                                                    | `src/components/RootLayout.tsx` (wired from `src/routes/__root.tsx`)                                                                                  |
+| Screen-reader route announcements                                     | `src/components/RouteAnnouncer.tsx`                                                                                                                   |
 | Top navigation                                                        | `src/components/Navbar.tsx`                                                                                                                           |
 | Footer                                                                | `src/components/Footer.tsx`                                                                                                                           |
 | Privacy policy (incl. regional notices)                               | `src/routes/privacy.tsx`, `src/components/legal/*`                                                                                                    |

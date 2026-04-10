@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Route announcer (`RouteAnnouncer`):** visually-hidden `aria-live="polite"` region that announces the page title (or pathname fallback) to screen readers on every TanStack Router navigation; mounted in `RootLayout`.
+
 ### Fixed
 
 - Privacy policy (`PrivacyCoreSections`): add screen-reader-only `h2#privacy-intro` so the intro section’s `aria-labelledby="privacy-intro"` resolves to an accessible name.
