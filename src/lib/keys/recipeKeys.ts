@@ -2,8 +2,7 @@
 
 export const recipeKeys = {
   all: () => ["recipes"] as const,
-  featured: () => [...recipeKeys.all(), "featured"] as const,
-  grid: (params: { limit: number; skip: number }) => [...recipeKeys.all(), "grid", params] as const,
+  allRecipes: () => [...recipeKeys.all(), "all"] as const,
   byCuisine: (cuisine: string) => [...recipeKeys.all(), "cuisine", cuisine] as const,
   byTag: (tag: string) => [...recipeKeys.all(), "tag", tag] as const,
   byMealType: (mealType: string) => [...recipeKeys.all(), "meal-type", mealType] as const,

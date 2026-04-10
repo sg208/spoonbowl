@@ -9,6 +9,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Unified primary browse navigation links in `src/lib/navigationLinks.ts` and refactored `Navbar`/`Footer` to render from that shared source of truth (including cuisines prefetch behavior and redundant list-role cleanup).
+- Home route now preloads a single `allRecipes` query and derives both featured recipe and grid from that cache; featured selection is stabilized per session using `sessionStorage` and `FeaturedRecipe` layout was tightened for large screens.
+- Reworked legal and accessibility copy for clarity and consistency across `/privacy`, `/terms`, `/disclaimer`, and `/accessibility`; legal `Last updated` dates are aligned to **April 11, 2026**.
+- Privacy regional notices were consolidated into a single global rights section and core privacy sections were simplified into scannable bullet lists while preserving Cloudflare disclosure.
 - Extracted `RecipeCardSkeleton` and `EmptyRecipes` into their own files (`src/components/RecipeCardSkeleton.tsx`, `src/components/EmptyRecipes.tsx`) to keep `RecipeCard.tsx` under the ~120-line soft cap; updated all consumers.
 - Extracted shared `usePrefetchRecipeDetail` hook (`src/hooks/use-prefetch-recipe-detail.ts`) from inline prefetch logic in `RecipeCard` and `$tag`; both callers now use the single hook.
 - Fixed stale JSDoc comment in `usePrefetchRecipeDetail` to reference the correct route path `/recipe/$recipeId/$slug` instead of `/recipe/$recipeId`.
