@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, Tag } from "lucide-react"
-import { fetchRecipesByTag, fetchTags } from "@/lib/api"
+import { useRecipesByTag, useTags } from "@/hooks/use-recipe-queries"
 import { tagToPageTitle, tagToDescription, slugToTag, getTagEmoji } from "@/lib/tagUtils"
 import { RecipeCard, RecipeCardSkeleton } from "@/components/RecipeCard"
 import { Badge } from "@/components/ui/badge"
@@ -14,21 +13,14 @@ export const Route = createFileRoute("/recipes/tag/$tag")({
 const TagRecipesPage = () => {
   const { tag: tagSlug } = Route.useParams()
 
-  const { data: allTags } = useQuery({
-    queryKey: ["tags"],
-    queryFn: fetchTags,
-  })
+  const { data: allTags } = useTags()
 
   const tag = slugToTag(tagSlug, allTags)
   const pageTitle = tagToPageTitle(tag)
   const description = tagToDescription(tag)
   const emoji = getTagEmoji(tag)
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["recipes", "tag", tag],
-    queryFn: () => fetchRecipesByTag(tag),
-    enabled: Boolean(tag),
-  })
+  const { data, isLoading, isError } = useRecipesByTag(tag, Boolean(tag))
 
   const recipes = data?.recipes ?? []
 

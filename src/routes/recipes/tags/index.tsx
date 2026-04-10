@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery } from "@tanstack/react-query"
 import { Tag, ChefHat, ArrowRight } from "lucide-react"
-import { fetchTags } from "@/lib/api"
+import { useTags } from "@/hooks/use-recipe-queries"
 import { tagToPageTitle, sortTagsAlphabetically, getTagEmoji, tagToSlug } from "@/lib/tagUtils"
 import { Badge } from "@/components/ui/badge"
 
@@ -10,14 +9,7 @@ export const Route = createFileRoute("/recipes/tags/")({
 })
 
 const TagsIndexPage = () => {
-  const {
-    data: tags,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["tags"],
-    queryFn: fetchTags,
-  })
+  const { data: tags, isLoading, isError } = useTags()
 
   const grouped = tags ? sortTagsAlphabetically(tags) : {}
   const letters = Object.keys(grouped).sort()

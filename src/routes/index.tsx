@@ -1,15 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useQuery } from "@tanstack/react-query"
 import { useMemo } from "react"
 import { fetchFeaturedRecipe, fetchRecipes } from "@/lib/api"
 import { getRandomHeading } from "@/lib/headings"
 import { RecipeCard, RecipeCardSkeleton, EmptyRecipes } from "@/components/RecipeCard"
 import { FeaturedRecipe, FeaturedRecipeSkeleton } from "@/components/FeaturedRecipe"
+import { useFeaturedRecipe, useRecipeGrid } from "@/hooks/use-recipe-queries"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
 import type { Recipe } from "@/lib/api"
-
-export const Route = createFileRoute("/")({
-  component: HomePage,
-})
 
 const pickRandom = <T,>(arr: T[], count: number): T[] => {
   if (arr.length <= count) return [...arr]
@@ -24,19 +21,9 @@ const HomePage = () => {
     data: featured,
     isLoading: isFeaturedLoading,
     isError: isFeaturedError,
-  } = useQuery({
-    queryKey: ["recipes", "featured"],
-    queryFn: fetchFeaturedRecipe,
-  })
+  } = useFeaturedRecipe()
 
-  const {
-    data,
-    isLoading: isGridLoading,
-    isError: isGridError,
-  } = useQuery({
-    queryKey: ["recipes", "grid", { limit: 48, skip: 0 }],
-    queryFn: () => fetchRecipes(48, 0),
-  })
+  const { data, isLoading: isGridLoading, isError: isGridError } = useRecipeGrid(48, 0)
 
   const displayRecipes = useMemo<Recipe[]>(() => {
     if (!data?.recipes?.length) return []
@@ -115,3 +102,18 @@ const HomePage = () => {
     </div>
   )
 }
+
+export const Route = createFileRoute("/")({
+  loader: ({ context }) =>
+    Promise.all([
+      context.queryClient.ensureQueryData({
+        queryKey: recipeKeys.featured(),
+        queryFn: fetchFeaturedRecipe,
+      }),
+      context.queryClient.ensureQueryData({
+        queryKey: recipeKeys.grid({ limit: 48, skip: 0 }),
+        queryFn: () => fetchRecipes(48, 0),
+      }),
+    ]),
+  component: HomePage,
+})
