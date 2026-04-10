@@ -141,12 +141,12 @@ const GdprPage = () => {
               <tbody className="text-muted-foreground">
                 <tr className="border-b border-border">
                   <td className="py-2 pr-4">Identifiers (name, email, IP)</td>
-                  <td className="py-2 pr-4">No (IP via Cloudflare logs only)</td>
+                  <td className="py-2 pr-4">Yes — IP via Cloudflare edge logs only</td>
                   <td className="py-2">No</td>
                 </tr>
                 <tr className="border-b border-border">
                   <td className="py-2 pr-4">Internet or network activity</td>
-                  <td className="py-2 pr-4">Via Cloudflare edge logs only</td>
+                  <td className="py-2 pr-4">Yes — IP via Cloudflare edge logs only</td>
                   <td className="py-2">No</td>
                 </tr>
                 <tr className="border-b border-border">

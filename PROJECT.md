@@ -10,15 +10,15 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 ## Quick facts
 
-| Key               | Value                                                                                                                                 |
-| ----------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| **Stack**         | Vite + React 19 + TypeScript + Tailwind CSS v4                                                                                        |
-| **Router**        | TanStack Router — file-based routes in `src/routes/*`; generated tree in `src/routeTree.gen.ts`                                       |
-| **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                                                    |
-| **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json`                                   |
-| **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                                                    |
-| **Deploy**        | Production: **Cloudflare Pages** (see `README.md`); legal copy in `src/routes/privacy.tsx`, `terms.tsx`, `gdpr.tsx`, `disclaimer.tsx` |
-| **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                        |
+| Key               | Value                                                                                                                                                                  |
+| ----------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Stack**         | Vite + React 19 + TypeScript + Tailwind CSS v4                                                                                                                         |
+| **Router**        | TanStack Router — file-based routes in `src/routes/*`; generated tree in `src/routeTree.gen.ts`                                                                        |
+| **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                                                                                     |
+| **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json`                                                                    |
+| **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                                                                                     |
+| **Deploy**        | Production: **Cloudflare Pages** (see `README.md`); legal copy in `src/routes/privacy.tsx`, `src/routes/terms.tsx`, `src/routes/gdpr.tsx`, `src/routes/disclaimer.tsx` |
+| **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                                                         |
 
 **Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/use-recipe-queries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
 

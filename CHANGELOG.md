@@ -33,6 +33,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - (v0.0.5) Fix 404 random recipe teaser React Query key to be stable (enables caching).
 - (v0.0.5) Cuisine browsing: only fetch cuisine recipes after cuisines list is fetched; prefetch cuisine results on keyboard focus (parity with hover).
 - Merged latest `origin/develop`: `npm run preview` is `build` then `wrangler dev`; `.gitignore` ignores Wrangler cache (`.wrangler`), `.dev.vars*`, and `.env*` (with `!.env.example` / `!.dev.vars.example` kept).
+- GDPR (`/gdpr`): CCPA categories table — mark IP and network-activity collection as **Yes** (Cloudflare edge logs only), consistent with edge logging disclosure elsewhere.
+- `PROJECT.md`: Deploy row lists legal routes with full `src/routes/*.tsx` paths.
 
 [0.0.5]: https://github.com/sg208/spoonbowl/compare/v0.0.4...v0.0.5
 
