@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, UtensilsCrossed } from "lucide-react"
-import { fetchRecipesByMealType, fetchMealTypes } from "@/lib/api"
+import { fetchRecipesByMealType } from "@/lib/api"
+import { useMealTypes, useRecipesByMealType } from "@/hooks/use-recipe-queries"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
   getMealTypeEmoji,
   getMealTypeDescription,
@@ -21,29 +24,22 @@ const MealTypeRecipesPage = () => {
   const { mealType: mealTypeSlug } = Route.useParams()
   const queryClient = useQueryClient()
 
-  const { data: allTypes } = useQuery({
-    queryKey: ["meal-types"],
-    queryFn: fetchMealTypes,
-  })
+  const { data: allTypes } = useMealTypes()
 
   const mealType = slugToMealType(mealTypeSlug, allTypes)
   const pageTitle = mealTypeToPageTitle(mealType)
   const description = getMealTypeDescription(mealType)
   const emoji = getMealTypeEmoji(mealType)
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["recipes", "meal-type", mealType],
-    queryFn: () => fetchRecipesByMealType(mealType),
-    enabled: Boolean(mealType),
-  })
+  const { data, isLoading, isError } = useRecipesByMealType(mealType, Boolean(mealType))
 
   const recipes = data?.recipes ?? []
 
   const prefetchMealType = (type: string) => {
     queryClient.prefetchQuery({
-      queryKey: ["recipes", "meal-type", type],
+      queryKey: recipeKeys.byMealType(type),
       queryFn: () => fetchRecipesByMealType(type),
-      staleTime: 1000 * 60 * 5,
+      staleTime: STALE_TIME_5M_MS,
     })
   }
 

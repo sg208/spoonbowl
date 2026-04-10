@@ -1,24 +1,11 @@
-import { useQuery } from "@tanstack/react-query"
 import { Fragment, useMemo } from "react"
 import { RecipeCard, RecipeCardSkeleton, EmptyRecipes } from "@/components/RecipeCard"
-import { fetchAllRecipes } from "@/lib/api"
+import { useNotFoundRandomRecipe } from "@/hooks/use-recipe-queries"
 
 const NotFoundRandomRecipe = () => {
   const clientSessionId = useMemo(() => crypto.randomUUID(), [])
 
-  const {
-    data: recipe,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["not-found", "random-recipe"],
-    queryFn: async () => {
-      const res = await fetchAllRecipes()
-      if (res.recipes.length === 0) return null
-      const index = Math.floor(Math.random() * res.recipes.length)
-      return res.recipes[index] ?? null
-    },
-  })
+  const { data: recipe, isLoading, isError } = useNotFoundRandomRecipe()
 
   if (isLoading) {
     return (

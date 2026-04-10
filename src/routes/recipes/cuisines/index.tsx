@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { Globe, ChefHat, ArrowRight } from "lucide-react"
-import { fetchCuisines, fetchRecipesByCuisine } from "@/lib/api"
+import { fetchRecipesByCuisine } from "@/lib/api"
+import { useCuisines } from "@/hooks/use-recipe-queries"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
   getCuisineEmoji,
   getCuisineDescription,
@@ -12,20 +15,13 @@ import { Badge } from "@/components/ui/badge"
 
 const CuisinesIndexPage = () => {
   const queryClient = useQueryClient()
-  const {
-    data: cuisines,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["cuisines"],
-    queryFn: fetchCuisines,
-  })
+  const { data: cuisines, isLoading, isError } = useCuisines()
 
   const prefetchCuisine = (cuisine: string) => {
     queryClient.prefetchQuery({
-      queryKey: ["recipes", "cuisine", cuisine],
+      queryKey: recipeKeys.byCuisine(cuisine),
       queryFn: () => fetchRecipesByCuisine(cuisine),
-      staleTime: 1000 * 60 * 5,
+      staleTime: STALE_TIME_5M_MS,
     })
   }
 

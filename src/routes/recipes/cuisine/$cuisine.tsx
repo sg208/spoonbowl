@@ -1,238 +1,83 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
-import { ArrowLeft, ChefHat, Globe } from "lucide-react"
-import { fetchCuisines, fetchRecipesByCuisine } from "@/lib/api"
+import { createFileRoute } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
+import { fetchRecipesByCuisine } from "@/lib/api"
 import {
   getCuisineEmoji,
   getCuisineDescription,
   cuisineToPageTitle,
-  cuisineToSlug,
   slugToCuisine,
 } from "@/lib/cuisineUtils"
-import { RecipeCard, RecipeCardSkeleton } from "@/components/RecipeCard"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
+import { useCuisines, useRecipesByCuisine } from "@/hooks/use-recipe-queries"
 import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
+import { CuisineRecipesBreadcrumb } from "@/components/cuisine/CuisineRecipesBreadcrumb"
+import { CuisineRecipesHeader } from "@/components/cuisine/CuisineRecipesHeader"
+import { CuisineRecipesErrorGrid } from "@/components/cuisine/CuisineRecipesErrorGrid"
+import { CuisineRecipesSeoAndRelated } from "@/components/cuisine/CuisineRecipesSeoAndRelated"
 
 const CuisineRecipesPage = () => {
   const { cuisine: cuisineSlug } = Route.useParams()
   const queryClient = useQueryClient()
   const prefetchCuisinesIndex = usePrefetchCuisinesIndex()
 
-  const { data: allCuisines, isFetched: cuisinesFetched } = useQuery({
-    queryKey: ["cuisines"],
-    queryFn: fetchCuisines,
-  })
+  const { data: allCuisines, isFetched: cuisinesFetched } = useCuisines()
 
   const cuisine = slugToCuisine(cuisineSlug, allCuisines)
   const pageTitle = cuisineToPageTitle(cuisine)
   const description = getCuisineDescription(cuisine)
   const emoji = getCuisineEmoji(cuisine)
 
-  const { data, isLoading, isError } = useQuery({
-    queryKey: ["recipes", "cuisine", cuisine],
-    queryFn: () => fetchRecipesByCuisine(cuisine),
-    enabled: Boolean(cuisine) && cuisinesFetched,
-  })
+  const { data, isLoading, isError } = useRecipesByCuisine(
+    cuisine,
+    Boolean(cuisine) && cuisinesFetched
+  )
 
   const recipes = data?.recipes ?? []
 
   const prefetchCuisine = (name: string) => {
     queryClient.prefetchQuery({
-      queryKey: ["recipes", "cuisine", name],
+      queryKey: recipeKeys.byCuisine(name),
       queryFn: () => fetchRecipesByCuisine(name),
-      staleTime: 1000 * 60 * 5,
+      staleTime: STALE_TIME_5M_MS,
     })
   }
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <nav aria-label="Breadcrumb" className="mb-8">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap" role="list">
-          <li>
-            <Link
-              to="/"
-              className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-            >
-              Home
-            </Link>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li>
-            <Link
-              to="/recipes/cuisines"
-              onMouseEnter={prefetchCuisinesIndex}
-              onFocus={prefetchCuisinesIndex}
-              className="hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-            >
-              Recipes by Cuisine
-            </Link>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li className="text-foreground font-medium" aria-current="page">
-            {pageTitle}
-          </li>
-        </ol>
-      </nav>
-
-      <header className="mb-10" aria-labelledby="cuisine-page-heading">
-        <div className="flex items-start gap-4">
-          <span
-            className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl bg-secondary text-3xl sm:text-4xl border border-border"
-            aria-hidden="true"
-          >
-            {emoji}
-          </span>
-          <div>
-            <div className="flex items-center gap-2 mb-2 flex-wrap">
-              <Badge className="bg-primary/10 text-primary border-0 text-xs font-medium gap-1">
-                <Globe className="h-3 w-3" aria-hidden="true" />
-                {cuisine}
-              </Badge>
-              {!isLoading && data && (
-                <Badge variant="outline" className="text-xs">
-                  {data.total} {data.total === 1 ? "recipe" : "recipes"}
-                </Badge>
-              )}
-            </div>
-            <h1
-              id="cuisine-page-heading"
-              className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl text-balance"
-            >
-              {pageTitle}
-            </h1>
-            <p className="mt-2 text-muted-foreground leading-7 max-w-2xl">{description}</p>
-          </div>
-        </div>
-      </header>
-
-      {isError && (
-        <div
-          role="alert"
-          className="rounded-xl border border-destructive/30 bg-destructive/5 p-8 text-center"
-        >
-          <ChefHat className="h-10 w-10 text-muted-foreground mx-auto mb-3" aria-hidden="true" />
-          <p className="text-destructive font-medium">Failed to load recipes for "{cuisine}"</p>
-          <p className="text-sm text-muted-foreground mt-1">Please try again.</p>
-          <Button asChild variant="outline" className="mt-4">
-            <Link
-              to="/recipes/cuisines"
-              onMouseEnter={prefetchCuisinesIndex}
-              onFocus={prefetchCuisinesIndex}
-            >
-              Back to Cuisines
-            </Link>
-          </Button>
-        </div>
-      )}
-
-      {!isError && (
-        <>
-          <div
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            aria-label={`${pageTitle} recipe grid`}
-          >
-            {isLoading
-              ? Array.from({ length: 8 }).map((_, i) => <RecipeCardSkeleton key={i} />)
-              : recipes.map((recipe) => <RecipeCard key={recipe.id} recipe={recipe} />)}
-          </div>
-
-          {!isLoading && recipes.length === 0 && (
-            <div
-              className="flex flex-col items-center justify-center py-20 text-center"
-              role="status"
-            >
-              <ChefHat className="h-14 w-14 text-muted-foreground mb-4" aria-hidden="true" />
-              <h2 className="text-lg font-semibold text-foreground">
-                No recipes found for "{cuisine}"
-              </h2>
-              <p className="text-muted-foreground mt-1 text-sm">Try exploring other cuisines.</p>
-              <Button asChild variant="outline" className="mt-5 gap-2">
-                <Link
-                  to="/recipes/cuisines"
-                  onMouseEnter={prefetchCuisinesIndex}
-                  onFocus={prefetchCuisinesIndex}
-                >
-                  <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-                  Browse Cuisines
-                </Link>
-              </Button>
-            </div>
-          )}
-        </>
-      )}
-
-      {!isLoading && !isError && recipes.length > 0 && (
-        <section
-          className="mt-12 rounded-2xl bg-secondary/50 border border-border p-6"
-          aria-labelledby="cuisine-seo-meta-heading"
-        >
-          <h2
-            id="cuisine-seo-meta-heading"
-            className="text-base font-semibold text-foreground mb-2"
-          >
-            About {pageTitle}
-          </h2>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {description} Browse all {data?.total} {pageTitle.toLowerCase()} on Spoonbowl — each
-            with full ingredients lists, step-by-step instructions, prep and cook times, serving
-            sizes, and calorie counts.
-          </p>
-          <div className="mt-4 flex flex-wrap gap-2" aria-label="Related recipe names">
-            {recipes.slice(0, 6).map((r) => (
-              <Link
-                key={r.id}
-                to="/recipe/$recipeId/$slug"
-                params={{ recipeId: String(r.id), slug: r.name.toLowerCase().replace(/\s+/g, "-") }}
-                className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-              >
-                {r.name}
-              </Link>
-            ))}
-          </div>
-        </section>
-      )}
-
-      {allCuisines && allCuisines.length > 1 && (
-        <section className="mt-8" aria-labelledby="other-cuisines-heading">
-          <h2
-            id="other-cuisines-heading"
-            className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-3"
-          >
-            Other Cuisines
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {allCuisines
-              .filter((c) => c !== cuisine)
-              .map((c) => (
-                <Link
-                  key={c}
-                  to="/recipes/cuisine/$cuisine"
-                  params={{ cuisine: cuisineToSlug(c) }}
-                  onMouseEnter={() => prefetchCuisine(c)}
-                  onFocus={() => prefetchCuisine(c)}
-                  className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                >
-                  <span aria-hidden="true">{getCuisineEmoji(c)}</span>
-                  {c}
-                </Link>
-              ))}
-          </div>
-        </section>
-      )}
-
-      <div className="mt-8 flex justify-start">
-        <Button asChild variant="outline" className="gap-2">
-          <Link
-            to="/recipes/cuisines"
-            onMouseEnter={prefetchCuisinesIndex}
-            onFocus={prefetchCuisinesIndex}
-          >
-            <ArrowLeft className="h-4 w-4" aria-hidden="true" />
-            All Cuisines
-          </Link>
-        </Button>
-      </div>
+      <CuisineRecipesBreadcrumb
+        pageTitle={pageTitle}
+        prefetchCuisinesIndex={prefetchCuisinesIndex}
+      />
+      <CuisineRecipesHeader
+        cuisine={cuisine}
+        emoji={emoji}
+        pageTitle={pageTitle}
+        description={description}
+        isLoading={isLoading}
+        data={data}
+      />
+      <CuisineRecipesErrorGrid
+        cuisine={cuisine}
+        pageTitle={pageTitle}
+        isError={isError}
+        isLoading={isLoading}
+        recipes={recipes}
+        prefetchCuisinesIndex={prefetchCuisinesIndex}
+      />
+      <CuisineRecipesSeoAndRelated
+        pageTitle={pageTitle}
+        description={description}
+        total={data?.total}
+        recipes={recipes}
+        cuisine={cuisine}
+        allCuisines={allCuisines}
+        getCuisineEmoji={getCuisineEmoji}
+        prefetchCuisine={prefetchCuisine}
+        prefetchCuisinesIndex={prefetchCuisinesIndex}
+        isLoading={isLoading}
+        isError={isError}
+      />
     </div>
   )
 }

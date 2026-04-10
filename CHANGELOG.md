@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- React Query: hierarchical key factories in `src/lib/keys/recipeKeys.ts` and shared hooks in `src/hooks/use-recipe-queries.ts` for home grid, featured recipe, cuisine/tag/meal-type lists, recipe detail, and 404 random recipe; cuisine index prefetch uses `recipeMetaKeys.cuisines()`.
+- TanStack Router: root route uses `createRootRouteWithContext` with `queryClient`; home route `loader` calls `ensureQueryData` for featured + grid queries; `main.tsx` passes `queryClient` on router context.
+- Cuisine recipe page split into `src/components/cuisine/*` (breadcrumb, header, grid/error/empty, SEO and related cuisines); `src/lib/queryClient.ts` exports `STALE_TIME_5M_MS` for prefetch `staleTime` alignment.
+
 - `PROJECT.md`: expanded repo mini-memory for onboarding and AI-assisted work — command table, “where to change X”, TanStack Router/Query conventions, shadcn/Tailwind/PWA notes.
 - TanStack Router: enable `scrollRestoration` on `createRouter` instead of the deprecated `<ScrollRestoration />` component.
 - (v0.0.5) Fix 404 random recipe teaser React Query key to be stable (enables caching).
