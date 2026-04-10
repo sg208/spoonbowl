@@ -1,5 +1,7 @@
 import { Fragment, useMemo } from "react"
-import { RecipeCard, RecipeCardSkeleton, EmptyRecipes } from "@/components/RecipeCard"
+import { RecipeCard } from "@/components/RecipeCard"
+import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
+import { EmptyRecipes } from "@/components/EmptyRecipes"
 import { useNotFoundRandomRecipe } from "@/hooks/use-recipe-queries"
 
 const NotFoundRandomRecipe = () => {

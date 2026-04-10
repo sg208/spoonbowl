@@ -1,12 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, Tag } from "lucide-react"
-import { fetchRecipe } from "@/lib/api"
 import { useRecipesByTag, useTags } from "@/hooks/use-recipe-queries"
 import { tagToPageTitle, tagToDescription, slugToTag, getTagEmoji } from "@/lib/tagUtils"
-import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
-import { STALE_TIME_5M_MS } from "@/lib/queryClient"
-import { RecipeCard, RecipeCardSkeleton } from "@/components/RecipeCard"
+import { usePrefetchRecipeDetail } from "@/hooks/use-prefetch-recipe-detail"
+import { RecipeCard } from "@/components/RecipeCard"
+import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 
@@ -15,16 +13,8 @@ export const Route = createFileRoute("/recipes/tag/$tag")({
 })
 
 const TagRecipesPage = () => {
-  const queryClient = useQueryClient()
+  const prefetchRecipeDetail = usePrefetchRecipeDetail()
   const { tag: tagSlug } = Route.useParams()
-
-  const prefetchRecipeDetail = (id: number) => {
-    queryClient.prefetchQuery({
-      queryKey: recipeDetailKeys.detail(id),
-      queryFn: () => fetchRecipe(id),
-      staleTime: STALE_TIME_5M_MS,
-    })
-  }
 
   const { data: allTags } = useTags()
 

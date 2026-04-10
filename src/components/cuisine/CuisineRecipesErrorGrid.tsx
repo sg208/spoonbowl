@@ -1,7 +1,8 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowLeft, ChefHat } from "lucide-react"
 import type { Recipe } from "@/lib/api"
-import { RecipeCard, RecipeCardSkeleton } from "@/components/RecipeCard"
+import { RecipeCard } from "@/components/RecipeCard"
+import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Button } from "@/components/ui/button"
 
 type CuisineRecipesErrorGridProps = {
