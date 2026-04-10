@@ -9,12 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- (v0.0.5) Browse recipes by cuisine: `/recipes/cuisines` and `/recipes/cuisine/:cuisine` (DummyJSON cuisine list + filtered recipes), `cuisineUtils`, navbar link, and prefetch on hover/focus for the cuisines index query.
 - Custom not-found UI (`NotFoundPage`, random recipe teaser) and root layout moved to `src/components/RootLayout.tsx`.
 
 ### Changed
 
 - TanStack Router: enable `scrollRestoration` on `createRouter` instead of the deprecated `<ScrollRestoration />` component.
 - (v0.0.5) Fix 404 random recipe teaser React Query key to be stable (enables caching).
+- (v0.0.5) Cuisine browsing: only fetch cuisine recipes after cuisines list is fetched; prefetch cuisine results on keyboard focus (parity with hover).
 
 [0.0.5]: https://github.com/sg208/spoonbowl/compare/v0.0.4...v0.0.5
 
