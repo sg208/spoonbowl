@@ -1,0 +1,61 @@
+# Spoonbowl — GitHub Copilot instructions
+
+Repository-wide context for Copilot Chat, PR review, and coding agents. This file is intentionally short (GitHub Copilot code review reads only the first ~4,000 characters). **Full detail:** [`PROJECT.md`](../PROJECT.md) at the repo root is canonical.
+
+## Quick facts
+
+| Key          | Value                                                                        |
+| ------------ | ---------------------------------------------------------------------------- |
+| Stack        | Vite + React 19 + TypeScript + Tailwind CSS v4                               |
+| Router       | TanStack Router — `src/routes/*`; tree in `src/routeTree.gen.ts` (generated) |
+| Server state | TanStack React Query — `src/lib/queryClient.ts`                              |
+| UI           | shadcn-style in `src/components/ui/*` — `components.json`, `npx shadcn add`  |
+| PWA          | `vite-plugin-pwa` — `vite.config.ts` Workbox                                 |
+| Alias        | `@` → `./src`                                                                |
+
+**Queries:** Many routes use inline `queryKey` arrays. Prefer key factories under `src/lib/keys/` when adding or refactoring queries.
+
+## Commands
+
+| Script              | Purpose                              |
+| ------------------- | ------------------------------------ |
+| `npm run dev`       | Dev server                           |
+| `npm run build`     | Production build (no `tsc`)          |
+| `npm run typecheck` | `tsc --noEmit`                       |
+| `npm run check`     | lint + typecheck + format:check      |
+| `npm run fix`       | lint:fix then format — before commit |
+
+## Key paths
+
+- **Generated:** `src/routeTree.gen.ts` — never edit.
+- **Root route:** `src/routes/__root.tsx` → `RootLayout`, 404.
+- **Routes:** file-based; dynamic segments use `$` (e.g. `$cuisine`, `$recipeId`).
+- **API:** `src/lib/api.ts` — typed wrappers only; avoid raw `fetch` in components.
+- **404 copy:** `src/lib/not-found-messages.ts`.
+
+## Where to change (short)
+
+| Area                 | Location                                     |
+| -------------------- | -------------------------------------------- |
+| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx` |
+| New route            | `src/routes/**`                              |
+| Recipe UI            | `RecipeCard.tsx`, `FeaturedRecipe.tsx`       |
+| Domain helpers       | `src/lib/headings.ts`, `*Utils.ts`           |
+| Styles / tokens      | `src/index.css`                              |
+| PWA caching          | `vite.config.ts`                             |
+
+## Guardrails
+
+- **Router:** `<Link>` / `useNavigate` for in-app navigation; search params as source of truth for filters. Optional: `validateSearch`, `loader`, `ensureQueryData` on new routes.
+- **Data:** React Query for server state; no `useEffect`+`useState` fetch for that.
+- **TS:** No `enum` (use const or unions); no bare `any`.
+- **Components:** ~120 lines/file soft cap; a11y before layout polish; `event` not `e` for DOM.
+- **Repo:** ESLint ignores `routeTree.gen.ts`; run `npm run fix` before push.
+
+## TanStack (summary)
+
+- Keys: prefer `src/lib/keys/*` factories; invalidate at appropriate scope.
+- Global defaults in `queryClient.ts`: `staleTime` 5m, `gcTime` 6m, `retry` 2, `refetchOnWindowFocus` false.
+- shadcn: add via CLI; `cn()` from `src/lib/utils.ts`.
+
+Full tables, tree, and patterns: **[`PROJECT.md`](../PROJECT.md)**.
