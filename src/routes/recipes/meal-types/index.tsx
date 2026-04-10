@@ -136,6 +136,7 @@ const MealTypesIndexPage = () => {
                 to="/recipes/meal-type/$mealType"
                 params={{ mealType: mealTypeToSlug(mealType) }}
                 onMouseEnter={() => prefetchMealType(mealType)}
+                onFocus={() => prefetchMealType(mealType)}
                 className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label={mealTypeToPageTitle(mealType)}
               >
