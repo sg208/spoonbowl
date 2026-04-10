@@ -32,6 +32,7 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 - **Generated:** `src/routeTree.gen.ts` — never edit.
 - **Root route:** `src/routes/__root.tsx` → `RootLayout`, 404.
+- **Route announcer:** `src/components/RouteAnnouncer.tsx` — `aria-live` SPA a11y; mounted in `RootLayout`.
 - **Routes:** file-based; dynamic segments use `$` (e.g. `$cuisine`, `$recipeId`).
 - **API:** `src/lib/api.ts` — typed wrappers only; avoid raw `fetch` in components.
 - **404 copy:** `src/lib/not-found-messages.ts`.

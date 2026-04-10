@@ -7,17 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.6] - 2026-04-10
+
 ### Added
 
 - Prefetch on hover and keyboard focus (`onMouseEnter` + `onFocus`) for all navigable `<Link>` components that load data: tag index cards and SEO pills (`/recipes/tags/`), tag SEO recipe links (`/recipes/tag/$tag`), `RecipeCard` (recipe detail prefetch on every listing page), and missing `onFocus` on meal-type index SEO pills and "Other Meal Types" pills.
+- **Route announcer (`RouteAnnouncer`):** visually-hidden `aria-live="polite"` region that announces the page title (or pathname fallback) to screen readers on every TanStack Router navigation; mounted in `RootLayout`.
 
 ### Fixed
 
+- **RouteAnnouncer:** clear the live-region string synchronously before re-setting it so repeated navigations to the same page title are always re-announced by screen readers (fixes silent navigations when `document.title` is unchanged).
 - Privacy policy (`PrivacyCoreSections`): add screen-reader-only `h2#privacy-intro` so the intro section’s `aria-labelledby="privacy-intro"` resolves to an accessible name.
 
 ### Changed
 
 - **Privacy:** merged former `/gdpr` page into `/privacy` (single policy + regional notices); `/gdpr` now redirects to `/privacy`. Footer and Terms §1 link only to Privacy Policy. Split body into `src/components/legal/PrivacyCoreSections.tsx` and `src/components/legal/PrivacyRegionalNotices.tsx`. One Cloudflare privacy-policy link (in §3). Updated `PROJECT.md`, `README.md`, and `.github/copilot-instructions.md` to match.
+- Merged `origin/develop` into `feat/link-prefetch-on-hover`; incorporated RouteAnnouncer a11y feature and fixes.
+
+[0.0.6]: https://github.com/sg208/spoonbowl/compare/v0.0.5...v0.0.6
 
 ## [0.0.5] - 2026-04-10
 
