@@ -1,7 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, Tag } from "lucide-react"
+import { fetchRecipe } from "@/lib/api"
 import { useRecipesByTag, useTags } from "@/hooks/use-recipe-queries"
 import { tagToPageTitle, tagToDescription, slugToTag, getTagEmoji } from "@/lib/tagUtils"
+import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import { RecipeCard, RecipeCardSkeleton } from "@/components/RecipeCard"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -11,7 +15,16 @@ export const Route = createFileRoute("/recipes/tag/$tag")({
 })
 
 const TagRecipesPage = () => {
+  const queryClient = useQueryClient()
   const { tag: tagSlug } = Route.useParams()
+
+  const prefetchRecipeDetail = (id: number) => {
+    queryClient.prefetchQuery({
+      queryKey: recipeDetailKeys.detail(id),
+      queryFn: () => fetchRecipe(id),
+      staleTime: STALE_TIME_5M_MS,
+    })
+  }
 
   const { data: allTags } = useTags()
 
@@ -148,6 +161,8 @@ const TagRecipesPage = () => {
                 key={r.id}
                 to="/recipes/$recipeId"
                 params={{ recipeId: String(r.id) }}
+                onMouseEnter={() => prefetchRecipeDetail(r.id)}
+                onFocus={() => prefetchRecipeDetail(r.id)}
                 className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
               >
                 {r.name}

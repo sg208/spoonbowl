@@ -1,7 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
 import { Tag, ChefHat, ArrowRight } from "lucide-react"
+import { fetchRecipesByTag } from "@/lib/api"
 import { useTags } from "@/hooks/use-recipe-queries"
 import { tagToPageTitle, sortTagsAlphabetically, getTagEmoji, tagToSlug } from "@/lib/tagUtils"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import { Badge } from "@/components/ui/badge"
 
 export const Route = createFileRoute("/recipes/tags/")({
@@ -9,7 +13,16 @@ export const Route = createFileRoute("/recipes/tags/")({
 })
 
 const TagsIndexPage = () => {
+  const queryClient = useQueryClient()
   const { data: tags, isLoading, isError } = useTags()
+
+  const prefetchTag = (tag: string) => {
+    queryClient.prefetchQuery({
+      queryKey: recipeKeys.byTag(tag),
+      queryFn: () => fetchRecipesByTag(tag),
+      staleTime: STALE_TIME_5M_MS,
+    })
+  }
 
   const grouped = tags ? sortTagsAlphabetically(tags) : {}
   const letters = Object.keys(grouped).sort()
@@ -75,6 +88,8 @@ const TagsIndexPage = () => {
                     <Link
                       to="/recipes/tag/$tag"
                       params={{ tag: tagToSlug(tag) }}
+                      onMouseEnter={() => prefetchTag(tag)}
+                      onFocus={() => prefetchTag(tag)}
                       className="group flex items-center gap-3 rounded-xl border border-border bg-card p-4 transition-all duration-200 hover:border-primary/40 hover:shadow-sm hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                       aria-label={`Browse ${tagToPageTitle(tag)}`}
                     >
@@ -132,6 +147,8 @@ const TagsIndexPage = () => {
                 key={tag}
                 to="/recipes/tag/$tag"
                 params={{ tag: tagToSlug(tag) }}
+                onMouseEnter={() => prefetchTag(tag)}
+                onFocus={() => prefetchTag(tag)}
                 className="inline-flex items-center gap-1 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 aria-label={tagToPageTitle(tag)}
               >

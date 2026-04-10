@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Prefetch on hover and keyboard focus (`onMouseEnter` + `onFocus`) for all navigable `<Link>` components that load data: tag index cards and SEO pills (`/recipes/tags/`), tag SEO recipe links (`/recipes/tag/$tag`), `RecipeCard` (recipe detail prefetch on every listing page), and missing `onFocus` on meal-type index SEO pills and "Other Meal Types" pills.
+
 ### Fixed
 
 - Privacy policy (`PrivacyCoreSections`): add screen-reader-only `h2#privacy-intro` so the intro section’s `aria-labelledby="privacy-intro"` resolves to an accessible name.

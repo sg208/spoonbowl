@@ -193,6 +193,7 @@ const MealTypeRecipesPage = () => {
                   to="/recipes/meal-type/$mealType"
                   params={{ mealType: mealTypeToSlug(t) }}
                   onMouseEnter={() => prefetchMealType(t)}
+                  onFocus={() => prefetchMealType(t)}
                   className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground hover:border-primary/40 hover:text-primary transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
                 >
                   <span aria-hidden="true">{getMealTypeEmoji(t)}</span>
