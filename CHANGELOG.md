@@ -16,6 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Legal pages (`/privacy`, `/gdpr`, `/terms`, `/disclaimer`): name **Cloudflare Pages** and Cloudflare’s network for hosting and edge logs; link to Cloudflare’s privacy policy; align effective/last-updated dates (April 10, 2026) on privacy, terms, and GDPR; add **Site availability** on disclaimer and **Infrastructure** under Terms §7.
 - Cuisine recipe route (`/recipes/cuisine/$cuisine`): route `loader` loads the cuisines list with `ensureQueryData`, validates the `:cuisine` slug, and throws `notFound()` for unknown slugs; the page uses `Route.useLoaderData()` for `cuisine` and `allCuisines` (no client `useCuisines` gate before fetching recipes).
 - `CuisineRecipesSeoAndRelated`: SEO paragraph uses `total ?? recipes.length` when the API omits `total`.
 - `PROJECT.md`: “where to change” table — correct `NotFoundRandomRecipe` path under `src/components/`.

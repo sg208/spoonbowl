@@ -90,6 +90,19 @@ const DisclaimerPage = () => {
             information on this site. Your use is at your own risk.
           </p>
         </section>
+
+        <Separator />
+
+        <section aria-labelledby="disclaimer-availability">
+          <h2 id="disclaimer-availability" className="text-xl font-bold tracking-tight mb-3">
+            Site availability
+          </h2>
+          <p className="text-muted-foreground leading-7">
+            This site is served using third-party hosting (<strong>Cloudflare Pages</strong>).
+            Interruptions, regional differences in delivery, or temporary unavailability may occur
+            and are outside Spoonbowl&apos;s control.
+          </p>
+        </section>
       </div>
     </div>
   )

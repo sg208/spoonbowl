@@ -19,8 +19,8 @@ const GdprPage = () => {
           Privacy Rights &amp; Compliance
         </h1>
         <p className="mt-3 text-muted-foreground">
-          GDPR (EU), CCPA (California), and applicable privacy regulations. Effective: January 1,
-          2025.
+          GDPR (EU), CCPA (California), and applicable privacy regulations. Effective: April 10,
+          2026.
         </p>
       </header>
 
@@ -48,9 +48,10 @@ const GdprPage = () => {
           <h3 className="font-semibold mb-2">Legal Basis for Processing</h3>
           <p className="text-muted-foreground leading-7 mb-4">
             We process minimal data based on <strong>legitimate interests</strong> (operating a
-            functional website) and <strong>legal obligations</strong> (server security logs via our
-            hosting provider). We do not process personal data based on consent for marketing or
-            profiling purposes.
+            functional website) and <strong>legal obligations</strong> (connection and security logs
+            processed by <strong>Cloudflare</strong> when serving this site via{" "}
+            <strong>Cloudflare Pages</strong>). We do not process personal data based on consent for
+            marketing or profiling purposes.
           </p>
 
           <h3 className="font-semibold mb-2">Your GDPR Rights</h3>
@@ -87,10 +88,24 @@ const GdprPage = () => {
           </ul>
 
           <h3 className="font-semibold mt-5 mb-2">Data Transfers</h3>
-          <p className="text-muted-foreground leading-7">
+          <p className="text-muted-foreground leading-7 mb-4">
             Recipe data is fetched from DummyJSON, a service that may be hosted outside the EU. No
             personal data is transmitted in these requests — only a standard HTTP request is made to
             retrieve recipe information.
+          </p>
+          <p className="text-muted-foreground leading-7">
+            When you visit spoonbowl.app, your traffic may be routed through{" "}
+            <strong>Cloudflare&apos;s global network</strong> (EU/EEA or elsewhere). How Cloudflare
+            processes connection data is described in{" "}
+            <a
+              href="https://www.cloudflare.com/privacypolicy/"
+              className="underline hover:text-foreground transition-colors"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Cloudflare&apos;s Privacy Policy
+            </a>
+            .
           </p>
 
           <h3 className="font-semibold mt-5 mb-2">Data Retention</h3>
@@ -126,12 +141,12 @@ const GdprPage = () => {
               <tbody className="text-muted-foreground">
                 <tr className="border-b border-border">
                   <td className="py-2 pr-4">Identifiers (name, email, IP)</td>
-                  <td className="py-2 pr-4">No (IP via hosting logs only)</td>
+                  <td className="py-2 pr-4">No (IP via Cloudflare logs only)</td>
                   <td className="py-2">No</td>
                 </tr>
                 <tr className="border-b border-border">
                   <td className="py-2 pr-4">Internet or network activity</td>
-                  <td className="py-2 pr-4">Via server logs only</td>
+                  <td className="py-2 pr-4">Via Cloudflare edge logs only</td>
                   <td className="py-2">No</td>
                 </tr>
                 <tr className="border-b border-border">

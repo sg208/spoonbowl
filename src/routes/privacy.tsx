@@ -13,7 +13,7 @@ const PrivacyPage = () => {
           Privacy Policy
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Effective date: January 1, 2025 &middot; Last updated: January 1, 2025
+          Effective date: April 10, 2026 &middot; Last updated: April 10, 2026
         </p>
       </header>
 
@@ -102,12 +102,21 @@ const PrivacyPage = () => {
               </p>
             </div>
             <div className="rounded-lg border border-border p-4 bg-card">
-              <h3 className="font-semibold mb-1">Hosting Provider</h3>
+              <h3 className="font-semibold mb-1">Hosting — Cloudflare Pages</h3>
               <p className="text-sm text-muted-foreground">
-                Depending on where this site is deployed, your hosting provider or CDN may collect
-                standard connection and server logs (for example IP address, request time, and
-                status). We do not control that provider&apos;s logging practices; check their
-                privacy notice for details.
+                This website is hosted on <strong>Cloudflare Pages</strong> and delivered through{" "}
+                <strong>Cloudflare&apos;s global network</strong>. When you load pages or assets
+                from spoonbowl.app, Cloudflare may process connection metadata such as your IP
+                address, requested URL, timestamps, and related technical data as described in{" "}
+                <a
+                  href="https://www.cloudflare.com/privacypolicy/"
+                  className="underline hover:text-foreground transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Cloudflare&apos;s Privacy Policy
+                </a>
+                . We do not control Cloudflare&apos;s logging or retention practices.
               </p>
             </div>
           </div>
@@ -154,7 +163,10 @@ const PrivacyPage = () => {
               Clear all locally stored data (theme preferences, cache) via your browser settings
             </li>
             <li>Browse our site without any form of account</li>
-            <li>Request information about what data our hosting provider may hold</li>
+            <li>
+              Request information about what data Cloudflare may hold in connection with serving
+              this site (see Cloudflare&apos;s privacy policy)
+            </li>
           </ul>
         </section>
 
