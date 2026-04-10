@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Extracted `RecipeCardSkeleton` and `EmptyRecipes` into their own files (`src/components/RecipeCardSkeleton.tsx`, `src/components/EmptyRecipes.tsx`) to keep `RecipeCard.tsx` under the ~120-line soft cap; updated all consumers.
+- Extracted shared `usePrefetchRecipeDetail` hook (`src/hooks/use-prefetch-recipe-detail.ts`) from inline prefetch logic in `RecipeCard` and `$tag`; both callers now use the single hook.
+- Removed internal branch-merge note from `[0.0.6]` changelog entry.
+
 ## [0.0.6] - 2026-04-10
 
 ### Added
@@ -22,7 +28,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Privacy:** merged former `/gdpr` page into `/privacy` (single policy + regional notices); `/gdpr` now redirects to `/privacy`. Footer and Terms §1 link only to Privacy Policy. Split body into `src/components/legal/PrivacyCoreSections.tsx` and `src/components/legal/PrivacyRegionalNotices.tsx`. One Cloudflare privacy-policy link (in §3). Updated `PROJECT.md`, `README.md`, and `.github/copilot-instructions.md` to match.
-- Merged `origin/develop` into `feat/link-prefetch-on-hover`; incorporated RouteAnnouncer a11y feature and fixes.
+- Incorporated RouteAnnouncer accessibility feature and fixes.
 
 [0.0.6]: https://github.com/sg208/spoonbowl/compare/v0.0.5...v0.0.6
 

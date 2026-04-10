@@ -105,6 +105,8 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │   ├── Footer.tsx
     │   ├── FeaturedRecipe.tsx
     │   ├── RecipeCard.tsx
+    │   ├── RecipeCardSkeleton.tsx     # skeleton placeholder for recipe cards
+    │   ├── EmptyRecipes.tsx           # empty-state UI for recipe grids
     │   ├── mode-toggle.tsx
     │   ├── theme-provider.tsx
     │   └── ui/
@@ -113,6 +115,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     ├── hooks/
     │   ├── use-mobile.ts
     │   ├── use-prefetch-cuisines-index.ts
+    │   ├── use-prefetch-recipe-detail.ts  # prefetch a recipe detail query on hover/focus
     │   └── use-recipe-queries.ts      # shared useQuery wrappers + keys from lib/keys
     └── lib/
         ├── keys/
@@ -140,7 +143,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 | Privacy policy (incl. regional notices)                               | `src/routes/privacy.tsx`, `src/components/legal/*`                                                                                                    |
 | Theme / dark mode                                                     | `src/components/theme-provider.tsx`, `src/components/mode-toggle.tsx`                                                                                 |
 | New page / route                                                      | Add a file under `src/routes/**` (tree regenerates into `src/routeTree.gen.ts`)                                                                       |
-| Recipe cards / list UI                                                | `src/components/RecipeCard.tsx`, `src/components/FeaturedRecipe.tsx`                                                                                  |
+| Recipe cards / list UI                                                | `src/components/RecipeCard.tsx`, `src/components/RecipeCardSkeleton.tsx`, `src/components/EmptyRecipes.tsx`, `src/components/FeaturedRecipe.tsx`      |
 | 404 page / random recipe                                              | `src/components/NotFoundPage.tsx`, `src/components/NotFoundRandomRecipe.tsx`, copy pool `src/lib/not-found-messages.ts`                               |
 | Domain helpers (headings, filters, labels)                            | `src/lib/headings.ts`, `mealTypeUtils.ts`, `cuisineUtils.ts`, `tagUtils.ts`                                                                           |
 | API calls                                                             | `src/lib/api.ts` — add a typed wrapper; avoid scattering `fetch` in components                                                                        |

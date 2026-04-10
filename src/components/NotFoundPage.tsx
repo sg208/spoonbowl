@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo } from "react"
 import { Link } from "@tanstack/react-router"
-import { RecipeCardSkeleton } from "@/components/RecipeCard"
+import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { pickRandomNotFoundMessage } from "@/lib/not-found-messages"
 
 const NotFoundRandomRecipe = lazy(() => import("@/components/NotFoundRandomRecipe"))
