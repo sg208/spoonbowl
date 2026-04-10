@@ -82,13 +82,15 @@ const HomePage = () => {
         </h2>
         {isLoading ? (
           <FeaturedRecipeSkeleton />
-        ) : isError || !featured ? (
+        ) : isError ? (
           <div
             className="rounded-2xl border border-border bg-card p-8 text-center text-muted-foreground"
             role="alert"
           >
             Unable to load featured recipe. Please try again.
           </div>
+        ) : !featured ? (
+          <FeaturedRecipeSkeleton />
         ) : (
           <FeaturedRecipe recipe={featured} />
         )}
