@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useMemo } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { fetchAllRecipes } from "@/lib/api"
 import { getRandomHeading } from "@/lib/headings"
 import { RecipeCard } from "@/components/RecipeCard"
@@ -38,24 +38,27 @@ const getSessionFeaturedRecipeId = (recipes: Recipe[]): number | null => {
 const HomePage = () => {
   const heading = useMemo(() => getRandomHeading(), [])
   const { data, isLoading, isError } = useAllRecipes()
+  const recipes = useMemo<Recipe[]>(() => data?.recipes ?? [], [data?.recipes])
+  const [featured, setFeatured] = useState<Recipe | null>(null)
 
-  const featured = useMemo<Recipe | null>(() => {
-    const recipes = data?.recipes
-    if (!recipes?.length) return null
-
+  useEffect(() => {
+    if (!recipes.length) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect -- Sync featured selection from current recipe payload.
+      setFeatured(null)
+      return
+    }
     const featuredId = getSessionFeaturedRecipeId(recipes)
-    return recipes.find((recipe) => recipe.id === featuredId) ?? recipes[0] ?? null
-  }, [data?.recipes])
+    setFeatured(recipes.find((recipe) => recipe.id === featuredId) ?? recipes[0] ?? null)
+  }, [recipes])
 
   const displayRecipes = useMemo<Recipe[]>(() => {
-    const recipes = data?.recipes
-    if (!recipes?.length) return []
+    if (!recipes.length) return []
 
     const pool = featured ? recipes.filter((recipe) => recipe.id !== featured.id) : recipes
     const randomized = pickRandom(pool, GRID_SIZE)
     if (randomized.length === GRID_SIZE || !featured) return randomized
     return [...randomized, featured].slice(0, GRID_SIZE)
-  }, [data?.recipes, featured])
+  }, [recipes, featured])
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-8">
