@@ -10,7 +10,9 @@ import "./index.css"
 
 const router = createRouter({
   routeTree,
-  context: {},
+  context: {
+    queryClient,
+  },
   defaultPreload: "intent",
   defaultPreloadStaleTime: 0,
   scrollRestoration: true,

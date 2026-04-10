@@ -19,7 +19,7 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 | **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                  |
 | **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                      |
 
-**Today’s codebase note:** route components often call `useQuery` with **inline** `queryKey` arrays. Prefer migrating toward **key factories** under `src/lib/keys/` when touching or adding queries (see [TanStack conventions](#tanstack-conventions)).
+**Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/use-recipe-queries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
 
 ---
 
@@ -96,6 +96,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │   ├── RootLayout.tsx             # app shell: Navbar/Footer/Outlet + Toaster
     │   ├── NotFoundPage.tsx
     │   ├── NotFoundRandomRecipe.tsx
+    │   ├── cuisine/                 # cuisine listing page sections (breadcrumb, header, grid, SEO)
     │   ├── Navbar.tsx
     │   ├── Footer.tsx
     │   ├── FeaturedRecipe.tsx
@@ -107,10 +108,13 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │       └── sonner.tsx             # toaster wrapper
     ├── hooks/
     │   ├── use-mobile.ts
-    │   └── use-prefetch-cuisines-index.ts
+    │   ├── use-prefetch-cuisines-index.ts
+    │   └── use-recipe-queries.ts      # shared useQuery wrappers + keys from lib/keys
     └── lib/
+        ├── keys/
+        │   └── recipeKeys.ts          # React Query key factories (recipes, meta lists, 404)
         ├── api.ts                     # typed fetch wrappers (DummyJSON recipes)
-        ├── queryClient.ts             # React Query defaults (staleTime/gcTime/retry)
+        ├── queryClient.ts             # React Query defaults (staleTime/gcTime/retry) + STALE_TIME export
         ├── not-found-messages.ts      # 404 copy pool + random picker
         ├── utils.ts                   # cn() / class merging utilities
         ├── headings.ts
@@ -134,7 +138,7 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 | 404 page / random recipe                                              | `src/components/NotFoundPage.tsx`, `NotFoundRandomRecipe.tsx`, copy pool `src/lib/not-found-messages.ts`                                              |
 | Domain helpers (headings, filters, labels)                            | `src/lib/headings.ts`, `mealTypeUtils.ts`, `cuisineUtils.ts`, `tagUtils.ts`                                                                           |
 | API calls                                                             | `src/lib/api.ts` — add a typed wrapper; avoid scattering `fetch` in components                                                                        |
-| React Query defaults                                                  | `src/lib/queryClient.ts`                                                                                                                              |
+| React Query defaults / shared recipe queries                          | `src/lib/queryClient.ts`, `src/lib/keys/recipeKeys.ts`, `src/hooks/use-recipe-queries.ts`                                                             |
 | PWA / cache rules                                                     | `vite.config.ts` → `VitePWA({ workbox: { runtimeCaching: […] } })`                                                                                    |
 | Global styles                                                         | `src/index.css`                                                                                                                                       |
 | UI primitives                                                         | `src/components/ui/*` — add via `npx shadcn add <component>`; don’t hand-copy from docs                                                               |
@@ -207,12 +211,12 @@ const HomePage = (): JSX.Element => {
 
 ### Current vs preferred
 
-| Area           | Today                                                        | Preferred for new work / refactors                                                                              |
-| -------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- |
-| Query keys     | Inline string arrays in routes                               | Factories in `src/lib/keys/*` (import everywhere; don’t duplicate literals)                                     |
-| Queries        | `useQuery` inside route components                           | Optional: wrap in `src/hooks/use*.ts`; keep side-effects (toasts, invalidation) in the hook                     |
-| Router context | `createRootRoute` only — **no** `queryClient` on context yet | Optional: `createRootRouteWithContext<{ queryClient: QueryClient }>()` so loaders can use `context.queryClient` |
-| Loaders        | Not used everywhere                                          | Recommended when adding routes or fixing double-fetch: `loader` + `ensureQueryData`                             |
+| Area           | Today                                                                 | Preferred for new work / refactors                                                                    |
+| -------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| Query keys     | Legacy inline keys in some places                                     | `recipeKeys` / `recipeMetaKeys` / `recipeDetailKeys` in `src/lib/keys/recipeKeys.ts` for recipe flows |
+| Queries        | `useQuery` inside route components                                    | Optional: wrap in `src/hooks/use*.ts`; keep side-effects (toasts, invalidation) in the hook           |
+| Router context | Root uses `createRootRouteWithContext` — **`queryClient` on context** | Loaders can use `context.queryClient` (e.g. home `ensureQueryData`)                                   |
+| Loaders        | Not used everywhere                                                   | Recommended when adding routes or fixing double-fetch: `loader` + `ensureQueryData`                   |
 
 ### React Query — query key factory (preferred pattern)
 

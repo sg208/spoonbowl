@@ -1,7 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { UtensilsCrossed, ChefHat, ArrowRight } from "lucide-react"
-import { fetchMealTypes, fetchRecipesByMealType } from "@/lib/api"
+import { fetchRecipesByMealType } from "@/lib/api"
+import { useMealTypes } from "@/hooks/use-recipe-queries"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
   getMealTypeEmoji,
   getMealTypeDescription,
@@ -16,20 +19,13 @@ export const Route = createFileRoute("/recipes/meal-types/")({
 
 const MealTypesIndexPage = () => {
   const queryClient = useQueryClient()
-  const {
-    data: mealTypes,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["meal-types"],
-    queryFn: fetchMealTypes,
-  })
+  const { data: mealTypes, isLoading, isError } = useMealTypes()
 
   const prefetchMealType = (mealType: string) => {
     queryClient.prefetchQuery({
-      queryKey: ["recipes", "meal-type", mealType],
+      queryKey: recipeKeys.byMealType(mealType),
       queryFn: () => fetchRecipesByMealType(mealType),
-      staleTime: 1000 * 60 * 5,
+      staleTime: STALE_TIME_5M_MS,
     })
   }
 
