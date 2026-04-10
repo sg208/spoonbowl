@@ -1,17 +1,17 @@
 import { useQueryClient } from "@tanstack/react-query"
 import { useCallback } from "react"
 import { fetchCuisines } from "@/lib/api"
-
-const STALE_5M = 1000 * 60 * 5
+import { recipeMetaKeys } from "@/lib/keys/recipeKeys"
+import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 
 /** Prefetch cuisines list query (same key as `/recipes/cuisines/`). */
-export function usePrefetchCuisinesIndex() {
+export const usePrefetchCuisinesIndex = () => {
   const queryClient = useQueryClient()
   return useCallback(() => {
     queryClient.prefetchQuery({
-      queryKey: ["cuisines"],
+      queryKey: recipeMetaKeys.cuisines(),
       queryFn: fetchCuisines,
-      staleTime: STALE_5M,
+      staleTime: STALE_TIME_5M_MS,
     })
   }, [queryClient])
 }

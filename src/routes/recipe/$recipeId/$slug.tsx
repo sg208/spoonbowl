@@ -1,28 +1,17 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { useQuery } from "@tanstack/react-query"
 import { Clock, ChefHat, Users, Star, Flame, ArrowLeft } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import { useRecipeDetail } from "@/hooks/use-recipe-queries"
 import { fetchRecipe } from "@/lib/api"
-
-export const Route = createFileRoute("/recipe/$recipeId/$slug")({
-  component: RecipeDetailPage,
-})
+import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
 
 const RecipeDetailPage = () => {
   const { recipeId } = Route.useParams()
   const id = Number(recipeId)
 
-  const {
-    data: recipe,
-    isLoading,
-    isError,
-  } = useQuery({
-    queryKey: ["recipe", id],
-    queryFn: () => fetchRecipe(id),
-    enabled: !isNaN(id),
-  })
+  const { data: recipe, isLoading, isError } = useRecipeDetail(id)
 
   if (isLoading) {
     return <RecipeDetailSkeleton />
@@ -247,3 +236,15 @@ const RecipeDetailSkeleton = () => {
     </div>
   )
 }
+
+export const Route = createFileRoute("/recipe/$recipeId/$slug")({
+  loader: ({ context, params }) => {
+    const id = Number(params.recipeId)
+    if (Number.isNaN(id)) return
+    return context.queryClient.ensureQueryData({
+      queryKey: recipeDetailKeys.detail(id),
+      queryFn: () => fetchRecipe(id),
+    })
+  },
+  component: RecipeDetailPage,
+})
