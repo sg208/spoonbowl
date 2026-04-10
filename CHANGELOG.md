@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Extracted `RecipeCardSkeleton` and `EmptyRecipes` into their own files (`src/components/RecipeCardSkeleton.tsx`, `src/components/EmptyRecipes.tsx`) to keep `RecipeCard.tsx` under the ~120-line soft cap; updated all consumers.
 - Extracted shared `usePrefetchRecipeDetail` hook (`src/hooks/use-prefetch-recipe-detail.ts`) from inline prefetch logic in `RecipeCard` and `$tag`; both callers now use the single hook.
+- Fixed stale JSDoc comment in `usePrefetchRecipeDetail` to reference the correct route path `/recipe/$recipeId/$slug` instead of `/recipe/$recipeId`.
 - Removed internal branch-merge note from `[0.0.6]` changelog entry.
 
 ## [0.0.6] - 2026-04-10

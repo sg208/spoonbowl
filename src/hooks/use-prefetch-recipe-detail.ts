@@ -4,7 +4,7 @@ import { fetchRecipe } from "@/lib/api"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 
-/** Prefetch a single recipe detail query (same key as `/recipe/$recipeId`). */
+/** Prefetch a single recipe detail query (same key as `/recipe/$recipeId/$slug`). */
 export const usePrefetchRecipeDetail = () => {
   const queryClient = useQueryClient()
   return useCallback(
