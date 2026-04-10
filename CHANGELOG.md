@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **RouteAnnouncer:** clear the live-region string synchronously before re-setting it so repeated navigations to the same page title are always re-announced by screen readers (fixes silent navigations when `document.title` is unchanged).
 - Privacy policy (`PrivacyCoreSections`): add screen-reader-only `h2#privacy-intro` so the intro section’s `aria-labelledby="privacy-intro"` resolves to an accessible name.
 
 ### Changed
