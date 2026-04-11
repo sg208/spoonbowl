@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- Home route now persists a session-stable hero heading and recipes-section heading via `getSessionRandomText`, and narrows the homepage recipe grid to four session-stable picks (excluding the featured recipe when available).
+- Browse navigation links now use trailing slashes in `src/lib/navigationLinks.ts` so shared `Navbar`/`Footer` links align with index route paths (`/recipes/tags/`, `/recipes/meal-types/`, `/recipes/cuisines/`).
 - Unified primary browse navigation links in `src/lib/navigationLinks.ts` and refactored `Navbar`/`Footer` to render from that shared source of truth (including cuisines prefetch behavior and redundant list-role cleanup).
 - Home route now preloads a single `allRecipes` query and derives both featured recipe and grid from that cache; featured selection is stabilized per session using `sessionStorage` and `FeaturedRecipe` layout was tightened for large screens.
 - Home route featured selection now keeps `useMemo` pure by moving `sessionStorage`-touching featured-id resolution into a `useEffect` with local featured state.
