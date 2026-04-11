@@ -17,9 +17,11 @@ import { Route as AccessibilityRouteImport } from './routes/accessibility'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as RecipesTagsIndexRouteImport } from './routes/recipes/tags/index'
 import { Route as RecipesMealTypesIndexRouteImport } from './routes/recipes/meal-types/index'
+import { Route as RecipesDifficultiesIndexRouteImport } from './routes/recipes/difficulties/index'
 import { Route as RecipesCuisinesIndexRouteImport } from './routes/recipes/cuisines/index'
 import { Route as RecipesTagTagRouteImport } from './routes/recipes/tag/$tag'
 import { Route as RecipesMealTypeMealTypeRouteImport } from './routes/recipes/meal-type/$mealType'
+import { Route as RecipesDifficultyDifficultyRouteImport } from './routes/recipes/difficulty/$difficulty'
 import { Route as RecipesCuisineCuisineRouteImport } from './routes/recipes/cuisine/$cuisine'
 import { Route as RecipeRecipeIdSlugRouteImport } from './routes/recipe/$recipeId/$slug'
 
@@ -63,6 +65,12 @@ const RecipesMealTypesIndexRoute = RecipesMealTypesIndexRouteImport.update({
   path: '/recipes/meal-types/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesDifficultiesIndexRoute =
+  RecipesDifficultiesIndexRouteImport.update({
+    id: '/recipes/difficulties/',
+    path: '/recipes/difficulties/',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RecipesCuisinesIndexRoute = RecipesCuisinesIndexRouteImport.update({
   id: '/recipes/cuisines/',
   path: '/recipes/cuisines/',
@@ -78,6 +86,12 @@ const RecipesMealTypeMealTypeRoute = RecipesMealTypeMealTypeRouteImport.update({
   path: '/recipes/meal-type/$mealType',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RecipesDifficultyDifficultyRoute =
+  RecipesDifficultyDifficultyRouteImport.update({
+    id: '/recipes/difficulty/$difficulty',
+    path: '/recipes/difficulty/$difficulty',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const RecipesCuisineCuisineRoute = RecipesCuisineCuisineRouteImport.update({
   id: '/recipes/cuisine/$cuisine',
   path: '/recipes/cuisine/$cuisine',
@@ -98,9 +112,11 @@ export interface FileRoutesByFullPath {
   '/terms': typeof TermsRoute
   '/recipe/$recipeId/$slug': typeof RecipeRecipeIdSlugRoute
   '/recipes/cuisine/$cuisine': typeof RecipesCuisineCuisineRoute
+  '/recipes/difficulty/$difficulty': typeof RecipesDifficultyDifficultyRoute
   '/recipes/meal-type/$mealType': typeof RecipesMealTypeMealTypeRoute
   '/recipes/tag/$tag': typeof RecipesTagTagRoute
   '/recipes/cuisines/': typeof RecipesCuisinesIndexRoute
+  '/recipes/difficulties/': typeof RecipesDifficultiesIndexRoute
   '/recipes/meal-types/': typeof RecipesMealTypesIndexRoute
   '/recipes/tags/': typeof RecipesTagsIndexRoute
 }
@@ -113,9 +129,11 @@ export interface FileRoutesByTo {
   '/terms': typeof TermsRoute
   '/recipe/$recipeId/$slug': typeof RecipeRecipeIdSlugRoute
   '/recipes/cuisine/$cuisine': typeof RecipesCuisineCuisineRoute
+  '/recipes/difficulty/$difficulty': typeof RecipesDifficultyDifficultyRoute
   '/recipes/meal-type/$mealType': typeof RecipesMealTypeMealTypeRoute
   '/recipes/tag/$tag': typeof RecipesTagTagRoute
   '/recipes/cuisines': typeof RecipesCuisinesIndexRoute
+  '/recipes/difficulties': typeof RecipesDifficultiesIndexRoute
   '/recipes/meal-types': typeof RecipesMealTypesIndexRoute
   '/recipes/tags': typeof RecipesTagsIndexRoute
 }
@@ -129,9 +147,11 @@ export interface FileRoutesById {
   '/terms': typeof TermsRoute
   '/recipe/$recipeId/$slug': typeof RecipeRecipeIdSlugRoute
   '/recipes/cuisine/$cuisine': typeof RecipesCuisineCuisineRoute
+  '/recipes/difficulty/$difficulty': typeof RecipesDifficultyDifficultyRoute
   '/recipes/meal-type/$mealType': typeof RecipesMealTypeMealTypeRoute
   '/recipes/tag/$tag': typeof RecipesTagTagRoute
   '/recipes/cuisines/': typeof RecipesCuisinesIndexRoute
+  '/recipes/difficulties/': typeof RecipesDifficultiesIndexRoute
   '/recipes/meal-types/': typeof RecipesMealTypesIndexRoute
   '/recipes/tags/': typeof RecipesTagsIndexRoute
 }
@@ -146,9 +166,11 @@ export interface FileRouteTypes {
     | '/terms'
     | '/recipe/$recipeId/$slug'
     | '/recipes/cuisine/$cuisine'
+    | '/recipes/difficulty/$difficulty'
     | '/recipes/meal-type/$mealType'
     | '/recipes/tag/$tag'
     | '/recipes/cuisines/'
+    | '/recipes/difficulties/'
     | '/recipes/meal-types/'
     | '/recipes/tags/'
   fileRoutesByTo: FileRoutesByTo
@@ -161,9 +183,11 @@ export interface FileRouteTypes {
     | '/terms'
     | '/recipe/$recipeId/$slug'
     | '/recipes/cuisine/$cuisine'
+    | '/recipes/difficulty/$difficulty'
     | '/recipes/meal-type/$mealType'
     | '/recipes/tag/$tag'
     | '/recipes/cuisines'
+    | '/recipes/difficulties'
     | '/recipes/meal-types'
     | '/recipes/tags'
   id:
@@ -176,9 +200,11 @@ export interface FileRouteTypes {
     | '/terms'
     | '/recipe/$recipeId/$slug'
     | '/recipes/cuisine/$cuisine'
+    | '/recipes/difficulty/$difficulty'
     | '/recipes/meal-type/$mealType'
     | '/recipes/tag/$tag'
     | '/recipes/cuisines/'
+    | '/recipes/difficulties/'
     | '/recipes/meal-types/'
     | '/recipes/tags/'
   fileRoutesById: FileRoutesById
@@ -192,9 +218,11 @@ export interface RootRouteChildren {
   TermsRoute: typeof TermsRoute
   RecipeRecipeIdSlugRoute: typeof RecipeRecipeIdSlugRoute
   RecipesCuisineCuisineRoute: typeof RecipesCuisineCuisineRoute
+  RecipesDifficultyDifficultyRoute: typeof RecipesDifficultyDifficultyRoute
   RecipesMealTypeMealTypeRoute: typeof RecipesMealTypeMealTypeRoute
   RecipesTagTagRoute: typeof RecipesTagTagRoute
   RecipesCuisinesIndexRoute: typeof RecipesCuisinesIndexRoute
+  RecipesDifficultiesIndexRoute: typeof RecipesDifficultiesIndexRoute
   RecipesMealTypesIndexRoute: typeof RecipesMealTypesIndexRoute
   RecipesTagsIndexRoute: typeof RecipesTagsIndexRoute
 }
@@ -257,6 +285,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RecipesMealTypesIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/recipes/difficulties/': {
+      id: '/recipes/difficulties/'
+      path: '/recipes/difficulties'
+      fullPath: '/recipes/difficulties/'
+      preLoaderRoute: typeof RecipesDifficultiesIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recipes/cuisines/': {
       id: '/recipes/cuisines/'
       path: '/recipes/cuisines'
@@ -276,6 +311,13 @@ declare module '@tanstack/react-router' {
       path: '/recipes/meal-type/$mealType'
       fullPath: '/recipes/meal-type/$mealType'
       preLoaderRoute: typeof RecipesMealTypeMealTypeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/recipes/difficulty/$difficulty': {
+      id: '/recipes/difficulty/$difficulty'
+      path: '/recipes/difficulty/$difficulty'
+      fullPath: '/recipes/difficulty/$difficulty'
+      preLoaderRoute: typeof RecipesDifficultyDifficultyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/recipes/cuisine/$cuisine': {
@@ -304,9 +346,11 @@ const rootRouteChildren: RootRouteChildren = {
   TermsRoute: TermsRoute,
   RecipeRecipeIdSlugRoute: RecipeRecipeIdSlugRoute,
   RecipesCuisineCuisineRoute: RecipesCuisineCuisineRoute,
+  RecipesDifficultyDifficultyRoute: RecipesDifficultyDifficultyRoute,
   RecipesMealTypeMealTypeRoute: RecipesMealTypeMealTypeRoute,
   RecipesTagTagRoute: RecipesTagTagRoute,
   RecipesCuisinesIndexRoute: RecipesCuisinesIndexRoute,
+  RecipesDifficultiesIndexRoute: RecipesDifficultiesIndexRoute,
   RecipesMealTypesIndexRoute: RecipesMealTypesIndexRoute,
   RecipesTagsIndexRoute: RecipesTagsIndexRoute,
 }

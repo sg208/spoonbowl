@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router"
-import { ChefHat, Globe, Menu, X, Tag, UtensilsCrossed } from "lucide-react"
+import { BarChart2, ChefHat, Globe, Menu, X, Tag, UtensilsCrossed } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
@@ -17,6 +17,7 @@ const getBrowseLinkIcon = (id: BrowseLinkId) => {
   if (id === "categories") return <Tag className="h-3.5 w-3.5" aria-hidden="true" />
   if (id === "mealTypes") return <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
   if (id === "cuisines") return <Globe className="h-3.5 w-3.5" aria-hidden="true" />
+  if (id === "difficulties") return <BarChart2 className="h-3.5 w-3.5" aria-hidden="true" />
 
   return null
 }
