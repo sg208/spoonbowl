@@ -2,7 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react"
 import { useNavigate } from "@tanstack/react-router"
 import type { Recipe } from "@/lib/api"
 import { useRecipeSearch } from "@/hooks/useRecipeSearch"
-import { cn } from "@/lib/utils"
+import { cn, slugify } from "@/lib/utils"
 
 const renderBoldHighlight = (text: string, query: string): JSX.Element => {
   if (!query) return <>{text}</>
@@ -42,10 +42,14 @@ export const RecipeSearch = ({ recipes, isLoading = false }: RecipeSearchProps):
   const showResults = query.length >= 3 && results.length > 0
 
   const handleSelectRecipe = useCallback(
-    (recipeId: number) => {
+    (recipe: Recipe) => {
       setQuery("")
       setSelectedIndex(-1)
-      navigate({ to: "/recipes/$recipeId", params: { recipeId: recipeId.toString() } })
+      const slug = slugify(recipe.name)
+      navigate({
+        to: "/recipe/$recipeId/$slug",
+        params: { recipeId: recipe.id.toString(), slug },
+      })
     },
     [navigate]
   )
@@ -65,7 +69,7 @@ export const RecipeSearch = ({ recipes, isLoading = false }: RecipeSearchProps):
       case "Enter":
         event.preventDefault()
         if (selectedIndex >= 0 && results[selectedIndex]) {
-          handleSelectRecipe(results[selectedIndex].id)
+          handleSelectRecipe(results[selectedIndex])
         }
         break
       case "Escape":
@@ -147,11 +151,11 @@ export const RecipeSearch = ({ recipes, isLoading = false }: RecipeSearchProps):
                   ? "bg-orange-500/20 text-orange-100"
                   : "text-gray-200 hover:bg-gray-700"
               )}
-              onClick={() => handleSelectRecipe(recipe.id)}
+              onClick={() => handleSelectRecipe(recipe)}
               onKeyDown={(event) => {
                 if (event.key === "Enter" || event.key === " ") {
                   event.preventDefault()
-                  handleSelectRecipe(recipe.id)
+                  handleSelectRecipe(recipe)
                 }
               }}
               onMouseEnter={() => setSelectedIndex(index)}
