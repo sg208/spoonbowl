@@ -1,11 +1,9 @@
 import { useQuery } from "@tanstack/react-query"
 import {
-  fetchAllRecipes,
   fetchCuisines,
-  fetchFeaturedRecipe,
   fetchMealTypes,
   fetchRecipe,
-  fetchRecipes,
+  fetchAllRecipes,
   fetchRecipesByCuisine,
   fetchRecipesByMealType,
   fetchRecipesByTag,
@@ -13,16 +11,10 @@ import {
 } from "@/lib/api"
 import { notFoundKeys, recipeDetailKeys, recipeKeys, recipeMetaKeys } from "@/lib/keys/recipeKeys"
 
-export const useFeaturedRecipe = () =>
+export const useAllRecipes = () =>
   useQuery({
-    queryKey: recipeKeys.featured(),
-    queryFn: fetchFeaturedRecipe,
-  })
-
-export const useRecipeGrid = (limit: number, skip: number) =>
-  useQuery({
-    queryKey: recipeKeys.grid({ limit, skip }),
-    queryFn: () => fetchRecipes(limit, skip),
+    queryKey: recipeKeys.allRecipes(),
+    queryFn: fetchAllRecipes,
   })
 
 export const useCuisines = () =>

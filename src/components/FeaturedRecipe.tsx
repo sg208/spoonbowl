@@ -17,8 +17,8 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
       aria-labelledby="featured-recipe-heading"
       className="relative overflow-hidden rounded-2xl bg-card border border-border"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="relative aspect-[16/9] lg:aspect-auto lg:min-h-80">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:h-[400px] xl:h-[420px]">
+        <div className="relative aspect-[16/9] lg:aspect-auto lg:h-full">
           <img
             src={recipe.image}
             alt={`Featured recipe: ${recipe.name}`}
@@ -38,7 +38,7 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
           </div>
         </div>
 
-        <div className="flex flex-col justify-center p-6 lg:p-8 gap-4">
+        <div className="flex h-full flex-col justify-center gap-4 p-6 lg:gap-3 lg:p-6 xl:p-8">
           <div className="flex items-center gap-2 flex-wrap">
             <Badge variant="outline" className="text-xs">
               {recipe.cuisine}
@@ -71,7 +71,7 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
             )}
           </div>
 
-          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-2 xl:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-4">
             <div className="flex flex-col gap-0.5">
               <dt className="text-xs text-muted-foreground flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5" aria-hidden="true" />
@@ -138,9 +138,9 @@ export const FeaturedRecipeSkeleton = () => {
       aria-busy="true"
       aria-label="Loading featured recipe"
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2">
-        <div className="aspect-[16/9] lg:aspect-auto lg:min-h-80 bg-muted animate-pulse" />
-        <div className="p-6 lg:p-8 space-y-4">
+      <div className="grid grid-cols-1 lg:grid-cols-2 lg:h-[400px] xl:h-[420px]">
+        <div className="aspect-[16/9] lg:aspect-auto lg:h-full bg-muted animate-pulse" />
+        <div className="flex h-full flex-col justify-center space-y-4 p-6 lg:p-8">
           <div className="flex gap-2">
             <div className="h-5 w-16 bg-muted rounded-full animate-pulse" />
             <div className="h-5 w-12 bg-muted rounded-full animate-pulse" />

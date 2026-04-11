@@ -4,11 +4,20 @@ import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { ModeToggle } from "@/components/mode-toggle"
 import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
+import { browseLinks, type BrowseLinkId } from "@/lib/navigationLinks"
 
 const focusMainContent = () => {
   const main = document.getElementById("main-content")
   main?.focus()
   main?.scrollIntoView({ block: "start" })
+}
+
+const getBrowseLinkIcon = (id: BrowseLinkId) => {
+  if (id === "categories") return <Tag className="h-3.5 w-3.5" aria-hidden="true" />
+  if (id === "mealTypes") return <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
+  if (id === "cuisines") return <Globe className="h-3.5 w-3.5" aria-hidden="true" />
+
+  return null
 }
 
 export const Navbar = () => {
@@ -64,40 +73,22 @@ export const Navbar = () => {
         </Link>
 
         <nav className="hidden md:flex items-center gap-1" aria-label="Main navigation">
-          <Link
-            to="/"
-            className="px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            activeProps={{ className: "text-foreground" }}
-            activeOptions={{ exact: true }}
-          >
-            Recipes
-          </Link>
-          <Link
-            to="/recipes/tags/"
-            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            activeProps={{ className: "text-foreground" }}
-          >
-            <Tag className="h-3.5 w-3.5" aria-hidden="true" />
-            Categories
-          </Link>
-          <Link
-            to="/recipes/meal-types/"
-            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            activeProps={{ className: "text-foreground" }}
-          >
-            <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
-            Meal Types
-          </Link>
-          <Link
-            to="/recipes/cuisines"
-            onMouseEnter={prefetchCuisinesIndex}
-            onFocus={prefetchCuisinesIndex}
-            className="flex items-center gap-1.5 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            activeProps={{ className: "text-foreground" }}
-          >
-            <Globe className="h-3.5 w-3.5" aria-hidden="true" />
-            Cuisines
-          </Link>
+          {browseLinks.map((link) => (
+            <Link
+              key={link.id}
+              to={link.to}
+              onMouseEnter={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
+              onFocus={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
+              className={`px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                link.id === "recipes" ? "" : "flex items-center gap-1.5"
+              }`}
+              activeProps={{ className: "text-foreground" }}
+              activeOptions={link.id === "recipes" ? { exact: true } : undefined}
+            >
+              {getBrowseLinkIcon(link.id)}
+              {link.label}
+            </Link>
+          ))}
         </nav>
 
         <div className="flex items-center gap-2">
@@ -129,45 +120,24 @@ export const Navbar = () => {
           aria-label="Mobile navigation"
         >
           <div className="px-4 py-2 space-y-1">
-            <Link
-              ref={firstMobileLinkRef}
-              to="/"
-              onClick={() => setOpen(false)}
-              className="flex px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              activeProps={{ className: "text-foreground bg-accent" }}
-              activeOptions={{ exact: true }}
-            >
-              Recipes
-            </Link>
-            <Link
-              to="/recipes/tags/"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              activeProps={{ className: "text-foreground bg-accent" }}
-            >
-              <Tag className="h-3.5 w-3.5" aria-hidden="true" />
-              Categories
-            </Link>
-            <Link
-              to="/recipes/meal-types/"
-              onClick={() => setOpen(false)}
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              activeProps={{ className: "text-foreground bg-accent" }}
-            >
-              <UtensilsCrossed className="h-3.5 w-3.5" aria-hidden="true" />
-              Meal Types
-            </Link>
-            <Link
-              to="/recipes/cuisines"
-              onClick={() => setOpen(false)}
-              onMouseEnter={prefetchCuisinesIndex}
-              onFocus={prefetchCuisinesIndex}
-              className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-              activeProps={{ className: "text-foreground bg-accent" }}
-            >
-              <Globe className="h-3.5 w-3.5" aria-hidden="true" />
-              Cuisines
-            </Link>
+            {browseLinks.map((link) => (
+              <Link
+                key={link.id}
+                ref={link.id === "recipes" ? firstMobileLinkRef : undefined}
+                to={link.to}
+                onClick={() => setOpen(false)}
+                onMouseEnter={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
+                onFocus={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
+                className={`px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
+                  link.id === "recipes" ? "flex" : "flex items-center gap-2"
+                }`}
+                activeProps={{ className: "text-foreground bg-accent" }}
+                activeOptions={link.id === "recipes" ? { exact: true } : undefined}
+              >
+                {getBrowseLinkIcon(link.id)}
+                {link.label}
+              </Link>
+            ))}
           </div>
         </div>
       )}

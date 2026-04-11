@@ -1,3 +1,5 @@
+import { Separator } from "@/components/ui/separator"
+
 export const PrivacyRegionalNotices = () => {
   return (
     <div className="prose-like space-y-8 text-foreground">
@@ -11,58 +13,39 @@ export const PrivacyRegionalNotices = () => {
         </p>
       </section>
 
-      <section aria-labelledby="rights-gdpr">
-        <h2 id="rights-gdpr" className="text-xl font-bold tracking-tight mb-3">
-          6. GDPR — European Union / EEA users
+      <Separator />
+
+      <section aria-labelledby="rights-regional">
+        <h2 id="rights-regional" className="text-xl font-bold tracking-tight mb-3">
+          6. Regional privacy rights and notices
         </h2>
-        <p className="text-muted-foreground leading-7 mb-4">
-          We process minimal data based on <strong>legitimate interests</strong> (running the site)
-          and technical processing by our host and CDN (<strong>Cloudflare</strong>) as described in
-          §3 above. We do not use consent for marketing or profiling.
+        <p className="text-muted-foreground leading-7 mb-2">
+          We process minimal data based on <strong>legitimate interests</strong> to run and secure
+          the site, including technical processing by our host/CDN (<strong>Cloudflare</strong>) as
+          described in §3. We do not use data for marketing or profiling, and we do{" "}
+          <strong>not</strong> sell or share personal information for cross-context behavioral
+          advertising.
         </p>
         <p className="text-muted-foreground leading-7 mb-2">
-          Depending on applicable law, you may have rights to:
+          This section covers key frameworks including GDPR (EU/EEA), CCPA/CPRA and CalOPPA
+          (California), and other major privacy laws such as UK GDPR, Brazil&apos;s LGPD,
+          Canada&apos;s PIPEDA, Australia&apos;s Privacy Act, Singapore&apos;s PDPA, and
+          Japan&apos;s APPI.
         </p>
         <ul className="list-disc pl-6 space-y-1 text-muted-foreground">
-          <li>Access, rectify, or erase personal data we hold (we do not store account data)</li>
-          <li>Restrict or object to certain processing</li>
-          <li>Data portability where applicable</li>
-          <li>Lodge a complaint with your supervisory authority</li>
+          <li>Access, correction, and deletion rights where applicable</li>
+          <li>
+            Objection, restriction, portability, or consent-withdrawal rights where applicable
+          </li>
+          <li>Complaint rights with your local data protection authority where applicable</li>
+          <li>
+            Do Not Track (DNT) is honored to the extent consistent with our minimal, non-advertising
+            data use
+          </li>
         </ul>
-        <p className="text-muted-foreground leading-7 mt-4">
-          Recipe requests go to DummyJSON; those calls do not include personal data you typed into
-          our site. Traffic to spoonbowl.app may route through Cloudflare&apos;s global network.
-        </p>
-        <h3 className="font-semibold mt-5 mb-2">Retention</h3>
-        <p className="text-muted-foreground leading-7">
-          We retain no personal data on our servers. The PWA service worker may cache recipe images
-          for up to <strong>7 days</strong> and recipe JSON for up to <strong>24 hours</strong> on
-          your device, then purge automatically.
-        </p>
-      </section>
-
-      <section aria-labelledby="rights-ccpa">
-        <h2 id="rights-ccpa" className="text-xl font-bold tracking-tight mb-3">
-          7. CCPA / CPRA — California residents
-        </h2>
-        <p className="text-muted-foreground leading-7">
-          We do <strong>not</strong> sell or share personal information for cross-context behavioral
-          advertising. Identifiers (such as IP address) and internet or network activity may appear
-          in <strong>Cloudflare</strong> edge logs when you use the site, as noted in §3. We do not
-          collect sensitive personal information for limited purposes under CPRA. You may have
-          rights to know, delete, and correct personal information, to opt out of sale (not
-          applicable here), and not to be discriminated against for exercising these rights.
-        </p>
-      </section>
-
-      <section aria-labelledby="rights-caloppa">
-        <h2 id="rights-caloppa" className="text-xl font-bold tracking-tight mb-3">
-          8. CalOPPA and Do Not Track
-        </h2>
-        <p className="text-muted-foreground leading-7">
-          We post this policy and describe collection and choices here. We do not engage in
-          cross-site tracking; Do Not Track (DNT) signals are honored to the extent consistent with
-          our minimal, non-advertising use of data.
+        <p className="text-muted-foreground leading-7 mt-3">
+          Rights and verification requirements vary by jurisdiction. Contact us using §8 and we will
+          handle requests under the law that applies to your region.
         </p>
       </section>
     </div>
