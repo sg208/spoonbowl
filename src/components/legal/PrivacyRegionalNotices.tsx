@@ -39,8 +39,8 @@ export const PrivacyRegionalNotices = () => {
           </li>
           <li>Complaint rights with your local data protection authority where applicable</li>
           <li>
-            Do Not Track (DNT) is honored to the extent consistent with our minimal, non-advertising
-            data use
+            We do not track users or collect behavioral data, so Do Not Track (DNT) and similar
+            privacy signals are not applicable to our service
           </li>
         </ul>
         <p className="text-muted-foreground leading-7 mt-3">

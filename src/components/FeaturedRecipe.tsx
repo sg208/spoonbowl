@@ -140,7 +140,7 @@ export const FeaturedRecipeSkeleton = () => {
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:h-[400px] xl:h-[420px]">
         <div className="aspect-[16/9] lg:aspect-auto lg:h-full bg-muted animate-pulse" />
-        <div className="flex h-full flex-col justify-center space-y-4 p-6 lg:p-8">
+        <div className="flex h-full flex-col justify-center space-y-4 p-6 lg:p-6 xl:p-8">
           <div className="flex gap-2">
             <div className="h-5 w-16 bg-muted rounded-full animate-pulse" />
             <div className="h-5 w-12 bg-muted rounded-full animate-pulse" />
