@@ -6,6 +6,7 @@ import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { EmptyRecipes } from "@/components/EmptyRecipes"
 import { FeaturedRecipe, FeaturedRecipeSkeleton } from "@/components/FeaturedRecipe"
+import { RecipeSearch } from "@/components/RecipeSearch"
 import { useAllRecipes } from "@/hooks/use-recipe-queries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import type { Recipe } from "@/lib/api"
@@ -158,6 +159,8 @@ const HomePage = () => {
           <FeaturedRecipe recipe={featured} />
         )}
       </section>
+
+      <RecipeSearch recipes={recipes} isLoading={isLoading} />
 
       <section aria-labelledby="recipes-section-label">
         <div className="mb-6">
