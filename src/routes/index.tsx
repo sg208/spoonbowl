@@ -175,14 +175,17 @@ const HomePage = () => {
 
       <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
 
-      <section aria-labelledby="recipes-section-label">
-        <div className="mb-6">
+      <section aria-labelledby="recipes-section-label" className="mb-12">
+        <div className="mb-6 text-center">
           <h2
             id="recipes-section-label"
             className="text-xl font-bold tracking-tight text-foreground sm:text-2xl"
           >
             {recipeSectionHeading}
           </h2>
+          <p className="mt-3 text-lg text-muted-foreground">
+            A curated handful to spark tonight's dinner inspiration.
+          </p>
         </div>
 
         {isError && (

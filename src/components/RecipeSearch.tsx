@@ -1,9 +1,11 @@
 import { useRef, useState, useCallback, useEffect } from "react"
 import { useNavigate } from "@tanstack/react-router"
+import { useQueryClient } from "@tanstack/react-query"
 import type { Recipe } from "@/lib/api"
 import { useRecipeSearch } from "@/hooks/useRecipeSearch"
 import { searchPlaceholders } from "@/lib/headings"
 import { cn, slugify } from "@/lib/utils"
+import { recipeKeys } from "@/lib/keys/recipeKeys"
 
 const PLACEHOLDER_INTERVAL_MS = 3200
 
@@ -32,6 +34,7 @@ export const RecipeSearch = ({
   isLoading = false,
 }: RecipeSearchProps): JSX.Element => {
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
   const [query, setQuery] = useState("")
   const [selectedIndex, setSelectedIndex] = useState(-1)
   const [placeholderIndex, setPlaceholderIndex] = useState(0)
@@ -50,6 +53,10 @@ export const RecipeSearch = ({
     }, PLACEHOLDER_INTERVAL_MS)
     return () => clearInterval(id)
   }, [query])
+
+  const handlePrefetchRecipe = useCallback((recipe: Recipe) => {
+    queryClient.setQueryData(recipeKeys.detail(recipe.id), recipe)
+  }, [queryClient])
 
   const handleSelectRecipe = useCallback(
     (recipe: Recipe) => {
@@ -106,13 +113,16 @@ export const RecipeSearch = ({
 
   return (
     <section aria-labelledby="search-section-label" className="mb-12">
-      <div className="mb-4">
+      <div className="mb-4 text-center">
         <h2
           id="search-section-label"
           className="text-xl font-bold tracking-tight text-foreground sm:text-2xl"
         >
           {heading}
         </h2>
+        <p className="mt-3 text-lg text-muted-foreground">
+          Search by name, ingredient, cuisine, or tag. Results appear as you type.
+        </p>
       </div>
 
       <div className="relative">
@@ -162,7 +172,11 @@ export const RecipeSearch = ({
                     handleSelectRecipe(recipe)
                   }
                 }}
-                onMouseEnter={() => setSelectedIndex(index)}
+                onMouseEnter={() => {
+                  setSelectedIndex(index)
+                  handlePrefetchRecipe(recipe)
+                }}
+                onFocus={() => handlePrefetchRecipe(recipe)}
               >
                 <div className="flex items-center justify-between gap-3">
                   <span className="flex-1 min-w-0 truncate">
