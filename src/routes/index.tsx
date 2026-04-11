@@ -1,7 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useEffect, useMemo, useState } from "react"
 import { fetchAllRecipes } from "@/lib/api"
-import { getSessionRandomText, headings, recipeSectionHeadings } from "@/lib/headings"
+import {
+  getSessionRandomText,
+  headings,
+  recipeSectionHeadings,
+  searchHeadings,
+} from "@/lib/headings"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { EmptyRecipes } from "@/components/EmptyRecipes"
@@ -16,6 +21,7 @@ const FEATURED_RECIPE_SESSION_KEY = "spoonbowl:home-featured-recipe-id"
 const GRID_RECIPE_IDS_SESSION_KEY = "spoonbowl:home-grid-recipe-ids"
 const HERO_HEADING_SESSION_KEY = "spoonbowl:home-hero-heading"
 const RECIPE_SECTION_HEADING_SESSION_KEY = "spoonbowl:home-recipes-section-heading"
+const SEARCH_HEADING_SESSION_KEY = "spoonbowl:home-search-heading"
 
 const pickRandom = <T,>(arr: T[], count: number): T[] => {
   if (arr.length <= count) return [...arr]
@@ -91,6 +97,13 @@ const HomePage = () => {
       fallback: "Four Recipes, Zero Drama.",
     })
   )
+  const [searchHeading] = useState(() =>
+    getSessionRandomText({
+      sessionKey: SEARCH_HEADING_SESSION_KEY,
+      texts: searchHeadings,
+      fallback: "Find Something Worth Cooking Tonight.",
+    })
+  )
   const { data, isLoading, isError } = useAllRecipes()
   const recipes = useMemo<Recipe[]>(() => data?.recipes ?? [], [data?.recipes])
   const featured = useMemo(() => {
@@ -160,7 +173,7 @@ const HomePage = () => {
         )}
       </section>
 
-      <RecipeSearch recipes={recipes} isLoading={isLoading} />
+      <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
 
       <section aria-labelledby="recipes-section-label">
         <div className="mb-6">
