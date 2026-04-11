@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Autocomplete recipe search** on the home page between the featured recipe and recipe grid. Filters the existing `allRecipes` cache client-side (no extra API calls), requires 3+ characters, searches across name, cuisine, tags, meal types, and ingredients. Results render in a keyboard-navigable dropdown (arrow keys, Enter, Escape) with bold match highlighting and colour-coded difficulty badges. Includes animated rotating placeholder hints and a session-stable dynamic heading (50 options each).
+- Search results pre-populate the TanStack Query detail cache via `setQueryData` on hover (`onMouseEnter`), enabling instant navigation to recipe detail pages without a network request.
+- Live region (`role="status" aria-live="polite"`) announces result counts to screen readers as the user types.
+
 ### Changed
 
 - Home route now persists a session-stable hero heading and recipes-section heading via `getSessionRandomText`, and narrows the homepage recipe grid to four session-stable picks (excluding the featured recipe when available).

@@ -44,6 +44,8 @@ export const RecipeSearch = ({
   const results = useRecipeSearch(recipes, query)
   const showResults = query.length >= 3 && results.length > 0
   const clampedIndex = selectedIndex >= results.length ? -1 : selectedIndex
+  const activeDescendantId =
+    clampedIndex >= 0 ? `recipe-option-${results[clampedIndex]?.id}` : undefined
 
   // Cycle through placeholder hints when the user isn't typing
   useEffect(() => {
@@ -54,9 +56,12 @@ export const RecipeSearch = ({
     return () => clearInterval(id)
   }, [query])
 
-  const handlePrefetchRecipe = useCallback((recipe: Recipe) => {
-    queryClient.setQueryData(recipeKeys.detail(recipe.id), recipe)
-  }, [queryClient])
+  const handlePrefetchRecipe = useCallback(
+    (recipe: Recipe) => {
+      queryClient.setQueryData(recipeKeys.detail(recipe.id), recipe)
+    },
+    [queryClient]
+  )
 
   const handleSelectRecipe = useCallback(
     (recipe: Recipe) => {
@@ -130,13 +135,16 @@ export const RecipeSearch = ({
           ref={inputRef}
           id="recipe-search"
           type="text"
+          role="combobox"
           placeholder={searchPlaceholders[placeholderIndex]}
           value={query}
           onChange={(event) => setQuery(event.target.value)}
           onKeyDown={handleKeyDown}
           disabled={isLoading}
           aria-autocomplete="list"
+          aria-expanded={showResults}
           aria-controls="recipe-search-results"
+          aria-activedescendant={activeDescendantId}
           aria-label="Search recipes by name, cuisine, tags, or ingredients"
           className={cn(
             "w-full rounded-xl border border-border bg-card px-5 py-4 text-base text-foreground",
@@ -146,64 +154,75 @@ export const RecipeSearch = ({
           )}
         />
 
-        {showResults && (
-          <ul
-            ref={dropdownRef}
-            id="recipe-search-results"
-            role="listbox"
-            aria-label={`${results.length} recipe result${results.length !== 1 ? "s" : ""} found`}
-            className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-96 overflow-y-auto rounded-xl border border-border bg-card shadow-xl"
-          >
-            {results.map((recipe, index) => (
-              <li
-                key={recipe.id}
-                role="option"
-                aria-selected={index === clampedIndex}
-                className={cn(
-                  "cursor-pointer border-b border-border/50 px-5 py-3 text-sm transition-colors last:border-b-0",
-                  index === clampedIndex
-                    ? "bg-orange-500/15 text-orange-100"
-                    : "text-foreground hover:bg-muted"
-                )}
-                onClick={() => handleSelectRecipe(recipe)}
-                onKeyDown={(event) => {
-                  if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault()
-                    handleSelectRecipe(recipe)
-                  }
-                }}
-                onMouseEnter={() => {
-                  setSelectedIndex(index)
-                  handlePrefetchRecipe(recipe)
-                }}
-                onFocus={() => handlePrefetchRecipe(recipe)}
-              >
-                <div className="flex items-center justify-between gap-3">
-                  <span className="flex-1 min-w-0 truncate">
-                    {renderBoldHighlight(recipe.name, query)}
-                    <span className="text-muted-foreground"> · {recipe.cuisine}</span>
-                  </span>
-                  <span
-                    className={cn(
-                      "flex-shrink-0 rounded-md px-2 py-0.5 text-xs font-medium",
-                      recipe.difficulty === "Easy" && "bg-green-900/40 text-green-300",
-                      recipe.difficulty === "Medium" && "bg-yellow-900/40 text-yellow-300",
-                      recipe.difficulty === "Hard" && "bg-red-900/40 text-red-300"
-                    )}
-                  >
-                    {recipe.difficulty}
-                  </span>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )}
+        {/* Always in DOM so aria-controls always resolves; hidden hides it from AT when inactive */}
+        <ul
+          ref={dropdownRef}
+          id="recipe-search-results"
+          role="listbox"
+          aria-label={`${results.length} recipe result${results.length !== 1 ? "s" : ""} found`}
+          hidden={!showResults}
+          className="absolute top-full left-0 right-0 z-50 mt-1.5 max-h-96 overflow-y-auto rounded-xl border border-border bg-card shadow-xl"
+        >
+          {results.map((recipe, index) => (
+            <li
+              key={recipe.id}
+              id={`recipe-option-${recipe.id}`}
+              role="option"
+              aria-selected={index === clampedIndex}
+              className={cn(
+                "cursor-pointer border-b border-border/50 px-5 py-3 text-sm transition-colors last:border-b-0",
+                index === clampedIndex
+                  ? "bg-orange-500/15 text-orange-100"
+                  : "text-foreground hover:bg-muted"
+              )}
+              onClick={() => handleSelectRecipe(recipe)}
+              onKeyDown={(event) => {
+                if (event.key === "Enter" || event.key === " ") {
+                  event.preventDefault()
+                  handleSelectRecipe(recipe)
+                }
+              }}
+              onMouseEnter={() => {
+                setSelectedIndex(index)
+                handlePrefetchRecipe(recipe)
+              }}
+            >
+              <div className="flex items-center justify-between gap-3">
+                <span className="flex-1 min-w-0 truncate">
+                  {renderBoldHighlight(recipe.name, query)}
+                  <span className="text-muted-foreground"> · {recipe.cuisine}</span>
+                </span>
+                <span
+                  className={cn(
+                    "flex-shrink-0 rounded-md px-2 py-0.5 text-xs font-medium",
+                    recipe.difficulty === "Easy" && "bg-green-900/40 text-green-300",
+                    recipe.difficulty === "Medium" && "bg-yellow-900/40 text-yellow-300",
+                    recipe.difficulty === "Hard" && "bg-red-900/40 text-red-300"
+                  )}
+                >
+                  {recipe.difficulty}
+                </span>
+              </div>
+            </li>
+          ))}
+        </ul>
 
         {query.length >= 3 && results.length === 0 && (
-          <div className="absolute top-full left-0 right-0 z-50 mt-1.5 rounded-xl border border-border bg-card px-5 py-4 text-center text-sm text-muted-foreground shadow-xl">
+          <div
+            role="status"
+            className="absolute top-full left-0 right-0 z-50 mt-1.5 rounded-xl border border-border bg-card px-5 py-4 text-center text-sm text-muted-foreground shadow-xl"
+          >
             No recipes found matching &ldquo;{query}&rdquo;
           </div>
         )}
+
+        <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
+          {showResults
+            ? `${results.length} result${results.length !== 1 ? "s" : ""} available`
+            : query.length >= 3
+              ? "No results found"
+              : ""}
+        </div>
       </div>
     </section>
   )

@@ -82,7 +82,7 @@ const getSessionGridRecipeIds = (
   return pickRandom(candidateIds, count)
 }
 
-const HomePage = () => {
+const HomePage = (): JSX.Element => {
   const [heading] = useState(() =>
     getSessionRandomText({
       sessionKey: HERO_HEADING_SESSION_KEY,
@@ -195,10 +195,7 @@ const HomePage = () => {
         )}
 
         {!isError && (
-          <div
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            aria-label="Recipe grid"
-          >
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {isLoading ? (
               Array.from({ length: GRID_SIZE }).map((_, index) => (
                 <RecipeCardSkeleton key={`skeleton-${index}`} />
