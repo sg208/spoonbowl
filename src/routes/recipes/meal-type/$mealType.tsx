@@ -12,7 +12,8 @@ import {
   mealTypeToSlug,
   slugToMealType,
 } from "@/lib/mealTypeUtils"
-import { RecipeCard, RecipeCardSkeleton } from "@/components/RecipeCard"
+import { RecipeCard } from "@/components/RecipeCard"
+import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 

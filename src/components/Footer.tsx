@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ChefHat } from "lucide-react"
+import { browseLinks } from "@/lib/navigationLinks"
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -31,29 +32,23 @@ export const Footer = () => {
 
           <nav aria-label="Browse links">
             <p className="text-sm font-semibold text-foreground mb-3">Browse</p>
-            <ul className="space-y-2" role="list">
-              <li>
-                <Link
-                  to="/"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  All Recipes
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/recipes/tags/"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  Recipes by Category
-                </Link>
-              </li>
+            <ul className="space-y-2">
+              {browseLinks.map((link) => (
+                <li key={link.id}>
+                  <Link
+                    to={link.to}
+                    className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
 
           <nav aria-label="Legal links">
             <p className="text-sm font-semibold text-foreground mb-3">Legal</p>
-            <ul className="space-y-2" role="list">
+            <ul className="space-y-2">
               <li>
                 <Link
                   to="/privacy"
@@ -83,7 +78,7 @@ export const Footer = () => {
 
           <nav aria-label="Accessibility and info links">
             <p className="text-sm font-semibold text-foreground mb-3">Accessibility</p>
-            <ul className="space-y-2" role="list">
+            <ul className="space-y-2">
               <li>
                 <Link
                   to="/accessibility"

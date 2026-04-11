@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { LEGAL_DATES } from "@/lib/legalDates"
 import { Separator } from "@/components/ui/separator"
 
 export const Route = createFileRoute("/disclaimer")({
@@ -12,7 +13,7 @@ const DisclaimerPage = () => {
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Disclaimer
         </h1>
-        <p className="mt-3 text-muted-foreground">Last updated: April 10, 2026</p>
+        <p className="mt-3 text-muted-foreground">Last updated: {LEGAL_DATES.lastUpdated}</p>
       </header>
 
       <div className="space-y-8 text-foreground">

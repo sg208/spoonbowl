@@ -1,12 +1,9 @@
 import { Link } from "@tanstack/react-router"
-import { useQueryClient } from "@tanstack/react-query"
-import { Clock, Star, Users, ChefHat } from "lucide-react"
-import { fetchRecipe } from "@/lib/api"
+import { Clock, Star, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Recipe } from "@/lib/api"
-import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
-import { STALE_TIME_5M_MS } from "@/lib/queryClient"
+import { usePrefetchRecipeDetail } from "@/hooks/use-prefetch-recipe-detail"
 import { slugify } from "@/lib/utils"
 
 interface RecipeCardProps {
@@ -20,23 +17,15 @@ const difficultyColors = {
 }
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
-  const queryClient = useQueryClient()
+  const prefetchRecipeDetail = usePrefetchRecipeDetail()
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
-
-  const prefetchRecipe = () => {
-    queryClient.prefetchQuery({
-      queryKey: recipeDetailKeys.detail(recipe.id),
-      queryFn: () => fetchRecipe(recipe.id),
-      staleTime: STALE_TIME_5M_MS,
-    })
-  }
 
   return (
     <Link
       to="/recipe/$recipeId/$slug"
       params={{ recipeId: String(recipe.id), slug: slugify(recipe.name) }}
-      onMouseEnter={prefetchRecipe}
-      onFocus={prefetchRecipe}
+      onMouseEnter={() => prefetchRecipeDetail(recipe.id)}
+      onFocus={() => prefetchRecipeDetail(recipe.id)}
       className="group block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-xl"
       aria-label={`View recipe: ${recipe.name}, ${recipe.cuisine} cuisine, ${recipe.difficulty} difficulty, ${totalTime} minutes total`}
     >
@@ -109,35 +98,5 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
         </CardContent>
       </Card>
     </Link>
-  )
-}
-
-export const RecipeCardSkeleton = () => {
-  return (
-    <Card className="overflow-hidden h-full border-border p-0 gap-0" aria-hidden="true">
-      <div className="aspect-[4/3] bg-muted animate-pulse" />
-      <CardContent className="p-4 space-y-3">
-        <div className="h-3 w-16 bg-muted rounded animate-pulse" />
-        <div className="space-y-1.5">
-          <div className="h-4 w-full bg-muted rounded animate-pulse" />
-          <div className="h-4 w-3/4 bg-muted rounded animate-pulse" />
-        </div>
-        <div className="flex gap-3">
-          <div className="h-3 w-12 bg-muted rounded animate-pulse" />
-          <div className="h-3 w-14 bg-muted rounded animate-pulse" />
-          <div className="h-3 w-10 bg-muted rounded animate-pulse" />
-        </div>
-      </CardContent>
-    </Card>
-  )
-}
-
-export const EmptyRecipes = () => {
-  return (
-    <div className="flex flex-col items-center justify-center py-20 text-center" role="status">
-      <ChefHat className="h-16 w-16 text-muted-foreground mb-4" aria-hidden="true" />
-      <h3 className="text-lg font-semibold text-foreground">No recipes found</h3>
-      <p className="text-muted-foreground mt-1 text-sm">Try again in a moment.</p>
-    </div>
   )
 }

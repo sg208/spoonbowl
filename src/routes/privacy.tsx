@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { LEGAL_DATES } from "@/lib/legalDates"
 import { PrivacyCoreSections } from "@/components/legal/PrivacyCoreSections"
 import { PrivacyRegionalNotices } from "@/components/legal/PrivacyRegionalNotices"
 import { Separator } from "@/components/ui/separator"
@@ -6,15 +7,18 @@ import { Separator } from "@/components/ui/separator"
 const PrivacyPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <header className="mb-8">
+      <header className="mb-6 space-y-3">
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Privacy Policy
         </h1>
-        <p className="mt-3 text-muted-foreground">
-          Effective date: April 10, 2026 &middot; Last updated: April 10, 2026
+        <p className="text-muted-foreground leading-7">
+          Effective date: {LEGAL_DATES.effectiveDate} &middot; Last updated:{" "}
+          {LEGAL_DATES.lastUpdated}
         </p>
-        <p className="mt-2 text-sm text-muted-foreground">
-          Includes notices for GDPR (EU/EEA), California (CCPA/CPRA), and CalOPPA where applicable.
+        <p className="text-muted-foreground leading-7">
+          Includes global privacy notices where applicable, including GDPR (EU/EEA), UK GDPR,
+          California (CCPA/CPRA and CalOPPA), Brazil&apos;s LGPD, Canada&apos;s PIPEDA,
+          Australia&apos;s Privacy Act, Singapore&apos;s PDPA, and Japan&apos;s APPI.
         </p>
       </header>
 
@@ -29,7 +33,7 @@ const PrivacyPage = () => {
       <div className="prose-like space-y-8 text-foreground">
         <section aria-labelledby="children-privacy">
           <h2 id="children-privacy" className="text-xl font-bold tracking-tight mb-3">
-            10. Children&apos;s privacy
+            7. Children&apos;s privacy
           </h2>
           <p className="text-muted-foreground leading-7">
             We do not knowingly collect personal data from children under 13. The site is
@@ -37,9 +41,11 @@ const PrivacyPage = () => {
           </p>
         </section>
 
+        <Separator />
+
         <section aria-labelledby="contact-privacy">
           <h2 id="contact-privacy" className="text-xl font-bold tracking-tight mb-3">
-            11. Contact
+            8. Contact
           </h2>
           <p className="text-muted-foreground leading-7">
             Questions or requests about this policy or your privacy rights:{" "}
@@ -49,8 +55,8 @@ const PrivacyPage = () => {
             >
               privacy@spoonbowl.app
             </a>
-            . We aim to respond within a reasonable time and within typical GDPR (about 30 days) and
-            CCPA (about 45 days) timelines where they apply.
+            . We aim to respond within a reasonable time and in line with applicable legal timelines
+            for your jurisdiction.
           </p>
         </section>
       </div>
