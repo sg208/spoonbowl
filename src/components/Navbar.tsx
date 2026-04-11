@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { ChefHat, Globe, Menu, X, Tag, UtensilsCrossed } from "lucide-react"
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
+import { cn } from "@/lib/utils"
 import { ModeToggle } from "@/components/mode-toggle"
 import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
 import { browseLinks, type BrowseLinkId } from "@/lib/navigationLinks"
@@ -79,9 +80,10 @@ export const Navbar = () => {
               to={link.to}
               onMouseEnter={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
               onFocus={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
-              className={`px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                link.id === "recipes" ? "" : "flex items-center gap-1.5"
-              }`}
+              className={cn(
+                "px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                link.id !== "recipes" && "flex items-center gap-1.5"
+              )}
               activeProps={{ className: "text-foreground" }}
               activeOptions={link.id === "recipes" ? { exact: true } : undefined}
             >
@@ -128,9 +130,10 @@ export const Navbar = () => {
                 onClick={() => setOpen(false)}
                 onMouseEnter={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
                 onFocus={link.id === "cuisines" ? prefetchCuisinesIndex : undefined}
-                className={`px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring ${
-                  link.id === "recipes" ? "flex" : "flex items-center gap-2"
-                }`}
+                className={cn(
+                  "flex px-3 py-2 text-sm font-medium text-muted-foreground hover:text-foreground rounded-md transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring",
+                  link.id !== "recipes" && "items-center gap-2"
+                )}
                 activeProps={{ className: "text-foreground bg-accent" }}
                 activeOptions={link.id === "recipes" ? { exact: true } : undefined}
               >

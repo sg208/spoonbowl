@@ -71,7 +71,7 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
             )}
           </div>
 
-          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-4">
+          <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
             <div className="flex flex-col gap-0.5">
               <dt className="text-xs text-muted-foreground flex items-center gap-1">
                 <Clock className="h-3.5 w-3.5" aria-hidden="true" />

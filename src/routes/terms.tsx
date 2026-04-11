@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { LEGAL_DATES } from "@/lib/legalDates"
 import { Separator } from "@/components/ui/separator"
 
 const TermsPage = () => {
@@ -9,7 +10,8 @@ const TermsPage = () => {
           Terms of Use
         </h1>
         <p className="mt-3 text-muted-foreground">
-          Effective date: April 10, 2026 &middot; Last updated: April 11, 2026
+          Effective date: {LEGAL_DATES.effectiveDate} &middot; Last updated:{" "}
+          {LEGAL_DATES.lastUpdated}
         </p>
       </header>
 

@@ -177,11 +177,18 @@ export const getSessionRandomText = ({
   const randomText = pickRandomItem(texts) ?? fallback
   if (typeof window === "undefined") return randomText
 
-  const savedText = window.sessionStorage.getItem(sessionKey)
-  if (savedText && texts.includes(savedText)) {
-    return savedText
+  try {
+    const savedText = window.sessionStorage.getItem(sessionKey)
+    if (savedText && texts.includes(savedText)) {
+      return savedText
+    }
+    try {
+      window.sessionStorage.setItem(sessionKey, randomText)
+    } catch {
+      // setItem failed; proceed to return randomText
+    }
+  } catch {
+    // getItem failed; proceed to return randomText
   }
-
-  window.sessionStorage.setItem(sessionKey, randomText)
   return randomText
 }

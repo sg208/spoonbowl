@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import { LEGAL_DATES } from "@/lib/legalDates"
 import { PrivacyCoreSections } from "@/components/legal/PrivacyCoreSections"
 import { PrivacyRegionalNotices } from "@/components/legal/PrivacyRegionalNotices"
 import { Separator } from "@/components/ui/separator"
@@ -11,7 +12,8 @@ const PrivacyPage = () => {
           Privacy Policy
         </h1>
         <p className="text-muted-foreground leading-7">
-          Effective date: April 10, 2026 &middot; Last updated: April 11, 2026
+          Effective date: {LEGAL_DATES.effectiveDate} &middot; Last updated:{" "}
+          {LEGAL_DATES.lastUpdated}
         </p>
         <p className="text-muted-foreground leading-7">
           Includes global privacy notices where applicable, including GDPR (EU/EEA), UK GDPR,
