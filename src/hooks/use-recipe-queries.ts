@@ -1,10 +1,12 @@
 import { useQuery } from "@tanstack/react-query"
 import {
   fetchCuisines,
+  fetchDifficulties,
   fetchMealTypes,
   fetchRecipe,
   fetchAllRecipes,
   fetchRecipesByCuisine,
+  fetchRecipesByDifficulty,
   fetchRecipesByMealType,
   fetchRecipesByTag,
   fetchTags,
@@ -54,6 +56,19 @@ export const useRecipesByMealType = (mealType: string, listReady: boolean) =>
     queryKey: recipeKeys.byMealType(mealType),
     queryFn: () => fetchRecipesByMealType(mealType),
     enabled: Boolean(mealType) && listReady,
+  })
+
+export const useDifficulties = () =>
+  useQuery({
+    queryKey: recipeMetaKeys.difficulties(),
+    queryFn: fetchDifficulties,
+  })
+
+export const useRecipesByDifficulty = (difficulty: string, listReady: boolean) =>
+  useQuery({
+    queryKey: recipeKeys.byDifficulty(difficulty),
+    queryFn: () => fetchRecipesByDifficulty(difficulty),
+    enabled: Boolean(difficulty) && listReady,
   })
 
 export const useRecipeDetail = (id: number) =>

@@ -110,3 +110,30 @@ export const fetchRecipesByCuisine = async (cuisine: string): Promise<RecipesRes
     limit: recipes.length,
   }
 }
+
+export type RecipeDifficultySummary = Pick<Recipe, "id" | "name" | "difficulty">
+
+interface RecipesDifficultySelectResponse {
+  recipes: RecipeDifficultySummary[]
+  total: number
+  skip: number
+  limit: number
+}
+
+export const fetchDifficulties = async (): Promise<string[]> => {
+  const res = await fetch(`${BASE_URL}?limit=0&select=id,name,difficulty`)
+  if (!res.ok) throw new Error("Failed to fetch difficulties")
+  const data: RecipesDifficultySelectResponse = await res.json()
+  const difficulties = new Set<string>()
+  for (const recipe of data.recipes) {
+    if (recipe.difficulty) difficulties.add(recipe.difficulty)
+  }
+  const order = ["Easy", "Medium", "Hard"]
+  return order.filter((d) => difficulties.has(d))
+}
+
+export const fetchRecipesByDifficulty = async (difficulty: string): Promise<RecipesResponse> => {
+  const data = await fetchAllRecipes()
+  const recipes = data.recipes.filter((r) => r.difficulty === difficulty)
+  return { recipes, total: recipes.length, skip: 0, limit: recipes.length }
+}
