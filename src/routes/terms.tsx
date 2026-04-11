@@ -17,6 +17,9 @@ const TermsPage = () => {
 
       <div className="space-y-8 text-foreground">
         <section aria-labelledby="terms-intro">
+          <h2 id="terms-intro" className="sr-only">
+            Introduction
+          </h2>
           <p className="text-muted-foreground leading-7">
             These Terms of Use ("Terms") govern your access to and use of spoonbowl.app and related
             pages (collectively, the "Service"). By using the Service, you agree to these Terms. If
