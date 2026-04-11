@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo } from "react"
 import { fetchAllRecipes } from "@/lib/api"
-import { getRandomHeading } from "@/lib/headings"
+import { getSessionRandomText, headings, recipeSectionHeadings } from "@/lib/headings"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { EmptyRecipes } from "@/components/EmptyRecipes"
@@ -10,12 +10,21 @@ import { useAllRecipes } from "@/hooks/use-recipe-queries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import type { Recipe } from "@/lib/api"
 
-const GRID_SIZE = 48
+const GRID_SIZE = 4
 const FEATURED_RECIPE_SESSION_KEY = "spoonbowl:home-featured-recipe-id"
+const GRID_RECIPE_IDS_SESSION_KEY = "spoonbowl:home-grid-recipe-ids"
+const HERO_HEADING_SESSION_KEY = "spoonbowl:home-hero-heading"
+const RECIPE_SECTION_HEADING_SESSION_KEY = "spoonbowl:home-recipes-section-heading"
 
 const pickRandom = <T,>(arr: T[], count: number): T[] => {
   if (arr.length <= count) return [...arr]
-  const shuffled = [...arr].sort(() => Math.random() - 0.5)
+  const shuffled = [...arr]
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1))
+    const temp = shuffled[index]
+    shuffled[index] = shuffled[randomIndex] as T
+    shuffled[randomIndex] = temp
+  }
   return shuffled.slice(0, count)
 }
 
@@ -35,30 +44,75 @@ const getSessionFeaturedRecipeId = (recipes: Recipe[]): number | null => {
   return randomRecipe.id
 }
 
+const getSessionGridRecipeIds = (
+  recipes: Recipe[],
+  count: number,
+  featuredRecipeId: number | null
+): number[] => {
+  const candidateRecipes =
+    featuredRecipeId === null ? recipes : recipes.filter((recipe) => recipe.id !== featuredRecipeId)
+  const candidateIds = candidateRecipes.map((recipe) => recipe.id)
+
+  if (typeof window === "undefined") {
+    return pickRandom(candidateIds, count)
+  }
+
+  const savedIdsRaw = window.sessionStorage.getItem(GRID_RECIPE_IDS_SESSION_KEY)
+  if (savedIdsRaw) {
+    try {
+      const parsed = JSON.parse(savedIdsRaw)
+      if (
+        Array.isArray(parsed) &&
+        parsed.length === count &&
+        parsed.every((value) => typeof value === "number") &&
+        parsed.every((value) => candidateIds.includes(value))
+      ) {
+        return parsed as number[]
+      }
+    } catch {
+      // Ignore malformed sessionStorage values and regenerate below.
+    }
+  }
+
+  const randomIds = pickRandom(candidateIds, count)
+  window.sessionStorage.setItem(GRID_RECIPE_IDS_SESSION_KEY, JSON.stringify(randomIds))
+  return randomIds
+}
+
 const HomePage = () => {
-  const heading = useMemo(() => getRandomHeading(), [])
+  const heading = useMemo(
+    () =>
+      getSessionRandomText({
+        sessionKey: HERO_HEADING_SESSION_KEY,
+        texts: headings,
+        fallback: "Good food. No excuses needed.",
+      }),
+    []
+  )
+  const recipeSectionHeading = useMemo(
+    () =>
+      getSessionRandomText({
+        sessionKey: RECIPE_SECTION_HEADING_SESSION_KEY,
+        texts: recipeSectionHeadings,
+        fallback: "Four Recipes, Zero Drama.",
+      }),
+    []
+  )
   const { data, isLoading, isError } = useAllRecipes()
   const recipes = useMemo<Recipe[]>(() => data?.recipes ?? [], [data?.recipes])
-  const [featured, setFeatured] = useState<Recipe | null>(null)
-
-  useEffect(() => {
-    if (!recipes.length) {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- Sync featured selection from current recipe payload.
-      setFeatured(null)
-      return
-    }
+  const featured = useMemo(() => {
+    if (recipes.length === 0) return null
     const featuredId = getSessionFeaturedRecipeId(recipes)
-    setFeatured(recipes.find((recipe) => recipe.id === featuredId) ?? recipes[0] ?? null)
+    return recipes.find((recipe) => recipe.id === featuredId) ?? recipes[0] ?? null
   }, [recipes])
 
   const displayRecipes = useMemo<Recipe[]>(() => {
     if (!recipes.length) return []
-
-    const pool = featured ? recipes.filter((recipe) => recipe.id !== featured.id) : recipes
-    const randomized = pickRandom(pool, GRID_SIZE)
-    if (randomized.length === GRID_SIZE || !featured) return randomized
-    return [...randomized, featured].slice(0, GRID_SIZE)
-  }, [recipes, featured])
+    const selectedIds = getSessionGridRecipeIds(recipes, GRID_SIZE, featured?.id ?? null)
+    return selectedIds
+      .map((id) => recipes.find((recipe) => recipe.id === id))
+      .filter((recipe): recipe is Recipe => Boolean(recipe))
+  }, [recipes, featured?.id])
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-8">
@@ -97,18 +151,13 @@ const HomePage = () => {
       </section>
 
       <section aria-labelledby="recipes-section-label">
-        <div className="flex items-baseline justify-between mb-6">
+        <div className="mb-6">
           <h2
             id="recipes-section-label"
             className="text-xl font-bold tracking-tight text-foreground sm:text-2xl"
           >
-            All Recipes
+            {recipeSectionHeading}
           </h2>
-          {!isLoading && data && (
-            <p className="text-sm text-muted-foreground" aria-live="polite">
-              Showing {displayRecipes.length} of {data.total} recipes
-            </p>
-          )}
         </div>
 
         {isError && (
@@ -123,7 +172,9 @@ const HomePage = () => {
             aria-label="Recipe grid"
           >
             {isLoading ? (
-              Array.from({ length: 12 }).map((_, i) => <RecipeCardSkeleton key={i} />)
+              Array.from({ length: GRID_SIZE }).map((_, index) => (
+                <RecipeCardSkeleton key={`skeleton-${index}`} />
+              ))
             ) : displayRecipes.length === 0 ? (
               <EmptyRecipes />
             ) : (

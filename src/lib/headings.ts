@@ -101,6 +101,87 @@ export const headings: string[] = [
   "This is where good meals are born.",
 ]
 
+export const recipeSectionHeadings: string[] = [
+  "Four Recipes Enter, One Dinner Leaves.",
+  "Tonight's Tiny But Mighty Menu.",
+  "Chef's Lucky Four.",
+  "Dinner Speedrun: Top 4 Picks.",
+  "Four Recipes, Zero Drama.",
+  "Plot Twist: You Can Cook.",
+  "Your Fridge's Favorite Four.",
+  "Fast Lane Flavor Picks.",
+  "Only Four, All Bangers.",
+  "What To Cook When Life Is Loud.",
+  "The No-Overthinking Four.",
+  "Four Ways To Avoid Sad Toast.",
+  "Meal Ideas That Do Not Judge.",
+  "Dinner Answers, Not Questions.",
+  "Four Picks For Hungry Legends.",
+  "Pick One, Brag Later.",
+  "Tiny Grid, Big Appetite.",
+  "Quick Picks, Big Fork Energy.",
+  "The I-Need-Food-Now Four.",
+  "Minimal Scroll, Maximum Yum.",
+  "Four Recipes That Understood The Assignment.",
+  "Calm Mind, Hot Pan, Four Picks.",
+  "Emergency Dinner Kit (4-Pack).",
+  "Your Hunger's Shortlist.",
+  "Cookbook Cliff Notes: Four Hits.",
+  "Dinner, But Make It Efficient.",
+  "Four Recipes You Can Totally Pull Off.",
+  "The Snack Prevention Program.",
+  "Handpicked By Chaos, Approved By Taste Buds.",
+  "Your Stomach Sent These.",
+  "Four Picks For Main Character Meals.",
+  "The Anti-Takeout Quartet.",
+  "Fast, Tasty, Slightly Unhinged.",
+  "Four Meals, Infinite Confidence.",
+  "Tonight's Panic-Proof Picks.",
+  "The Weeknight Hero Bundle.",
+  "Hunger Hotline: Press Any Recipe.",
+  "Four Dishes, One Happy Kitchen.",
+  "The Delicious Shortcut List.",
+  "Meals That Beat Cereal For Dinner.",
+  "Fork-Approved Finalists.",
+  "The Flavor Starter Pack.",
+  "Four Recipes To Flex Softly.",
+  "Low Effort, Loud Flavor.",
+  "The Cook-It-And-Crush-It Four.",
+  "Dinner Ideas With Good Vibes Only.",
+  "Four Recipes That Text Back.",
+  "What We Are Pretending Is Meal Prep.",
+  "The Four You Were Looking For.",
+  "Certified Yum, Limited Scroll Edition.",
+]
+
+const pickRandomItem = <T>(items: T[]): T | null => {
+  if (items.length === 0) return null
+  return items[Math.floor(Math.random() * items.length)] ?? null
+}
+
 export const getRandomHeading = (): string => {
-  return headings[Math.floor(Math.random() * headings.length)]
+  return pickRandomItem(headings) ?? "Good food. No excuses needed."
+}
+
+type SessionRandomTextParams = {
+  sessionKey: string
+  texts: string[]
+  fallback: string
+}
+
+export const getSessionRandomText = ({
+  sessionKey,
+  texts,
+  fallback,
+}: SessionRandomTextParams): string => {
+  const randomText = pickRandomItem(texts) ?? fallback
+  if (typeof window === "undefined") return randomText
+
+  const savedText = window.sessionStorage.getItem(sessionKey)
+  if (savedText && texts.includes(savedText)) {
+    return savedText
+  }
+
+  window.sessionStorage.setItem(sessionKey, randomText)
+  return randomText
 }
