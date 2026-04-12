@@ -19,7 +19,7 @@ interface MobileSearchModalBodyProps {
   clampedIndex: number
   activeDescendantId: string
   placeholderIndex: number
-  dropdownRef: React.RefObject<HTMLDivElement>
+  dropdownRef: React.RefObject<HTMLUListElement>
   handleSelect: (recipe: Recipe) => void
   setSelectedIndex: (index: number) => void
   handlePrefetch: (recipe: Recipe) => void
