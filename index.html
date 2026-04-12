@@ -9,6 +9,21 @@
     />
     <meta name="theme-color" content="#fcfaf6" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#27201c" media="(prefers-color-scheme: dark)" />
+    <script>
+      // Bootstrap persisted theme before React mounts to prevent theme flash
+      // Colors must match ThemeProvider.tsx constants
+      const DARK_COLOR = "#27201c"
+      const LIGHT_COLOR = "#fcfaf6"
+      const stored = localStorage.getItem("spoonbowl-theme")
+      const theme = stored === "dark" || stored === "light" ? stored : null
+      if (theme) {
+        document.documentElement.classList.add(theme)
+        const color = theme === "dark" ? DARK_COLOR : LIGHT_COLOR
+        document.querySelectorAll('meta[name="theme-color"]').forEach((el) => {
+          el.setAttribute("content", color)
+        })
+      }
+    </script>
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Spoonbowl" />

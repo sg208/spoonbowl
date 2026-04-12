@@ -8,3 +8,13 @@ export const browseLinks = [
 
 export type BrowseLink = (typeof browseLinks)[number]
 export type BrowseLinkId = BrowseLink["id"]
+
+export const legalLinks = [
+  { to: "/privacy", label: "Privacy Policy" },
+  { to: "/terms", label: "Terms of Use" },
+  { to: "/disclaimer", label: "Disclaimer" },
+] as const
+
+export const accessibilityLinks = [
+  { to: "/accessibility", label: "Accessibility Statement" },
+] as const

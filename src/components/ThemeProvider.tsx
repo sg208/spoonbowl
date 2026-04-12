@@ -18,6 +18,8 @@ type ThemeProviderState = {
 
 const COLOR_SCHEME_QUERY = "(prefers-color-scheme: dark)"
 const THEME_VALUES: Theme[] = ["dark", "light", "system"]
+export const DARK_THEME_COLOR = "#27201c"
+export const LIGHT_THEME_COLOR = "#fcfaf6"
 
 const ThemeProviderContext = React.createContext<ThemeProviderState | undefined>(undefined)
 
@@ -106,7 +108,7 @@ export const ThemeProvider = ({
       root.classList.remove("light", "dark")
       root.classList.add(resolvedTheme)
 
-      const themeColor = resolvedTheme === "dark" ? "#27201c" : "#fcfaf6"
+      const themeColor = resolvedTheme === "dark" ? DARK_THEME_COLOR : LIGHT_THEME_COLOR
       document.querySelectorAll('meta[name="theme-color"]').forEach((el) => {
         ;(el as HTMLMetaElement).content = themeColor
       })

@@ -4,10 +4,11 @@ import { Link } from "@tanstack/react-router"
 import { Home, Menu, Search, X } from "lucide-react"
 import { MobileSearchModal } from "@/components/MobileSearchModal"
 import { ModeToggle } from "@/components/ModeToggle"
+import { MenuSection } from "@/components/MenuSection"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { usePrefetchCuisinesIndex } from "@/hooks/usePrefetchCuisinesIndex"
-import { browseLinks } from "@/lib/config/navigationLinks"
+import { browseLinks, legalLinks, accessibilityLinks } from "@/lib/config/navigationLinks"
 
 export const MobileBottomNav = (): React.JSX.Element => {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -49,12 +50,13 @@ export const MobileBottomNav = (): React.JSX.Element => {
         </div>
       </nav>
 
-      <MobileSearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />
+      {searchOpen && <MobileSearchModal open={searchOpen} onClose={() => setSearchOpen(false)} />}
 
       <Dialog open={menuOpen} onOpenChange={setMenuOpen}>
         <DialogContent
           showCloseButton={false}
           className="top-0 left-0 translate-x-0 translate-y-0 max-w-none h-svh rounded-none p-0 flex flex-col gap-0"
+          aria-describedby={undefined}
         >
           <div className="flex items-center justify-between border-b border-border px-4 py-4 shrink-0">
             <DialogTitle className="text-base font-semibold">Menu</DialogTitle>
@@ -91,44 +93,19 @@ export const MobileBottomNav = (): React.JSX.Element => {
               </div>
             </nav>
 
-            <nav aria-label="Legal links" className="mb-6">
-              <p className="px-4 mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
-                Legal
-              </p>
-              <div className="space-y-1">
-                {[
-                  { to: "/privacy", label: "Privacy Policy" },
-                  { to: "/terms", label: "Terms of Use" },
-                  { to: "/disclaimer", label: "Disclaimer" },
-                ].map((link) => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    activeProps={{ className: "text-foreground bg-accent" }}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </nav>
+            <MenuSection
+              title="Legal"
+              ariaLabel="Legal links"
+              links={legalLinks}
+              onLinkClick={() => setMenuOpen(false)}
+            />
 
-            <nav aria-label="Accessibility and info links">
-              <p className="px-4 mb-1 text-xs font-semibold uppercase tracking-wider text-muted-foreground/70">
-                Accessibility
-              </p>
-              <div className="space-y-1">
-                <Link
-                  to="/accessibility"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center px-4 py-3 text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent rounded-xl transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                  activeProps={{ className: "text-foreground bg-accent" }}
-                >
-                  Accessibility Statement
-                </Link>
-              </div>
-            </nav>
+            <MenuSection
+              title="Accessibility"
+              ariaLabel="Accessibility and info links"
+              links={accessibilityLinks}
+              onLinkClick={() => setMenuOpen(false)}
+            />
           </div>
 
           <div className="border-t border-border px-4 py-4 pb-safe shrink-0 flex items-center justify-between">
