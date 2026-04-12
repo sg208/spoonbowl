@@ -38,7 +38,7 @@ const RecipeDetailPage = () => {
       aria-labelledby="recipe-title"
     >
       <nav aria-label="Breadcrumb" className="mb-6">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground" role="list">
+        <ol className="flex items-center gap-2 text-sm text-muted-foreground">
           <li>
             <Link
               to="/"

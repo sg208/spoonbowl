@@ -47,7 +47,7 @@ const MealTypeRecipesPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav aria-label="Breadcrumb" className="mb-8">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap" role="list">
+        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <li>
             <Link
               to="/"

@@ -2,23 +2,23 @@
 
 ## Quick Navigation
 
-| Looking for…           | Go to                                                     |
-| ---------------------- | --------------------------------------------------------- |
-| Pages / routes         | `src/routes/`                                             |
-| Shared components      | `src/components/`                                         |
-| Data fetching hooks    | `src/hooks/useRecipeQueries.ts`                           |
-| UI state hooks         | `src/hooks/useRecipeSearch.ts`, `useRecipeCombobox.ts`    |
-| API client + types     | `src/lib/api.ts`                                          |
-| Query key factories    | `src/lib/keys/recipeKeys.ts`                              |
-| Domain utilities       | `src/lib/utils/{cuisine,difficulty,mealType,tag}Utils.ts` |
-| App-wide constants     | `src/lib/config/`                                         |
-| shadcn/ui primitives   | `src/components/ui/`                                      |
-| Global styles + tokens | `src/index.css`                                           |
-| React Query config     | `src/lib/queryClient.ts`                                  |
+| Looking for…           | Go to                                                            |
+| ---------------------- | ---------------------------------------------------------------- |
+| Pages / routes         | `src/routes/`                                                    |
+| Shared components      | `src/components/`                                                |
+| Data fetching hooks    | `src/hooks/useRecipeQueries.ts`                                  |
+| UI state hooks         | `src/hooks/useRecipeSearch.ts`, `src/hooks/useRecipeCombobox.ts` |
+| API client + types     | `src/lib/api.ts`                                                 |
+| Query key factories    | `src/lib/keys/recipeKeys.ts`                                     |
+| Domain utilities       | `src/lib/utils/{cuisine,difficulty,mealType,tag}Utils.ts`        |
+| App-wide constants     | `src/lib/config/`                                                |
+| shadcn/ui primitives   | `src/components/ui/`                                             |
+| Global styles + tokens | `src/index.css`                                                  |
+| React Query config     | `src/lib/queryClient.ts`                                         |
 
 ## Folder Map
 
-```
+```text
 src/
 ├── main.tsx              Entry point
 ├── index.css             Tailwind v4 entry + @theme design tokens
