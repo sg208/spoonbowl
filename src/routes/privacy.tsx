@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { LEGAL_DATES } from "@/lib/legalDates"
+import { LEGAL_DATES } from "@/lib/config/legalDates"
 import { PrivacyCoreSections } from "@/components/legal/PrivacyCoreSections"
 import { PrivacyRegionalNotices } from "@/components/legal/PrivacyRegionalNotices"
 import { Separator } from "@/components/ui/separator"

@@ -3,7 +3,7 @@ import { Clock, Star, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Recipe } from "@/lib/api"
-import { usePrefetchRecipeDetail } from "@/hooks/use-prefetch-recipe-detail"
+import { usePrefetchRecipeDetail } from "@/hooks/usePrefetchRecipeDetail"
 import { slugify } from "@/lib/utils"
 
 interface RecipeCardProps {

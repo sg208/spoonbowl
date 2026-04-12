@@ -3,9 +3,9 @@ import { BarChart2, ChefHat, Globe, Menu, X, Tag, UtensilsCrossed } from "lucide
 import { useEffect, useRef, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { ModeToggle } from "@/components/mode-toggle"
-import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
-import { browseLinks, type BrowseLinkId } from "@/lib/navigationLinks"
+import { ModeToggle } from "@/components/ModeToggle"
+import { usePrefetchCuisinesIndex } from "@/hooks/usePrefetchCuisinesIndex"
+import { browseLinks, type BrowseLinkId } from "@/lib/config/navigationLinks"
 
 const focusMainContent = () => {
   const main = document.getElementById("main-content")

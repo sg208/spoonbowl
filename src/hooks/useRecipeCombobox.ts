@@ -2,7 +2,7 @@ import { useRef, useState, useCallback, useEffect } from "react"
 import type React from "react"
 import type { Recipe } from "@/lib/api"
 import { useRecipeSearch, MIN_QUERY_LENGTH } from "@/hooks/useRecipeSearch"
-import { searchPlaceholders } from "@/lib/headings"
+import { searchPlaceholders } from "@/lib/config/headings"
 
 const PLACEHOLDER_INTERVAL_MS = 3200
 

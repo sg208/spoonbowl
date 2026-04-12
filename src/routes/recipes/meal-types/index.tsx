@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
 import { UtensilsCrossed, ChefHat, ArrowRight } from "lucide-react"
 import { fetchRecipesByMealType } from "@/lib/api"
-import { useMealTypes } from "@/hooks/use-recipe-queries"
+import { useMealTypes } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
@@ -10,7 +10,7 @@ import {
   getMealTypeDescription,
   mealTypeToSlug,
   mealTypeToPageTitle,
-} from "@/lib/mealTypeUtils"
+} from "@/lib/utils/mealTypeUtils"
 import { Badge } from "@/components/ui/badge"
 
 export const Route = createFileRoute("/recipes/meal-types/")({

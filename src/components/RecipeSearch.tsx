@@ -5,7 +5,7 @@ import { useQueryClient } from "@tanstack/react-query"
 import type { Recipe } from "@/lib/api"
 import { useRecipeCombobox } from "@/hooks/useRecipeCombobox"
 import { RecipeSearchList } from "@/components/RecipeSearchList"
-import { searchPlaceholders } from "@/lib/headings"
+import { searchPlaceholders } from "@/lib/config/headings"
 import { cn, slugify } from "@/lib/utils"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
 
@@ -88,7 +88,7 @@ export const RecipeSearch = ({
           className={cn(
             "w-full rounded-xl border border-border bg-card px-5 py-4 text-base text-foreground",
             "placeholder:text-muted-foreground/60 placeholder:transition-none",
-            "focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:border-transparent",
             "disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
           )}
         />

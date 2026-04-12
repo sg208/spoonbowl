@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, UtensilsCrossed } from "lucide-react"
 import { fetchRecipesByMealType } from "@/lib/api"
-import { useMealTypes, useRecipesByMealType } from "@/hooks/use-recipe-queries"
+import { useMealTypes, useRecipesByMealType } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
@@ -11,7 +11,7 @@ import {
   mealTypeToPageTitle,
   mealTypeToSlug,
   slugToMealType,
-} from "@/lib/mealTypeUtils"
+} from "@/lib/utils/mealTypeUtils"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
