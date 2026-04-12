@@ -1,7 +1,7 @@
 import { useRef, useState, useCallback, useEffect } from "react"
 import type React from "react"
 import type { Recipe } from "@/lib/api"
-import { useRecipeSearch } from "@/hooks/useRecipeSearch"
+import { useRecipeSearch, MIN_QUERY_LENGTH } from "@/hooks/useRecipeSearch"
 import { searchPlaceholders } from "@/lib/headings"
 
 const PLACEHOLDER_INTERVAL_MS = 3200
@@ -32,7 +32,7 @@ export const useRecipeCombobox = (
   const dropdownRef = useRef<HTMLUListElement>(null)
 
   const results = useRecipeSearch(recipes, query)
-  const showResults = query.length >= 3 && results.length > 0
+  const showResults = query.length >= MIN_QUERY_LENGTH && results.length > 0
   const clampedIndex = selectedIndex >= results.length ? -1 : selectedIndex
   const activeDescendantId =
     clampedIndex >= 0 ? `recipe-option-${results[clampedIndex]?.id}` : undefined

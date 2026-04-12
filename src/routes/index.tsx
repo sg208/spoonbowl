@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
+import type React from "react"
 import { useEffect, useMemo, useState } from "react"
 import { fetchAllRecipes } from "@/lib/api"
 import {
@@ -82,7 +83,7 @@ const getSessionGridRecipeIds = (
   return pickRandom(candidateIds, count)
 }
 
-const HomePage = (): JSX.Element => {
+const HomePage = (): React.JSX.Element => {
   const [heading] = useState(() =>
     getSessionRandomText({
       sessionKey: HERO_HEADING_SESSION_KEY,

@@ -2,7 +2,7 @@ import { useMemo } from "react"
 import type { Recipe } from "@/lib/api"
 
 const MAX_RESULTS = 10
-const MIN_QUERY_LENGTH = 3
+export const MIN_QUERY_LENGTH = 3
 
 const matchesSearch = (recipe: Recipe, normalizedQuery: string): boolean => {
   if (recipe.name.toLowerCase().includes(normalizedQuery)) return true

@@ -7,11 +7,12 @@ on:
 
 permissions:
   contents: write
-  pull-requests: read
+  pull-requests: write
 
 jobs:
   release:
     runs-on: ubuntu-latest
+    if: github.actor != 'github-actions[bot]'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -24,17 +25,10 @@ jobs:
         uses: actions/github-script@v7
         with:
           script: |
-            const commits = await github.rest.repos.listCommitsOnHead({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              per_page: 1,
-            });
-
-            const commit = commits.data[0];
             const prResponse = await github.rest.repos.listPullRequestsAssociatedWithCommit({
               owner: context.repo.owner,
               repo: context.repo.repo,
-              commit_sha: commit.sha,
+              commit_sha: context.sha,
             });
 
             if (prResponse.data.length > 0) {
@@ -43,7 +37,7 @@ jobs:
               core.setOutput('pr_body', pr.body || '');
             }
 
-      # Extract CodeRabbit release notes from PR
+      # Extract CodeRabbit release notes from PR comments
       - name: Extract CodeRabbit release notes
         id: coderabbit
         uses: actions/github-script@v7
@@ -67,14 +61,16 @@ jobs:
             );
 
             if (coderabbitComment) {
-              // Extract the Release Notes section
               const releaseNotesMatch = coderabbitComment.body.match(
                 /## Release Notes([\s\S]*?)(?=---|\Z)/
               );
               if (releaseNotesMatch) {
                 core.setOutput('notes', releaseNotesMatch[1].trim());
+                return;
               }
             }
+
+            core.setOutput('notes', '');
 
       # Parse CHANGELOG to extract [Unreleased] section
       - name: Extract CHANGELOG [Unreleased]
@@ -85,7 +81,6 @@ jobs:
             const fs = require('fs');
             const changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
 
-            // Extract [Unreleased] section
             const unreleasedMatch = changelog.match(
               /## \[Unreleased\]\n([\s\S]*?)(?=\n## \[|$)/
             );
@@ -94,18 +89,14 @@ jobs:
               const unreleasedContent = unreleasedMatch[1].trim();
               core.setOutput('unreleased', unreleasedContent);
 
-              // Determine version bump based on content
-              let bump = 'patch'; // default
-              if (unreleasedContent.includes('### Added')) {
-                bump = 'minor';
-              }
+              const bump = unreleasedContent.includes('### Added') ? 'minor' : 'patch';
               core.setOutput('bump_type', bump);
             } else {
               core.setOutput('unreleased', '');
               core.setOutput('bump_type', 'patch');
             }
 
-      # Calculate next version
+      # Calculate next version from package.json
       - name: Calculate next version
         id: version
         uses: actions/github-script@v7
@@ -113,25 +104,21 @@ jobs:
           script: |
             const fs = require('fs');
             const pkg = JSON.parse(fs.readFileSync('package.json', 'utf8'));
-            const current = pkg.version;
-            const [major, minor, patch] = current.split('.').map(Number);
+            const [major, minor, patch] = pkg.version.split('.').map(Number);
 
-            let next;
-            if ('${{ steps.changelog.outputs.bump_type }}' === 'minor') {
-              next = `${major}.${minor + 1}.0`;
-            } else {
-              next = `${major}.${minor}.${patch + 1}`;
-            }
+            const next = '${{ steps.changelog.outputs.bump_type }}' === 'minor'
+              ? `${major}.${minor + 1}.0`
+              : `${major}.${minor}.${patch + 1}`;
 
-            core.setOutput('current', current);
+            core.setOutput('current', pkg.version);
             core.setOutput('next', next);
 
       # Update package.json version
       - name: Update package.json
         run: |
-          npm version ${{ steps.version.outputs.next }} --no-git-tag-v
+          npm version ${{ steps.version.outputs.next }} --no-git-tag-version
 
-      # Update CHANGELOG with new version
+      # Update CHANGELOG with new version entry
       - name: Update CHANGELOG
         uses: actions/github-script@v7
         with:
@@ -139,31 +126,26 @@ jobs:
             const fs = require('fs');
             const today = new Date().toISOString().split('T')[0];
             const newVersion = '${{ steps.version.outputs.next }}';
+            const previousVersion = '${{ steps.version.outputs.current }}';
 
             let changelog = fs.readFileSync('CHANGELOG.md', 'utf8');
 
-            // Replace [Unreleased] with versioned entry
-            const releaseHeader = `## [${newVersion}] - ${today}`;
             changelog = changelog.replace(
               '## [Unreleased]',
-              `## [Unreleased]\n\n${releaseHeader}`
+              `## [Unreleased]\n\n## [${newVersion}] - ${today}`
             );
 
-            // Add comparison link at the bottom
-            const previousVersion = '${{ steps.version.outputs.current }}';
             const compareLink = `\n[${newVersion}]: https://github.com/${{ github.repository }}/compare/v${previousVersion}...v${newVersion}`;
-
-            // Insert before the previous version's link if it exists
-            const previousLink = new RegExp(`\\n\\[${previousVersion}\\]:`, 'g');
-            if (previousLink.test(changelog)) {
-              changelog = changelog.replace(previousLink, compareLink + '\n[${ previousVersion }]:');
+            const prevLinkPattern = new RegExp(`(\\[${previousVersion.replace(/\./g, '\\.')}\\]:)`);
+            if (prevLinkPattern.test(changelog)) {
+              changelog = changelog.replace(prevLinkPattern, compareLink + '\n$1');
             } else {
               changelog += compareLink;
             }
 
             fs.writeFileSync('CHANGELOG.md', changelog);
 
-      # Prepare release notes
+      # Prepare release notes: prefer CodeRabbit, fall back to CHANGELOG
       - name: Prepare release notes
         id: release_notes
         run: |
@@ -177,7 +159,7 @@ jobs:
             echo "EOF"
           } >> $GITHUB_OUTPUT
 
-      # Commit and push version bump + CHANGELOG update
+      # Commit version bump + CHANGELOG update back to main
       - name: Commit version update
         run: |
           git config user.name "github-actions[bot]"
@@ -197,3 +179,18 @@ jobs:
           body: ${{ steps.release_notes.outputs.notes }}
           draft: false
           prerelease: false
+
+      # Open a PR to backport the version bump back to develop
+      - name: Create backport PR to develop
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const newVersion = '${{ steps.version.outputs.next }}';
+            await github.rest.pulls.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `chore(release): backport v${newVersion} to develop`,
+              body: `Syncs the version bump and CHANGELOG update from the v${newVersion} release back to \`develop\`.`,
+              head: 'main',
+              base: 'develop',
+            });

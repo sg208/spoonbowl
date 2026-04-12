@@ -2,7 +2,7 @@ import type React from "react"
 import type { Recipe } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
-const highlightMatch = (text: string, query: string): JSX.Element => {
+const highlightMatch = (text: string, query: string): React.JSX.Element => {
   const lowerText = text.toLowerCase()
   const index = lowerText.indexOf(query.toLowerCase())
   if (index === -1) return <>{text}</>
@@ -35,7 +35,7 @@ export const RecipeSearchList = ({
   onSelect,
   onHoverIndex,
   onPrefetch,
-}: RecipeSearchListProps): JSX.Element => (
+}: RecipeSearchListProps): React.JSX.Element => (
   <ul
     ref={dropdownRef}
     id="recipe-search-results"
