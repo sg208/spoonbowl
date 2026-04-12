@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-04-12
+
 ### Added
 
 - `MobileBottomNav` component: iOS-style floating pill fixed at the bottom of the screen (`md:hidden`), with Home, Search, and Menu icon buttons. Menu opens a full-screen Dialog with Browse, Legal, and Accessibility nav sections plus a Theme toggle. Safe-area-aware positioning via `bottom-nav-safe` CSS utility.
@@ -177,5 +179,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+
+[1.2.0]: https://github.com/sg208/spoonbowl/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/sg208/spoonbowl/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/sg208/spoonbowl/compare/v1.0.0...v1.1.0
