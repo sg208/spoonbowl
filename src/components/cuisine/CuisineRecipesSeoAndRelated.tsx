@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router"
 import { ArrowLeft } from "lucide-react"
 import type { Recipe } from "@/lib/api"
-import { cuisineToSlug } from "@/lib/cuisineUtils"
+import { cuisineToSlug } from "@/lib/utils/cuisineUtils"
 import { Button } from "@/components/ui/button"
 
 type CuisineRecipesSeoAndRelatedProps = {

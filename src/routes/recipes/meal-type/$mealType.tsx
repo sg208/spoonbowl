@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, UtensilsCrossed } from "lucide-react"
 import { fetchRecipesByMealType } from "@/lib/api"
-import { useMealTypes, useRecipesByMealType } from "@/hooks/use-recipe-queries"
+import { useMealTypes, useRecipesByMealType } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
@@ -11,7 +11,7 @@ import {
   mealTypeToPageTitle,
   mealTypeToSlug,
   slugToMealType,
-} from "@/lib/mealTypeUtils"
+} from "@/lib/utils/mealTypeUtils"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
@@ -47,7 +47,7 @@ const MealTypeRecipesPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav aria-label="Breadcrumb" className="mb-8">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap" role="list">
+        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <li>
             <Link
               to="/"

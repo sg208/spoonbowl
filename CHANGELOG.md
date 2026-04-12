@@ -7,6 +7,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Renamed kebab-case hook files to camelCase (`use-recipe-queries.ts` → `useRecipeQueries.ts`, `use-mobile.ts` → `useMobile.ts`, `use-prefetch-recipe-detail.ts` → `usePrefetchRecipeDetail.ts`, `use-prefetch-cuisines-index.ts` → `usePrefetchCuisinesIndex.ts`); updated all import sites.
+- Renamed `theme-provider.tsx` → `ThemeProvider.tsx` and `mode-toggle.tsx` → `ModeToggle.tsx` for consistent PascalCase component filenames.
+- Reorganised `src/lib/` — domain utilities moved to `src/lib/utils/` (`cuisineUtils`, `difficultyUtils`, `mealTypeUtils`, `tagUtils`) and app-wide constants moved to `src/lib/config/` (`headings`, `legalDates`, `navigationLinks`, `not-found-messages`); all import paths updated.
+- Added `.claude/rules/` to `.gitignore` to prevent local Claude config symlinks from being committed.
+
+### Fixed
+
+- Fixed broken route link in `$tag.tsx` SEO section: recipe links now correctly point to `/recipe/$recipeId/$slug` with both required params.
+- Removed redundant `role="list"` from `<ol>` elements in recipe detail, tag, and meal-type pages (implicit list semantics).
+- Removed invalid `aria-labelledby` from standalone `<header>` elements in cuisine, tags, and tag pages.
+- Fixed `focus:ring-orange-500` to `focus-visible:ring-ring` in `RecipeSearch` for consistent design-system focus styling.
+- Wrapped inline prefetch callbacks in `useCallback` in cuisine and tags pages to stabilise references across renders.
+
+### Added
+
+- `STRUCTURE.md` at project root: quick-reference navigation table and folder map for the codebase.
+- Folder-level `README.md` in `src/components/`, `src/hooks/`, `src/lib/`, and `src/routes/` documenting each folder's purpose and conventions.
+
 ## [1.1.1] - 2026-04-12
 
 ## [1.1.0] - 2026-04-12
@@ -133,7 +153,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
-
-
 [1.1.1]: https://github.com/sg208/spoonbowl/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/sg208/spoonbowl/compare/v1.0.0...v1.1.0

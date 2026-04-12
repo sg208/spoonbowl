@@ -7,13 +7,13 @@ import {
   headings,
   recipeSectionHeadings,
   searchHeadings,
-} from "@/lib/headings"
+} from "@/lib/config/headings"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { EmptyRecipes } from "@/components/EmptyRecipes"
 import { FeaturedRecipe, FeaturedRecipeSkeleton } from "@/components/FeaturedRecipe"
 import { RecipeSearch } from "@/components/RecipeSearch"
-import { useAllRecipes } from "@/hooks/use-recipe-queries"
+import { useAllRecipes } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import type { Recipe } from "@/lib/api"
 

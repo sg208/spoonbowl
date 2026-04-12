@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
-import { LEGAL_DATES } from "@/lib/legalDates"
+import { LEGAL_DATES } from "@/lib/config/legalDates"
 import { Separator } from "@/components/ui/separator"
 
 const TermsPage = () => {

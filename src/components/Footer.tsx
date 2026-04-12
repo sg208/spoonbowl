@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ChefHat } from "lucide-react"
-import { browseLinks } from "@/lib/navigationLinks"
+import { browseLinks } from "@/lib/config/navigationLinks"
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear()
