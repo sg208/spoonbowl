@@ -4,7 +4,7 @@ import { Link } from "@tanstack/react-router"
 interface MenuSectionProps {
   title: string
   ariaLabel: string
-  links: Array<{ to: string; label: string }>
+  links: readonly { to: string; label: string }[]
   onLinkClick?: () => void
   onPrefetch?: (to: string) => void
 }

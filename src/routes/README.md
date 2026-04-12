@@ -10,11 +10,11 @@ TanStack Router file-based routes. Each file maps 1:1 to a URL segment.
 
 ## Structure
 
-```
+```text
 routes/
 ├── __root.tsx           → layout shell
 ├── index.tsx            → / (home)
-├── recipe/$recipeId/$slug.tsx  → /recipe/:id/:slug
+├── recipe/$recipeId/$slug.tsx  → /recipe/:recipeId/:slug
 └── recipes/
     ├── cuisines/        → /recipes/cuisines (index listing)
     ├── cuisine/$cuisine → /recipes/cuisine/:cuisine (filtered)

@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ChefHat } from "lucide-react"
-import { browseLinks } from "@/lib/config/navigationLinks"
+import { browseLinks, legalLinks, accessibilityLinks } from "@/lib/config/navigationLinks"
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -48,44 +48,32 @@ export const Footer = () => {
           <nav aria-label="Legal links" className="hidden md:block">
             <p className="text-sm font-semibold text-foreground mb-3">Legal</p>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/privacy"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  Privacy Policy
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/terms"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  Terms of Use
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/disclaimer"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  Disclaimer
-                </Link>
-              </li>
+              {legalLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
 
           <nav aria-label="Accessibility and info links" className="hidden md:block">
             <p className="text-sm font-semibold text-foreground mb-3">Accessibility</p>
             <ul className="space-y-2">
-              <li>
-                <Link
-                  to="/accessibility"
-                  className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                >
-                  Accessibility Statement
-                </Link>
-              </li>
+              {accessibilityLinks.map((link) => (
+                <li key={link.to}>
+                  <Link
+                    to={link.to}
+                    className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+                  >
+                    {link.label}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </nav>
         </div>

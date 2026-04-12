@@ -84,6 +84,7 @@ const getSessionGridRecipeIds = (
 }
 
 const HomePage = (): React.JSX.Element => {
+  const [isMd, setIsMd] = useState(() => typeof window !== "undefined" && window.innerWidth >= 768)
   const [heading] = useState(() =>
     getSessionRandomText({
       sessionKey: HERO_HEADING_SESSION_KEY,
@@ -106,6 +107,16 @@ const HomePage = (): React.JSX.Element => {
     })
   )
   const { data, isLoading, isError } = useAllRecipes()
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)")
+    const onChange = () => {
+      setIsMd(mql.matches)
+    }
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
   const recipes = useMemo<Recipe[]>(() => data?.recipes ?? [], [data?.recipes])
   const featured = useMemo(() => {
     if (recipes.length === 0) return null
@@ -174,9 +185,7 @@ const HomePage = (): React.JSX.Element => {
         )}
       </section>
 
-      <div className="hidden md:block">
-        <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
-      </div>
+      {isMd && <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />}
 
       <section aria-labelledby="recipes-section-label" className="mb-12">
         <div className="mb-6 text-center">

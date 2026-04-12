@@ -43,5 +43,5 @@ src/
 - **Hooks**: camelCase filenames (`useRecipeQueries.ts`, `useMobile.ts`)
 - **Routes**: kebab-case folders, `$` prefix for dynamic segments (`$recipeId`, `$cuisine`)
 - **Imports**: always use `@/` alias, never relative `../../`
-- **Data fetching**: always via hooks in `src/hooks/` — no raw `useQuery` in route files
+- **Data fetching**: route loaders use `loader`, `validateSearch`, `ensureQueryData`, and `notFound()` (TanStack Router) to prime cache and validate params; components fetch via hooks in `src/hooks/` with no raw `useQuery` in route files
 - **Styling**: Tailwind classes via `cn()` — no inline styles

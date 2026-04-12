@@ -17,7 +17,7 @@ interface MobileSearchModalBodyProps {
   results: Recipe[]
   showResults: boolean
   clampedIndex: number
-  activeDescendantId: string
+  activeDescendantId: string | undefined
   placeholderIndex: number
   dropdownRef: React.RefObject<HTMLUListElement>
   handleSelect: (recipe: Recipe) => void
