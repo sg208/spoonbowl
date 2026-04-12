@@ -35,7 +35,7 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 - **Route announcer:** `src/components/RouteAnnouncer.tsx` — `aria-live` SPA a11y; mounted in `RootLayout`.
 - **Routes:** file-based; dynamic segments use `$` (e.g. `$cuisine`, `$recipeId`).
 - **API:** `src/lib/api.ts` — typed wrappers only; avoid raw `fetch` in components.
-- **404 copy:** `src/lib/not-found-messages.ts`.
+- **404 copy:** `src/lib/config/not-found-messages.ts`.
 
 ## Where to change (short)
 
@@ -45,7 +45,7 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 | Legal / privacy copy | `routes/privacy.tsx`, `components/legal/*`; `/gdpr` → `/privacy`                     |
 | New route            | `src/routes/**`                                                                      |
 | Recipe UI            | `RecipeCard.tsx`, `RecipeCardSkeleton.tsx`, `EmptyRecipes.tsx`, `FeaturedRecipe.tsx` |
-| Domain helpers       | `src/lib/headings.ts`, `*Utils.ts`                                                   |
+| Domain helpers       | `src/lib/config/headings.ts`, `src/lib/utils/*Utils.ts`                              |
 | Styles / tokens      | `src/index.css`                                                                      |
 | PWA caching          | `vite.config.ts`                                                                     |
 

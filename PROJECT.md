@@ -20,7 +20,7 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 | **Deploy**        | Production: **Cloudflare Pages** (see `README.md`); legal copy in `src/routes/privacy.tsx` (includes GDPR/CCPA/CalOPPA notices), `src/routes/terms.tsx`, `src/routes/disclaimer.tsx`; `src/routes/gdpr.tsx` redirects to `/privacy` |
 | **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                                                                                                                      |
 
-**Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/use-recipe-queries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
+**Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/useRecipeQueries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
 
 ---
 
@@ -107,27 +107,32 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │   ├── RecipeCard.tsx
     │   ├── RecipeCardSkeleton.tsx     # skeleton placeholder for recipe cards
     │   ├── EmptyRecipes.tsx           # empty-state UI for recipe grids
-    │   ├── mode-toggle.tsx
-    │   ├── theme-provider.tsx
+    │   ├── ModeToggle.tsx
+    │   ├── ThemeProvider.tsx
     │   └── ui/
     │       ├── ... shadcn-style primitives (Button, Dialog, Select, etc.)
     │       └── sonner.tsx             # toaster wrapper
     ├── hooks/
-    │   ├── use-mobile.ts
-    │   ├── use-prefetch-cuisines-index.ts
-    │   ├── use-prefetch-recipe-detail.ts  # prefetch a recipe detail query on hover/focus
-    │   └── use-recipe-queries.ts      # shared useQuery wrappers + keys from lib/keys
+    │   ├── useMobile.ts
+    │   ├── usePrefetchCuisinesIndex.ts
+    │   ├── usePrefetchRecipeDetail.ts  # prefetch a recipe detail query on hover/focus
+    │   └── useRecipeQueries.ts        # shared useQuery wrappers + keys from lib/keys
     └── lib/
         ├── keys/
         │   └── recipeKeys.ts          # React Query key factories (recipes, meta lists, 404)
         ├── api.ts                     # typed fetch wrappers (DummyJSON recipes)
         ├── queryClient.ts             # React Query defaults (staleTime/gcTime/retry) + STALE_TIME export
-        ├── not-found-messages.ts      # 404 copy pool + random picker
         ├── utils.ts                   # cn() / class merging utilities
-        ├── headings.ts
-        ├── mealTypeUtils.ts
-        ├── cuisineUtils.ts
-        └── tagUtils.ts
+        ├── config/
+        │   ├── headings.ts            # page/section heading copy
+        │   ├── legalDates.ts          # last-updated dates for legal pages
+        │   ├── navigationLinks.ts     # shared nav links (Navbar + Footer)
+        │   └── not-found-messages.ts  # 404 copy pool + random picker
+        └── utils/
+            ├── cuisineUtils.ts
+            ├── difficultyUtils.ts
+            ├── mealTypeUtils.ts
+            └── tagUtils.ts
 ```
 
 ---
@@ -141,13 +146,13 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 | Top navigation                                                        | `src/components/Navbar.tsx`                                                                                                                           |
 | Footer                                                                | `src/components/Footer.tsx`                                                                                                                           |
 | Privacy policy (incl. regional notices)                               | `src/routes/privacy.tsx`, `src/components/legal/*`                                                                                                    |
-| Theme / dark mode                                                     | `src/components/theme-provider.tsx`, `src/components/mode-toggle.tsx`                                                                                 |
+| Theme / dark mode                                                     | `src/components/ThemeProvider.tsx`, `src/components/ModeToggle.tsx`                                                                                   |
 | New page / route                                                      | Add a file under `src/routes/**` (tree regenerates into `src/routeTree.gen.ts`)                                                                       |
 | Recipe cards / list UI                                                | `src/components/RecipeCard.tsx`, `src/components/RecipeCardSkeleton.tsx`, `src/components/EmptyRecipes.tsx`, `src/components/FeaturedRecipe.tsx`      |
-| 404 page / random recipe                                              | `src/components/NotFoundPage.tsx`, `src/components/NotFoundRandomRecipe.tsx`, copy pool `src/lib/not-found-messages.ts`                               |
-| Domain helpers (headings, filters, labels)                            | `src/lib/headings.ts`, `mealTypeUtils.ts`, `cuisineUtils.ts`, `tagUtils.ts`                                                                           |
+| 404 page / random recipe                                              | `src/components/NotFoundPage.tsx`, `src/components/NotFoundRandomRecipe.tsx`, copy pool `src/lib/config/not-found-messages.ts`                        |
+| Domain helpers (headings, filters, labels)                            | `src/lib/config/headings.ts`, `src/lib/utils/mealTypeUtils.ts`, `src/lib/utils/cuisineUtils.ts`, `src/lib/utils/tagUtils.ts`                          |
 | API calls                                                             | `src/lib/api.ts` — add a typed wrapper; avoid scattering `fetch` in components                                                                        |
-| React Query defaults / shared recipe queries                          | `src/lib/queryClient.ts`, `src/lib/keys/recipeKeys.ts`, `src/hooks/use-recipe-queries.ts`                                                             |
+| React Query defaults / shared recipe queries                          | `src/lib/queryClient.ts`, `src/lib/keys/recipeKeys.ts`, `src/hooks/useRecipeQueries.ts`                                                               |
 | PWA / cache rules                                                     | `vite.config.ts` → `VitePWA({ workbox: { runtimeCaching: […] } })`                                                                                    |
 | Global styles                                                         | `src/index.css`                                                                                                                                       |
 | UI primitives                                                         | `src/components/ui/*` — add via `npx shadcn add <component>`; don’t hand-copy from docs                                                               |

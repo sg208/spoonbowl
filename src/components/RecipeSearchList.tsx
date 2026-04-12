@@ -2,6 +2,12 @@ import type React from "react"
 import type { Recipe } from "@/lib/api"
 import { cn } from "@/lib/utils"
 
+const difficultyClassMap = {
+  Easy: "bg-green-100 text-green-800 dark:bg-green-900/40 dark:text-green-300",
+  Medium: "bg-amber-100 text-amber-800 dark:bg-yellow-900/40 dark:text-yellow-300",
+  Hard: "bg-red-100 text-red-800 dark:bg-red-900/40 dark:text-red-300",
+} as const
+
 const highlightMatch = (text: string, query: string): React.JSX.Element => {
   const lowerText = text.toLowerCase()
   const index = lowerText.indexOf(query.toLowerCase())
@@ -54,7 +60,7 @@ export const RecipeSearchList = ({
         className={cn(
           "cursor-pointer border-b border-border/50 px-5 py-3 text-sm transition-colors last:border-b-0",
           index === clampedIndex
-            ? "bg-orange-500/15 text-orange-100"
+            ? "bg-primary/10 text-foreground"
             : "text-foreground hover:bg-muted"
         )}
         onClick={() => onSelect(recipe)}
@@ -77,9 +83,7 @@ export const RecipeSearchList = ({
           <span
             className={cn(
               "flex-shrink-0 rounded-md px-2 py-0.5 text-xs font-medium",
-              recipe.difficulty === "Easy" && "bg-green-900/40 text-green-300",
-              recipe.difficulty === "Medium" && "bg-yellow-900/40 text-yellow-300",
-              recipe.difficulty === "Hard" && "bg-red-900/40 text-red-300"
+              difficultyClassMap[recipe.difficulty as keyof typeof difficultyClassMap]
             )}
           >
             {recipe.difficulty}

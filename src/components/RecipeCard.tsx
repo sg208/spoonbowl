@@ -3,7 +3,7 @@ import { Clock, Star, Users } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Card, CardContent } from "@/components/ui/card"
 import type { Recipe } from "@/lib/api"
-import { usePrefetchRecipeDetail } from "@/hooks/use-prefetch-recipe-detail"
+import { usePrefetchRecipeDetail } from "@/hooks/usePrefetchRecipeDetail"
 import { slugify } from "@/lib/utils"
 
 interface RecipeCardProps {
@@ -13,7 +13,7 @@ interface RecipeCardProps {
 const difficultyColors = {
   Easy: "bg-accent text-accent-foreground",
   Medium: "bg-secondary text-secondary-foreground",
-  Hard: "bg-destructive/10 text-destructive",
+  Hard: "bg-destructive/10 text-red-800 dark:text-red-300",
 }
 
 export const RecipeCard = ({ recipe }: RecipeCardProps) => {
@@ -30,7 +30,7 @@ export const RecipeCard = ({ recipe }: RecipeCardProps) => {
       aria-label={`View recipe: ${recipe.name}, ${recipe.cuisine} cuisine, ${recipe.difficulty} difficulty, ${totalTime} minutes total`}
     >
       <Card className="overflow-hidden h-full border-border p-0 gap-0 transition-all duration-200 group-hover:shadow-md group-hover:-translate-y-0.5">
-        <div className="relative aspect-[4/3] overflow-hidden bg-muted">
+        <div className="relative aspect-[16/9] overflow-hidden bg-muted">
           <img
             src={recipe.image}
             alt={recipe.name}

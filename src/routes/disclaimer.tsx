@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { LEGAL_DATES } from "@/lib/legalDates"
+import { LEGAL_DATES } from "@/lib/config/legalDates"
 import { Separator } from "@/components/ui/separator"
 
 export const Route = createFileRoute("/disclaimer")({

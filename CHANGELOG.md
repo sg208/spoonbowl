@@ -7,6 +7,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- `MobileBottomNav` component: iOS-style floating pill fixed at the bottom of the screen (`md:hidden`), with Home, Search, and Menu icon buttons. Menu opens a full-screen Dialog with Browse, Legal, and Accessibility nav sections plus a Theme toggle. Safe-area-aware positioning via `bottom-nav-safe` CSS utility.
+- `MobileSearchModal` component: full-screen search Dialog for mobile, reusing `useRecipeCombobox`, `RecipeSearchList`, and hover-prefetch pattern from the desktop `RecipeSearch`.
+
+### Changed
+
+- `Navbar`: removed mobile hamburger dropdown and associated state/refs/effects; logo centred on mobile via flex utilities; `ModeToggle` hidden on mobile (moved to `MobileBottomNav` menu).
+- `Footer`: Browse, Legal, and Accessibility nav sections hidden on mobile (`hidden md:block`); branding column centred on mobile.
+- `RootLayout`: added `<MobileBottomNav />`; footer gains `mb-20 md:mb-0` to clear the floating nav bar on mobile.
+- `routes/index.tsx`: `RecipeSearch` section wrapped in `hidden md:block` — replaced by `MobileSearchModal` on mobile.
+- `FeaturedRecipe`: CTA button is full-width on mobile (`w-full sm:w-auto`), calorie text centred on mobile; button label changed from "View Recipe" to "Let's Cook!".
+- `RecipeCard` + `RecipeCardSkeleton`: image aspect ratio changed from `4/3` to `16/9` to match `FeaturedRecipe`.
+- `ThemeProvider`: dynamically updates `theme-color` meta tags on every theme change so the browser status bar blends with the app background.
+- `index.html`: replaced single `theme-color` with two media-query-targeted values (light/dark); `apple-mobile-web-app-status-bar-style` set to `black-translucent`.
+- `index.css`: added `.bottom-nav-safe` utility class for iOS safe-area-aware bottom positioning.
+
+### Fixed
+
+- WCAG 2.1/2.2 AA contrast violations in light theme: darkened `--primary` (`0.65` → `0.57 L`) and `--spoon-amber` (`0.78` → `0.55 L`) for ≥4.5:1 on near-white backgrounds; Hard difficulty badge changed to `text-red-800` on light `bg-destructive/10`; search-list difficulty badges now use dark text on light backgrounds in light mode.
+- `RecipeSearchList` selected-item highlight changed from `bg-orange-500/15 text-orange-100` (failing contrast in light mode) to `bg-primary/10 text-foreground`.
+- `MobileSearchModal`: replaced bare `<h2>` with `<DialogTitle>` so Radix wires `aria-labelledby` correctly.
+- `MobileBottomNav`: removed `aria-controls` referencing a conditionally-mounted Radix portal (broken reference when dialog is closed); removed redundant `role="banner"` from `<header>` in Navbar.
+- `RootLayout`: removed duplicate `flex-1` class on `<main>`.
+- `Footer`: removed redundant `role="contentinfo"` from `<footer>` (implicit semantic).
+- Inline `style` prop in `MobileBottomNav` (CSP `unsafe-inline` risk) replaced with `.bottom-nav-safe` CSS utility class.
+- Fixed broken route link in `$tag.tsx` SEO section: recipe links now correctly point to `/recipe/$recipeId/$slug` with both required params.
+- Removed redundant `role="list"` from `<ol>` elements in recipe detail, tag, and meal-type pages (implicit list semantics).
+- Removed invalid `aria-labelledby` from standalone `<header>` elements in cuisine, tags, and tag pages.
+- Fixed `focus:ring-orange-500` to `focus-visible:ring-ring` in `RecipeSearch` for consistent design-system focus styling.
+- Wrapped inline prefetch callbacks in `useCallback` in cuisine and tags pages to stabilise references across renders.
+
+### Changed
+
+- Renamed kebab-case hook files to camelCase (`use-recipe-queries.ts` → `useRecipeQueries.ts`, `use-mobile.ts` → `useMobile.ts`, `use-prefetch-recipe-detail.ts` → `usePrefetchRecipeDetail.ts`, `use-prefetch-cuisines-index.ts` → `usePrefetchCuisinesIndex.ts`); updated all import sites.
+- Renamed `theme-provider.tsx` → `ThemeProvider.tsx` and `mode-toggle.tsx` → `ModeToggle.tsx` for consistent PascalCase component filenames.
+- Reorganised `src/lib/` — domain utilities moved to `src/lib/utils/` (`cuisineUtils`, `difficultyUtils`, `mealTypeUtils`, `tagUtils`) and app-wide constants moved to `src/lib/config/` (`headings`, `legalDates`, `navigationLinks`, `not-found-messages`); all import paths updated.
+- Added `.claude/rules/` to `.gitignore` to prevent local Claude config symlinks from being committed.
+
+### Added
+
+- `STRUCTURE.md` at project root: quick-reference navigation table and folder map for the codebase.
+- Folder-level `README.md` in `src/components/`, `src/hooks/`, `src/lib/`, and `src/routes/` documenting each folder's purpose and conventions.
+
 ## [1.1.1] - 2026-04-12
 
 ## [1.1.0] - 2026-04-12
@@ -133,7 +177,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
-
-
 [1.1.1]: https://github.com/sg208/spoonbowl/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/sg208/spoonbowl/compare/v1.0.0...v1.1.0

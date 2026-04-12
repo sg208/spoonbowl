@@ -2,7 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { useQueryClient } from "@tanstack/react-query"
 import { BarChart2, ChefHat, ArrowRight } from "lucide-react"
 import { fetchRecipesByDifficulty } from "@/lib/api"
-import { useDifficulties } from "@/hooks/use-recipe-queries"
+import { useDifficulties } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
@@ -10,7 +10,7 @@ import {
   getDifficultyDescription,
   difficultyToSlug,
   difficultyToPageTitle,
-} from "@/lib/difficultyUtils"
+} from "@/lib/utils/difficultyUtils"
 import { Badge } from "@/components/ui/badge"
 
 const DifficultiesIndexPage = () => {

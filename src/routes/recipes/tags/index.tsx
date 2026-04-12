@@ -1,9 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Tag, ChefHat, ArrowRight } from "lucide-react"
 import { fetchRecipesByTag } from "@/lib/api"
-import { useTags } from "@/hooks/use-recipe-queries"
-import { tagToPageTitle, sortTagsAlphabetically, getTagEmoji, tagToSlug } from "@/lib/tagUtils"
+import { useTags } from "@/hooks/useRecipeQueries"
+import {
+  tagToPageTitle,
+  sortTagsAlphabetically,
+  getTagEmoji,
+  tagToSlug,
+} from "@/lib/utils/tagUtils"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import { Badge } from "@/components/ui/badge"
@@ -16,20 +22,23 @@ const TagsIndexPage = () => {
   const queryClient = useQueryClient()
   const { data: tags, isLoading, isError } = useTags()
 
-  const prefetchTag = (tag: string) => {
-    queryClient.prefetchQuery({
-      queryKey: recipeKeys.byTag(tag),
-      queryFn: () => fetchRecipesByTag(tag),
-      staleTime: STALE_TIME_5M_MS,
-    })
-  }
+  const prefetchTag = useCallback(
+    (tag: string) => {
+      queryClient.prefetchQuery({
+        queryKey: recipeKeys.byTag(tag),
+        queryFn: () => fetchRecipesByTag(tag),
+        staleTime: STALE_TIME_5M_MS,
+      })
+    },
+    [queryClient]
+  )
 
   const grouped = tags ? sortTagsAlphabetically(tags) : {}
   const letters = Object.keys(grouped).sort()
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <header className="mb-10" aria-labelledby="tags-page-heading">
+      <header className="mb-10">
         <div className="flex items-center gap-2 mb-3">
           <Badge className="bg-primary/10 text-primary border-0 font-medium">
             <Tag className="h-3 w-3 mr-1" aria-hidden="true" />

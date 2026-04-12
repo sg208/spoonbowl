@@ -1,12 +1,13 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { ArrowLeft, ChefHat, Tag } from "lucide-react"
-import { useRecipesByTag, useTags } from "@/hooks/use-recipe-queries"
-import { tagToPageTitle, tagToDescription, slugToTag, getTagEmoji } from "@/lib/tagUtils"
-import { usePrefetchRecipeDetail } from "@/hooks/use-prefetch-recipe-detail"
+import { useRecipesByTag, useTags } from "@/hooks/useRecipeQueries"
+import { tagToPageTitle, tagToDescription, slugToTag, getTagEmoji } from "@/lib/utils/tagUtils"
+import { usePrefetchRecipeDetail } from "@/hooks/usePrefetchRecipeDetail"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { slugify } from "@/lib/utils"
 
 export const Route = createFileRoute("/recipes/tag/$tag")({
   component: TagRecipesPage,
@@ -30,7 +31,7 @@ const TagRecipesPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <nav aria-label="Breadcrumb" className="mb-8">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap" role="list">
+        <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <li>
             <Link
               to="/"
@@ -55,7 +56,7 @@ const TagRecipesPage = () => {
         </ol>
       </nav>
 
-      <header className="mb-10" aria-labelledby="tag-page-heading">
+      <header className="mb-10">
         <div className="flex items-start gap-4">
           <span
             className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl bg-secondary text-3xl sm:text-4xl border border-border"
@@ -149,8 +150,8 @@ const TagRecipesPage = () => {
             {recipes.slice(0, 6).map((r) => (
               <Link
                 key={r.id}
-                to="/recipes/$recipeId"
-                params={{ recipeId: String(r.id) }}
+                to="/recipe/$recipeId/$slug"
+                params={{ recipeId: String(r.id), slug: slugify(r.name) }}
                 onMouseEnter={() => prefetchRecipeDetail(r.id)}
                 onFocus={() => prefetchRecipeDetail(r.id)}
                 className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"

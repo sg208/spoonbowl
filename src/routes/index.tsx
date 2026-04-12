@@ -7,13 +7,13 @@ import {
   headings,
   recipeSectionHeadings,
   searchHeadings,
-} from "@/lib/headings"
+} from "@/lib/config/headings"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { EmptyRecipes } from "@/components/EmptyRecipes"
 import { FeaturedRecipe, FeaturedRecipeSkeleton } from "@/components/FeaturedRecipe"
 import { RecipeSearch } from "@/components/RecipeSearch"
-import { useAllRecipes } from "@/hooks/use-recipe-queries"
+import { useAllRecipes } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import type { Recipe } from "@/lib/api"
 
@@ -84,6 +84,7 @@ const getSessionGridRecipeIds = (
 }
 
 const HomePage = (): React.JSX.Element => {
+  const [isMd, setIsMd] = useState(() => typeof window !== "undefined" && window.innerWidth >= 768)
   const [heading] = useState(() =>
     getSessionRandomText({
       sessionKey: HERO_HEADING_SESSION_KEY,
@@ -106,6 +107,16 @@ const HomePage = (): React.JSX.Element => {
     })
   )
   const { data, isLoading, isError } = useAllRecipes()
+
+  useEffect(() => {
+    const mql = window.matchMedia("(min-width: 768px)")
+    const onChange = () => {
+      setIsMd(mql.matches)
+    }
+    mql.addEventListener("change", onChange)
+    return () => mql.removeEventListener("change", onChange)
+  }, [])
+
   const recipes = useMemo<Recipe[]>(() => data?.recipes ?? [], [data?.recipes])
   const featured = useMemo(() => {
     if (recipes.length === 0) return null
@@ -174,7 +185,7 @@ const HomePage = (): React.JSX.Element => {
         )}
       </section>
 
-      <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
+      {isMd && <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />}
 
       <section aria-labelledby="recipes-section-label" className="mb-12">
         <div className="mb-6 text-center">

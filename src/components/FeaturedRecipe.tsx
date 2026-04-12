@@ -107,21 +107,21 @@ export const FeaturedRecipe = ({ recipe }: FeaturedRecipeProps) => {
             </div>
           </dl>
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:flex-wrap">
             <Button
               asChild
-              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2"
+              className="bg-primary text-primary-foreground hover:bg-primary/90 gap-2 w-full sm:w-auto"
             >
               <Link
                 to="/recipe/$recipeId/$slug"
                 params={{ recipeId: String(recipe.id), slug: slugify(recipe.name) }}
-                aria-label={`View full recipe for ${recipe.name}`}
+                aria-label={`Go to recipe: ${recipe.name}`}
               >
-                View Recipe
+                Let's Cook!
                 <ArrowRight className="h-4 w-4" aria-hidden="true" />
               </Link>
             </Button>
-            <p className="text-xs text-muted-foreground">
+            <p className="text-xs text-muted-foreground text-center sm:text-left">
               {recipe.caloriesPerServing} cal / serving
             </p>
           </div>

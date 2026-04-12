@@ -1,8 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Globe, ChefHat, ArrowRight } from "lucide-react"
 import { fetchRecipesByCuisine } from "@/lib/api"
-import { useCuisines } from "@/hooks/use-recipe-queries"
+import { useCuisines } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
@@ -10,24 +11,27 @@ import {
   getCuisineDescription,
   cuisineToSlug,
   cuisineToPageTitle,
-} from "@/lib/cuisineUtils"
+} from "@/lib/utils/cuisineUtils"
 import { Badge } from "@/components/ui/badge"
 
 const CuisinesIndexPage = () => {
   const queryClient = useQueryClient()
   const { data: cuisines, isLoading, isError } = useCuisines()
 
-  const prefetchCuisine = (cuisine: string) => {
-    queryClient.prefetchQuery({
-      queryKey: recipeKeys.byCuisine(cuisine),
-      queryFn: () => fetchRecipesByCuisine(cuisine),
-      staleTime: STALE_TIME_5M_MS,
-    })
-  }
+  const prefetchCuisine = useCallback(
+    (cuisine: string) => {
+      queryClient.prefetchQuery({
+        queryKey: recipeKeys.byCuisine(cuisine),
+        queryFn: () => fetchRecipesByCuisine(cuisine),
+        staleTime: STALE_TIME_5M_MS,
+      })
+    },
+    [queryClient]
+  )
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <header className="mb-10" aria-labelledby="cuisines-page-heading">
+      <header className="mb-10">
         <div className="flex items-center gap-2 mb-3">
           <Badge className="bg-primary/10 text-primary border-0 font-medium">
             <Globe className="h-3 w-3 mr-1" aria-hidden="true" />

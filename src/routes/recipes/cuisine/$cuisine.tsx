@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
+import { useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { fetchRecipesByCuisine, fetchCuisines } from "@/lib/api"
 import {
@@ -7,11 +8,11 @@ import {
   cuisineToPageTitle,
   slugToCuisine,
   cuisineToSlug,
-} from "@/lib/cuisineUtils"
+} from "@/lib/utils/cuisineUtils"
 import { recipeKeys, recipeMetaKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
-import { useRecipesByCuisine } from "@/hooks/use-recipe-queries"
-import { usePrefetchCuisinesIndex } from "@/hooks/use-prefetch-cuisines-index"
+import { useRecipesByCuisine } from "@/hooks/useRecipeQueries"
+import { usePrefetchCuisinesIndex } from "@/hooks/usePrefetchCuisinesIndex"
 import { CuisineRecipesBreadcrumb } from "@/components/cuisine/CuisineRecipesBreadcrumb"
 import { CuisineRecipesHeader } from "@/components/cuisine/CuisineRecipesHeader"
 import { CuisineRecipesErrorGrid } from "@/components/cuisine/CuisineRecipesErrorGrid"
@@ -30,13 +31,16 @@ const CuisineRecipesPage = () => {
 
   const recipes = data?.recipes ?? []
 
-  const prefetchCuisine = (name: string) => {
-    queryClient.prefetchQuery({
-      queryKey: recipeKeys.byCuisine(name),
-      queryFn: () => fetchRecipesByCuisine(name),
-      staleTime: STALE_TIME_5M_MS,
-    })
-  }
+  const prefetchCuisine = useCallback(
+    (name: string) => {
+      queryClient.prefetchQuery({
+        queryKey: recipeKeys.byCuisine(name),
+        queryFn: () => fetchRecipesByCuisine(name),
+        staleTime: STALE_TIME_5M_MS,
+      })
+    },
+    [queryClient]
+  )
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">

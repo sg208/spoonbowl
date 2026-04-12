@@ -3,7 +3,7 @@ import { Clock, ChefHat, Users, Star, Flame, ArrowLeft } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
-import { useRecipeDetail } from "@/hooks/use-recipe-queries"
+import { useRecipeDetail } from "@/hooks/useRecipeQueries"
 import { fetchRecipe } from "@/lib/api"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
 
@@ -38,7 +38,7 @@ const RecipeDetailPage = () => {
       aria-labelledby="recipe-title"
     >
       <nav aria-label="Breadcrumb" className="mb-6">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground" role="list">
+        <ol className="flex items-center gap-2 text-sm text-muted-foreground">
           <li>
             <Link
               to="/"
@@ -188,7 +188,7 @@ const RecipeDetailPage = () => {
             >
               Instructions
             </h2>
-            <ol className="space-y-4" role="list">
+            <ol className="space-y-4">
               {recipe.instructions.map((step, index) => (
                 <li key={index} className="flex items-start gap-3">
                   <span
