@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- `recipeKeys.detail` usage in `RecipeSearch` replaced with the correct `recipeDetailKeys.detail` factory, so hover-prefetch populates the right query cache key.
+- `useRecipeSearch` now trims the query before normalising to lowercase, preventing whitespace-padded inputs from bypassing the 3-character minimum and producing false-negative results.
+
+### Changed
+
+- `handleKeyDown` in `useRecipeCombobox` wrapped in `useCallback` with explicit deps to stabilise the function reference across renders.
+- `RecipeSearch.tsx` split into three focused units: `useRecipeCombobox` hook (combobox state, keyboard, outside-click), `RecipeSearchList` presentational component (list rendering, match highlighting), and a thin `RecipeSearch` composition layer.
+- `<li role="option">` items in `RecipeSearchList` now carry `tabIndex={-1}` and an `onKeyDown` handler so AT users in application mode can activate results directly.
+- "No recipes found" message `role="status"` removed from the conditionally-mounted node; the persistent sr-only `aria-live` region now carries the full no-results announcement instead.
+
+### Added
+
+- **Autocomplete recipe search** on the home page between the featured recipe and recipe grid. Filters the existing `allRecipes` cache client-side (no extra API calls), requires 3+ characters, searches across name, cuisine, tags, meal types, and ingredients. Results render in a keyboard-navigable dropdown (arrow keys, Enter, Escape) with bold match highlighting and colour-coded difficulty badges. Includes animated rotating placeholder hints and a session-stable dynamic heading (50 options each).
+- Search results pre-populate the TanStack Query detail cache via `setQueryData` on hover (`onMouseEnter`), enabling instant navigation to recipe detail pages without a network request.
+- Live region (`role="status" aria-live="polite"`) announces result counts to screen readers as the user types.
+
 ### Changed
 
 - Home route now persists a session-stable hero heading and recipes-section heading via `getSessionRandomText`, and narrows the homepage recipe grid to four session-stable picks (excluding the featured recipe when available).

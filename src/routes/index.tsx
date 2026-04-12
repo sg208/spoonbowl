@@ -1,11 +1,17 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { useEffect, useMemo, useState } from "react"
 import { fetchAllRecipes } from "@/lib/api"
-import { getSessionRandomText, headings, recipeSectionHeadings } from "@/lib/headings"
+import {
+  getSessionRandomText,
+  headings,
+  recipeSectionHeadings,
+  searchHeadings,
+} from "@/lib/headings"
 import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { EmptyRecipes } from "@/components/EmptyRecipes"
 import { FeaturedRecipe, FeaturedRecipeSkeleton } from "@/components/FeaturedRecipe"
+import { RecipeSearch } from "@/components/RecipeSearch"
 import { useAllRecipes } from "@/hooks/use-recipe-queries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import type { Recipe } from "@/lib/api"
@@ -15,6 +21,7 @@ const FEATURED_RECIPE_SESSION_KEY = "spoonbowl:home-featured-recipe-id"
 const GRID_RECIPE_IDS_SESSION_KEY = "spoonbowl:home-grid-recipe-ids"
 const HERO_HEADING_SESSION_KEY = "spoonbowl:home-hero-heading"
 const RECIPE_SECTION_HEADING_SESSION_KEY = "spoonbowl:home-recipes-section-heading"
+const SEARCH_HEADING_SESSION_KEY = "spoonbowl:home-search-heading"
 
 const pickRandom = <T,>(arr: T[], count: number): T[] => {
   if (arr.length <= count) return [...arr]
@@ -75,7 +82,7 @@ const getSessionGridRecipeIds = (
   return pickRandom(candidateIds, count)
 }
 
-const HomePage = () => {
+const HomePage = (): JSX.Element => {
   const [heading] = useState(() =>
     getSessionRandomText({
       sessionKey: HERO_HEADING_SESSION_KEY,
@@ -88,6 +95,13 @@ const HomePage = () => {
       sessionKey: RECIPE_SECTION_HEADING_SESSION_KEY,
       texts: recipeSectionHeadings,
       fallback: "Four Recipes, Zero Drama.",
+    })
+  )
+  const [searchHeading] = useState(() =>
+    getSessionRandomText({
+      sessionKey: SEARCH_HEADING_SESSION_KEY,
+      texts: searchHeadings,
+      fallback: "Find Something Worth Cooking Tonight.",
     })
   )
   const { data, isLoading, isError } = useAllRecipes()
@@ -159,14 +173,19 @@ const HomePage = () => {
         )}
       </section>
 
-      <section aria-labelledby="recipes-section-label">
-        <div className="mb-6">
+      <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
+
+      <section aria-labelledby="recipes-section-label" className="mb-12">
+        <div className="mb-6 text-center">
           <h2
             id="recipes-section-label"
             className="text-xl font-bold tracking-tight text-foreground sm:text-2xl"
           >
             {recipeSectionHeading}
           </h2>
+          <p className="mt-3 text-lg text-muted-foreground">
+            A curated handful to spark tonight's dinner inspiration.
+          </p>
         </div>
 
         {isError && (
@@ -176,10 +195,7 @@ const HomePage = () => {
         )}
 
         {!isError && (
-          <div
-            className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
-            aria-label="Recipe grid"
-          >
+          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
             {isLoading ? (
               Array.from({ length: GRID_SIZE }).map((_, index) => (
                 <RecipeCardSkeleton key={`skeleton-${index}`} />
