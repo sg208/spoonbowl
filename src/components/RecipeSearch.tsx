@@ -105,7 +105,7 @@ export const RecipeSearch = ({
           onPrefetch={handlePrefetchRecipe}
         />
 
-        {query.length >= 3 && results.length === 0 && !isLoading && (
+        {query.trim().length >= 3 && results.length === 0 && !isLoading && (
           <div className="absolute top-full left-0 right-0 z-50 mt-1.5 rounded-xl border border-border bg-card px-5 py-4 text-center text-sm text-muted-foreground shadow-xl">
             No recipes found matching &ldquo;{query}&rdquo;
           </div>
@@ -114,7 +114,7 @@ export const RecipeSearch = ({
         <div role="status" aria-live="polite" aria-atomic="true" className="sr-only">
           {showResults
             ? `${results.length} result${results.length !== 1 ? "s" : ""} available`
-            : query.length >= 3 && !isLoading
+            : query.trim().length >= 3 && !isLoading
               ? `No results found for ${query}`
               : ""}
         </div>
