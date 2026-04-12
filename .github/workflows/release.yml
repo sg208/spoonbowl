@@ -148,15 +148,18 @@ jobs:
       # Prepare release notes: prefer CodeRabbit, fall back to CHANGELOG
       - name: Prepare release notes
         id: release_notes
+        env:
+          CODERABBIT_NOTES: ${{ steps.coderabbit.outputs.notes }}
+          CHANGELOG_NOTES: ${{ steps.changelog.outputs.unreleased }}
         run: |
           {
-            echo "notes<<EOF"
-            if [ -n "${{ steps.coderabbit.outputs.notes }}" ]; then
-              echo "${{ steps.coderabbit.outputs.notes }}"
+            echo "notes<<EOF_RELEASE_NOTES"
+            if [ -n "$CODERABBIT_NOTES" ]; then
+              echo "$CODERABBIT_NOTES"
             else
-              echo "${{ steps.changelog.outputs.unreleased }}"
+              echo "$CHANGELOG_NOTES"
             fi
-            echo "EOF"
+            echo "EOF_RELEASE_NOTES"
           } >> $GITHUB_OUTPUT
 
       # Commit version bump + CHANGELOG update back to main
