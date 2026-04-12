@@ -38,19 +38,22 @@ const BASE_URL = "https://dummyjson.com/recipes"
 export const fetchRecipes = async (limit = 50, skip = 0): Promise<RecipesResponse> => {
   const res = await fetch(`${BASE_URL}?limit=${limit}&skip=${skip}`)
   if (!res.ok) throw new Error("Failed to fetch recipes")
-  return res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  return res.json() as Promise<RecipesResponse>
 }
 
 export const fetchAllRecipes = async (): Promise<RecipesResponse> => {
   const res = await fetch(`${BASE_URL}?limit=0`)
   if (!res.ok) throw new Error("Failed to fetch recipes")
-  return res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  return res.json() as Promise<RecipesResponse>
 }
 
 export const fetchRecipe = async (id: number): Promise<Recipe> => {
   const res = await fetch(`${BASE_URL}/${id}`)
   if (!res.ok) throw new Error(`Failed to fetch recipe ${id}`)
-  return res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  return res.json() as Promise<Recipe>
 }
 
 export const fetchFeaturedRecipe = async (): Promise<Recipe> => {
@@ -61,19 +64,22 @@ export const fetchFeaturedRecipe = async (): Promise<Recipe> => {
 export const fetchTags = async (): Promise<string[]> => {
   const res = await fetch(`${BASE_URL}/tags`)
   if (!res.ok) throw new Error("Failed to fetch recipe tags")
-  return res.json()
+  // DummyJSON /recipes/tags returns a plain string array
+  return res.json() as Promise<string[]>
 }
 
 export const fetchRecipesByTag = async (tag: string): Promise<RecipesResponse> => {
   const res = await fetch(`${BASE_URL}/tag/${encodeURIComponent(tag)}`)
   if (!res.ok) throw new Error(`Failed to fetch recipes for tag: ${tag}`)
-  return res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  return res.json() as Promise<RecipesResponse>
 }
 
 export const fetchMealTypes = async (): Promise<string[]> => {
   const res = await fetch(`${BASE_URL}?limit=0`)
   if (!res.ok) throw new Error("Failed to fetch recipes for meal types")
-  const data: RecipesResponse = await res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  const data = (await res.json()) as RecipesResponse
   const types = new Set<string>()
   for (const recipe of data.recipes) {
     for (const t of recipe.mealType) {
@@ -86,13 +92,15 @@ export const fetchMealTypes = async (): Promise<string[]> => {
 export const fetchRecipesByMealType = async (mealType: string): Promise<RecipesResponse> => {
   const res = await fetch(`${BASE_URL}/meal-type/${encodeURIComponent(mealType)}`)
   if (!res.ok) throw new Error(`Failed to fetch recipes for meal type: ${mealType}`)
-  return res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  return res.json() as Promise<RecipesResponse>
 }
 
 export const fetchCuisines = async (): Promise<string[]> => {
   const res = await fetch(`${BASE_URL}?limit=0&select=id,name,cuisine`)
   if (!res.ok) throw new Error("Failed to fetch cuisines")
-  const data: RecipesCuisineSelectResponse = await res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  const data = (await res.json()) as RecipesCuisineSelectResponse
   const cuisines = new Set<string>()
   for (const recipe of data.recipes) {
     if (recipe.cuisine) cuisines.add(recipe.cuisine)
@@ -123,7 +131,8 @@ interface RecipesDifficultySelectResponse {
 export const fetchDifficulties = async (): Promise<string[]> => {
   const res = await fetch(`${BASE_URL}?limit=0&select=id,name,difficulty`)
   if (!res.ok) throw new Error("Failed to fetch difficulties")
-  const data: RecipesDifficultySelectResponse = await res.json()
+  // DummyJSON returns a stable shape documented at https://dummyjson.com/docs/recipes
+  const data = (await res.json()) as RecipesDifficultySelectResponse
   const difficulties = new Set<string>()
   for (const recipe of data.recipes) {
     if (recipe.difficulty) difficulties.add(recipe.difficulty)

@@ -106,6 +106,11 @@ export const ThemeProvider = ({
       root.classList.remove("light", "dark")
       root.classList.add(resolvedTheme)
 
+      const themeColor = resolvedTheme === "dark" ? "#27201c" : "#fcfaf6"
+      document.querySelectorAll('meta[name="theme-color"]').forEach((el) => {
+        ;(el as HTMLMetaElement).content = themeColor
+      })
+
       if (restoreTransitions) {
         restoreTransitions()
       }

@@ -7,13 +7,12 @@ export const Footer = () => {
 
   return (
     <footer
-      className="border-t border-border bg-card mt-auto pb-safe"
-      role="contentinfo"
+      className="border-t border-border bg-card mt-auto pb-safe mb-20 md:mb-0"
       aria-label="Site footer"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-2 flex flex-col items-center md:items-start">
             <Link
               to="/"
               className="inline-flex items-center gap-2 font-bold text-xl tracking-tight focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded-md"
@@ -25,12 +24,12 @@ export const Footer = () => {
                 <span>bowl</span>
               </span>
             </Link>
-            <p className="mt-3 text-sm text-muted-foreground max-w-xs">
+            <p className="mt-3 text-sm text-muted-foreground max-w-xs text-center md:text-left">
               Discover delicious recipes from around the world. Cook with joy, eat with love.
             </p>
           </div>
 
-          <nav aria-label="Browse links">
+          <nav aria-label="Browse links" className="hidden md:block">
             <p className="text-sm font-semibold text-foreground mb-3">Browse</p>
             <ul className="space-y-2">
               {browseLinks.map((link) => (
@@ -46,7 +45,7 @@ export const Footer = () => {
             </ul>
           </nav>
 
-          <nav aria-label="Legal links">
+          <nav aria-label="Legal links" className="hidden md:block">
             <p className="text-sm font-semibold text-foreground mb-3">Legal</p>
             <ul className="space-y-2">
               <li>
@@ -76,7 +75,7 @@ export const Footer = () => {
             </ul>
           </nav>
 
-          <nav aria-label="Accessibility and info links">
+          <nav aria-label="Accessibility and info links" className="hidden md:block">
             <p className="text-sm font-semibold text-foreground mb-3">Accessibility</p>
             <ul className="space-y-2">
               <li>
