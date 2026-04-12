@@ -58,8 +58,8 @@
   --popover: oklch(1 0.005 80);
   --popover-foreground: oklch(0.2 0.03 45);
 
-  /* Warm orange primary */
-  --primary: oklch(0.65 0.2 38);
+  /* Warm orange primary — darkened to 0.57 for ≥4.5:1 on near-white backgrounds */
+  --primary: oklch(0.57 0.2 38);
   --primary-foreground: oklch(0.99 0 0);
 
   /* Warm light amber secondary */
@@ -78,9 +78,9 @@
 
   --border: oklch(0.9 0.02 80);
   --input: oklch(0.92 0.02 80);
-  --ring: oklch(0.65 0.18 38);
+  --ring: oklch(0.57 0.18 38);
 
-  --chart-1: oklch(0.65 0.2 38);
+  --chart-1: oklch(0.57 0.2 38);
   --chart-2: oklch(0.72 0.15 145);
   --chart-3: oklch(0.68 0.18 55);
   --chart-4: oklch(0.6 0.2 20);
@@ -88,16 +88,16 @@
 
   --sidebar: oklch(0.97 0.01 85);
   --sidebar-foreground: oklch(0.2 0.03 45);
-  --sidebar-primary: oklch(0.65 0.2 38);
+  --sidebar-primary: oklch(0.57 0.2 38);
   --sidebar-primary-foreground: oklch(0.99 0 0);
   --sidebar-accent: oklch(0.92 0.06 140);
   --sidebar-accent-foreground: oklch(0.3 0.08 145);
   --sidebar-border: oklch(0.9 0.02 80);
-  --sidebar-ring: oklch(0.65 0.18 38);
+  --sidebar-ring: oklch(0.57 0.18 38);
 
   /* Custom spoonbowl brand tokens */
-  --spoon-orange: oklch(0.65 0.2 38);
-  --spoon-amber: oklch(0.78 0.15 75);
+  --spoon-orange: oklch(0.57 0.2 38);
+  --spoon-amber: oklch(0.55 0.15 75);
   --spoon-green: oklch(0.65 0.18 145);
   --spoon-tomato: oklch(0.58 0.22 25);
   --spoon-cream: oklch(0.98 0.02 90);
@@ -222,4 +222,9 @@
 }
 .pt-safe {
   padding-top: max(0px, env(safe-area-inset-top));
+}
+
+/* Mobile bottom nav: sits above the home indicator on iOS */
+.bottom-nav-safe {
+  bottom: max(1rem, calc(env(safe-area-inset-bottom, 0px) + 0.5rem));
 }

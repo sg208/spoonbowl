@@ -174,7 +174,9 @@ const HomePage = (): React.JSX.Element => {
         )}
       </section>
 
-      <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
+      <div className="hidden md:block">
+        <RecipeSearch recipes={recipes} isLoading={isLoading} heading={searchHeading} />
+      </div>
 
       <section aria-labelledby="recipes-section-label" className="mb-12">
         <div className="mb-6 text-center">
