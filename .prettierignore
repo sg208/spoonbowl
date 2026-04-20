@@ -4,3 +4,6 @@ dist-ssr
 coverage
 src/routeTree.gen.ts
 package-lock.json
+.claude/**
+.claire/**
+CLAUDE.md

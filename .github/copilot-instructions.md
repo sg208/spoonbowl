@@ -4,15 +4,15 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 ## Quick facts
 
-| Key          | Value                                                                        |
-| ------------ | ---------------------------------------------------------------------------- |
-| Stack        | Vite + React 19 + TypeScript + Tailwind CSS v4                               |
-| Router       | TanStack Router — `src/routes/*`; tree in `src/routeTree.gen.ts` (generated) |
-| Server state | TanStack React Query — `src/lib/queryClient.ts`                              |
-| UI           | shadcn-style in `src/components/ui/*` — `components.json`, `npx shadcn add`  |
-| PWA          | `vite-plugin-pwa` — `vite.config.ts` Workbox                                 |
-| Hosting      | Production: **Cloudflare Pages** (see `README.md`)                           |
-| Alias        | `@` → `./src`                                                                |
+| Key          | Value                                                                         |
+| ------------ | ----------------------------------------------------------------------------- |
+| Stack        | Vite + React 19 + TypeScript + Tailwind CSS v4                                |
+| Router       | TanStack Router — `src/routes/*`; tree in `src/routeTree.gen.ts` (generated)  |
+| Server state | TanStack React Query — `src/lib/queryClient.ts`                               |
+| UI           | shadcn-style in `src/components/ui/*` — `components.json`, `npx shadcn add`   |
+| PWA          | `vite-plugin-pwa` — `vite.config.ts` Workbox                                  |
+| Hosting      | **Cloudflare** (DNS / network edge) + **Railway** (app host); see `README.md` |
+| Alias        | `@` → `./src`                                                                 |
 
 **Queries:** Many routes use inline `queryKey` arrays. Prefer key factories under `src/lib/keys/` when adding or refactoring queries.
 
@@ -39,15 +39,15 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 ## Where to change (short)
 
-| Area                 | Location                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------ |
-| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx`                                         |
-| Legal / privacy copy | `routes/privacy.tsx`, `components/legal/*`; `/gdpr` → `/privacy`                     |
-| New route            | `src/routes/**`                                                                      |
-| Recipe UI            | `RecipeCard.tsx`, `RecipeCardSkeleton.tsx`, `EmptyRecipes.tsx`, `FeaturedRecipe.tsx` |
-| Domain helpers       | `src/lib/config/headings.ts`, `src/lib/utils/*Utils.ts`                              |
-| Styles / tokens      | `src/index.css`                                                                      |
-| PWA caching          | `vite.config.ts`                                                                     |
+| Area                 | Location                                                                                                                                                                                  |
+| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx`                                                                                                                                              |
+| Legal / info copy    | `src/routes/about.tsx`, `src/routes/privacy.tsx`, `src/routes/terms.tsx`, `src/routes/accessibility.tsx`, `src/routes/disclaimer.tsx`; route `/gdpr` → `/privacy` (`src/routes/gdpr.tsx`) |
+| New route            | `src/routes/**`                                                                                                                                                                           |
+| Recipe UI            | `RecipeCard.tsx`, `RecipeCardSkeleton.tsx`, `EmptyRecipes.tsx`, `FeaturedRecipe.tsx`                                                                                                      |
+| Domain helpers       | `src/lib/config/headings.ts`, `src/lib/utils/*Utils.ts`                                                                                                                                   |
+| Styles / tokens      | `src/index.css`                                                                                                                                                                           |
+| PWA caching          | `vite.config.ts`                                                                                                                                                                          |
 
 ## Guardrails
 

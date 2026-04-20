@@ -1,6 +1,6 @@
 import { Link } from "@tanstack/react-router"
 import { ChefHat } from "lucide-react"
-import { browseLinks, legalLinks, accessibilityLinks } from "@/lib/config/navigationLinks"
+import { browseLinks, siteLinks } from "@/lib/config/navigationLinks"
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -11,7 +11,7 @@ export const Footer = () => {
       aria-label="Site footer"
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-10">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
           <div className="lg:col-span-2 flex flex-col items-center md:items-start">
             <Link
               to="/"
@@ -45,26 +45,10 @@ export const Footer = () => {
             </ul>
           </nav>
 
-          <nav aria-label="Legal links" className="hidden md:block">
-            <p className="text-sm font-semibold text-foreground mb-3">Legal</p>
+          <nav aria-label="Site information" className="hidden md:block">
+            <p className="text-sm font-semibold text-foreground mb-3">Information</p>
             <ul className="space-y-2">
-              {legalLinks.map((link) => (
-                <li key={link.to}>
-                  <Link
-                    to={link.to}
-                    className="inline-block min-h-6 min-w-6 py-2 text-sm text-muted-foreground hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-
-          <nav aria-label="Accessibility and info links" className="hidden md:block">
-            <p className="text-sm font-semibold text-foreground mb-3">Accessibility</p>
-            <ul className="space-y-2">
-              {accessibilityLinks.map((link) => (
+              {siteLinks.map((link) => (
                 <li key={link.to}>
                   <Link
                     to={link.to}

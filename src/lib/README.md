@@ -11,4 +11,4 @@ Utilities, configuration, and infrastructure. No React — pure TS only.
 | `utils.ts`       | Shared helpers: `cn()` (class merging), `slugify()`                                       |
 | `keys/`          | TanStack Query key factories — import from here, never inline                             |
 | `utils/`         | Domain-specific utilities: `cuisineUtils`, `difficultyUtils`, `mealTypeUtils`, `tagUtils` |
-| `config/`        | App-wide constants: `navigationLinks`, `headings`, `legalDates`, `not-found-messages`     |
+| `config/`        | App-wide constants: `navigationLinks`, `headings`, `not-found-messages`                   |
