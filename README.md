@@ -13,7 +13,7 @@ Recipe discovery **PWA** built with **Vite + React**, featuring fast navigation,
 
 ## Tech stack
 
-- **Production hosting**: **Cloudflare Pages** (static site + edge CDN)
+- **Production**: **Cloudflare** (DNS + network / edge in front of the domain) and **Railway** (hosts the built application)
 - **Vite** + **React 19**
 - **TanStack Router** (file-based routing in `src/routes/`)
 - **TanStack React Query** (server-state caching)

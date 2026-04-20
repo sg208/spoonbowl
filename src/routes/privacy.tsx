@@ -1,6 +1,9 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
+/** ISO date only; update when this page meaningfully changes. */
+const PRIVACY_LAST_UPDATED_ISO = "2026-04-20"
+
 const PrivacyPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
@@ -65,10 +68,20 @@ const PrivacyPage = () => {
           </h2>
           <p className="text-muted-foreground leading-7">
             Fonts are bundled locally where we package them — we avoid remote font services in the
-            page head for our own UI typography. A service worker may cache pages and same-origin
-            assets on your device for speed and a simple offline fallback; that cache stays on your
-            device. We do not use cookies for marketing or analytics; storage tied to caching, if
-            present, is for technical use, not cross-site tracking.
+            page head for our own UI typography. Light, dark, and system theme preference is stored
+            in <strong className="text-foreground">browser localStorage</strong> under the key{" "}
+            <code className="text-xs bg-muted px-1 py-0.5 rounded">spoonbowl-theme</code> (see{" "}
+            <code className="text-xs bg-muted px-1 py-0.5 rounded">ThemeProvider.tsx</code>) so your
+            choice survives visits. The optional sidebar layout primitive in{" "}
+            <code className="text-xs bg-muted px-1 py-0.5 rounded">sidebar.tsx</code> can set a
+            first-party <strong className="text-foreground">cookie</strong> (
+            <code className="text-xs bg-muted px-1 py-0.5 rounded">sidebar_state</code>) to remember
+            expanded or collapsed chrome when that component is used—Spoonbowl’s current shell does
+            not mount it, but the pattern may appear in future layouts. A service worker may cache
+            pages and same-origin assets on your device for speed and a simple offline fallback;
+            that cache stays on your device. These mechanisms exist to preserve UI choices and
+            technical behavior on this site only, not for marketing, profiling, or cross-site
+            tracking.
           </p>
         </section>
 
@@ -91,6 +104,15 @@ const PrivacyPage = () => {
           <h2 id="privacy-updates" className="text-xl font-bold tracking-tight mb-3">
             Updates
           </h2>
+          <p className="text-sm text-muted-foreground mb-3">
+            Last updated:{" "}
+            <time dateTime={PRIVACY_LAST_UPDATED_ISO}>
+              {new Intl.DateTimeFormat("en-US", {
+                dateStyle: "long",
+                timeZone: "UTC",
+              }).format(new Date(PRIVACY_LAST_UPDATED_ISO + "T00:00:00Z"))}
+            </time>
+          </p>
           <p className="text-muted-foreground leading-7">
             If our stack or practices change in a way that matters for privacy, we will update this
             page to reflect that. This is a transparency page, not a contract; for rules about using

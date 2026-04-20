@@ -75,11 +75,20 @@ const AccessibilityPage = () => {
           <h2 id="accessibility-feedback" className="text-xl font-bold tracking-tight mb-3">
             If something is hard to use
           </h2>
-          <p className="text-muted-foreground leading-7">
-            A direct reporting channel is not available at the moment; once there is a
-            straightforward way to share feedback, we will point to it from here. In the meantime,
-            noting what you were trying to do, what got in the way, and which device or tools you
-            use is still useful — keep those details for when a channel exists.
+          <p className="text-muted-foreground leading-7 mb-4">
+            You can report barriers on{" "}
+            <a
+              href="https://github.com/sg208/spoonbowl/issues"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline font-medium text-foreground hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
+              aria-label="Report an accessibility issue for Spoonbowl on GitHub (opens in a new tab)"
+            >
+              GitHub Issues
+            </a>
+            . Include what you were trying to do, what blocked you, and—if you know them—your
+            device, browser, and assistive technology (for example VoiceOver or NVDA). A public
+            GitHub account is required to open an issue.
           </p>
         </section>
       </div>
