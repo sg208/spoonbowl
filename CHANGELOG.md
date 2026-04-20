@@ -7,6 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **`/about` route** (`src/routes/about.tsx`): short project overview; infrastructure (Cloudflare DNS, Railway) described in plain language aligned with other info pages.
+
+### Changed
+
+- **Legal / info copy:** Rewrote `accessibility`, `privacy`, `terms`, and `disclaimer` in a plain, site-wide tone (similar to Mindful-style transparency pages): no effective/last-updated dates, no email or mailto links, Spoonbowl referred to as an informal project; privacy describes Cloudflare (DNS/network) and Railway (hosting), bundled fonts, optional PWA/service-worker cache, and third-party recipe data.
+- **Footer & mobile menu:** Merged former “Legal” and “Accessibility” into a single **Information** column; `navigationLinks` now exports one **`siteLinks`** list (About, Privacy, Terms of use, Disclaimer, Accessibility). Desktop footer grid uses four columns on large screens.
+- **`MobileBottomNav`:** Home, Search, and Menu icons are grouped, centered, ~1.5× size, inside a **width-fit** centered pill (`left-1/2 -translate-x-1/2 w-fit`) instead of a full-width bar with `justify-between`.
+- **`src/lib/README.md`:** Dropped obsolete `legalDates` mention from the config table.
+- **Tooling:** ESLint and Prettier ignore `.claude/**`, `.claire/**`, and root `CLAUDE.md` so local agent/worktree copies do not break `npm run check`.
+
+### Removed
+
+- **`src/lib/config/legalDates.ts`** and split privacy components **`PrivacyCoreSections.tsx`**, **`PrivacyRegionalNotices.tsx`** — privacy body is inline in `privacy.tsx` only.
+
 ## [1.2.0] - 2026-04-12
 
 ### Added
@@ -179,7 +195,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
-
 [1.2.0]: https://github.com/sg208/spoonbowl/compare/v1.1.1...v1.2.0
 [1.1.1]: https://github.com/sg208/spoonbowl/compare/v1.1.0...v1.1.1
 [1.1.0]: https://github.com/sg208/spoonbowl/compare/v1.0.0...v1.1.0

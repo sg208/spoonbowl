@@ -9,12 +9,11 @@ export const browseLinks = [
 export type BrowseLink = (typeof browseLinks)[number]
 export type BrowseLinkId = BrowseLink["id"]
 
-export const legalLinks = [
-  { to: "/privacy", label: "Privacy Policy" },
-  { to: "/terms", label: "Terms of Use" },
+/** About, policies, and accessibility — single footer / menu group */
+export const siteLinks = [
+  { to: "/about", label: "About" },
+  { to: "/privacy", label: "Privacy" },
+  { to: "/terms", label: "Terms of use" },
   { to: "/disclaimer", label: "Disclaimer" },
-] as const
-
-export const accessibilityLinks = [
-  { to: "/accessibility", label: "Accessibility Statement" },
+  { to: "/accessibility", label: "Accessibility" },
 ] as const

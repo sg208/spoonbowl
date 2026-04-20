@@ -39,15 +39,15 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 ## Where to change (short)
 
-| Area                 | Location                                                                             |
-| -------------------- | ------------------------------------------------------------------------------------ |
-| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx`                                         |
-| Legal / privacy copy | `routes/privacy.tsx`, `components/legal/*`; `/gdpr` → `/privacy`                     |
-| New route            | `src/routes/**`                                                                      |
-| Recipe UI            | `RecipeCard.tsx`, `RecipeCardSkeleton.tsx`, `EmptyRecipes.tsx`, `FeaturedRecipe.tsx` |
-| Domain helpers       | `src/lib/config/headings.ts`, `src/lib/utils/*Utils.ts`                              |
-| Styles / tokens      | `src/index.css`                                                                      |
-| PWA caching          | `vite.config.ts`                                                                     |
+| Area                 | Location                                                                                                    |
+| -------------------- | ----------------------------------------------------------------------------------------------------------- |
+| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx`                                                                |
+| Legal / info copy    | `routes/about.tsx`, `privacy.tsx`, `terms.tsx`, `accessibility.tsx`, `disclaimer.tsx`; `/gdpr` → `/privacy` |
+| New route            | `src/routes/**`                                                                                             |
+| Recipe UI            | `RecipeCard.tsx`, `RecipeCardSkeleton.tsx`, `EmptyRecipes.tsx`, `FeaturedRecipe.tsx`                        |
+| Domain helpers       | `src/lib/config/headings.ts`, `src/lib/utils/*Utils.ts`                                                     |
+| Styles / tokens      | `src/index.css`                                                                                             |
+| PWA caching          | `vite.config.ts`                                                                                            |
 
 ## Guardrails
 
