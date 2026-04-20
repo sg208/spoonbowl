@@ -9,7 +9,15 @@ import eslintConfigPrettier from "eslint-config-prettier"
 
 export default tseslint.config(
   {
-    ignores: ["dist/**", "dist-ssr/**", "node_modules/**", "coverage/**", "src/routeTree.gen.ts"],
+    ignores: [
+      "dist/**",
+      "dist-ssr/**",
+      "node_modules/**",
+      "coverage/**",
+      "src/routeTree.gen.ts",
+      ".claude/**",
+      ".claire/**",
+    ],
   },
   js.configs.recommended,
   ...tseslint.configs.recommended,

@@ -1,5 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router"
-import { LEGAL_DATES } from "@/lib/config/legalDates"
 import { Separator } from "@/components/ui/separator"
 
 export const Route = createFileRoute("/disclaimer")({
@@ -13,7 +12,6 @@ const DisclaimerPage = () => {
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Disclaimer
         </h1>
-        <p className="mt-3 text-muted-foreground">Last updated: {LEGAL_DATES.lastUpdated}</p>
       </header>
 
       <div className="space-y-8 text-foreground">
@@ -99,9 +97,10 @@ const DisclaimerPage = () => {
             Site availability
           </h2>
           <p className="text-muted-foreground leading-7">
-            This site is served using third-party hosting (<strong>Cloudflare Pages</strong>).
-            Interruptions, regional differences in delivery, or temporary unavailability may occur
-            and are outside Spoonbowl&apos;s control.
+            The site is delivered using infrastructure providers (for example{" "}
+            <strong>Cloudflare</strong> for DNS and network services and <strong>Railway</strong>{" "}
+            for hosting). Interruptions, regional differences in delivery, or temporary
+            unavailability may occur and are outside Spoonbowl&apos;s control.
           </p>
         </section>
       </div>

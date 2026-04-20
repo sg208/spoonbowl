@@ -8,7 +8,7 @@ import { MenuSection } from "@/components/MenuSection"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog"
 import { usePrefetchCuisinesIndex } from "@/hooks/usePrefetchCuisinesIndex"
-import { browseLinks, legalLinks, accessibilityLinks } from "@/lib/config/navigationLinks"
+import { browseLinks, siteLinks } from "@/lib/config/navigationLinks"
 
 export const MobileBottomNav = (): React.JSX.Element => {
   const [searchOpen, setSearchOpen] = useState(false)
@@ -18,26 +18,23 @@ export const MobileBottomNav = (): React.JSX.Element => {
   return (
     <>
       <nav
-        className="fixed inset-x-4 z-40 md:hidden rounded-2xl bg-background/80 backdrop-blur-md border border-border shadow-xl bottom-nav-safe"
+        className="fixed bottom-nav-safe left-1/2 -translate-x-1/2 z-40 md:hidden rounded-2xl bg-background/80 backdrop-blur-md border border-border shadow-xl w-fit"
         aria-label="Mobile navigation"
       >
-        <div className="flex items-center justify-between px-2 py-2">
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" asChild aria-label="Go to home">
-              <Link to="/">
-                <Home className="h-5 w-5" aria-hidden="true" />
-              </Link>
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              aria-label="Search recipes"
-              onClick={() => setSearchOpen(true)}
-            >
-              <Search className="h-5 w-5" aria-hidden="true" />
-            </Button>
-          </div>
-
+        <div className="flex items-center justify-center gap-2 px-2 py-2">
+          <Button variant="ghost" size="icon" asChild aria-label="Go to home">
+            <Link to="/">
+              <Home className="h-[1.875rem] w-[1.875rem]" aria-hidden="true" />
+            </Link>
+          </Button>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Search recipes"
+            onClick={() => setSearchOpen(true)}
+          >
+            <Search className="h-[1.875rem] w-[1.875rem]" aria-hidden="true" />
+          </Button>
           <Button
             variant="ghost"
             size="icon"
@@ -45,7 +42,7 @@ export const MobileBottomNav = (): React.JSX.Element => {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen(true)}
           >
-            <Menu className="h-5 w-5" aria-hidden="true" />
+            <Menu className="h-[1.875rem] w-[1.875rem]" aria-hidden="true" />
           </Button>
         </div>
       </nav>
@@ -94,16 +91,9 @@ export const MobileBottomNav = (): React.JSX.Element => {
             </nav>
 
             <MenuSection
-              title="Legal"
-              ariaLabel="Legal links"
-              links={legalLinks}
-              onLinkClick={() => setMenuOpen(false)}
-            />
-
-            <MenuSection
-              title="Accessibility"
-              ariaLabel="Accessibility and info links"
-              links={accessibilityLinks}
+              title="Information"
+              ariaLabel="Site information"
+              links={siteLinks}
               onLinkClick={() => setMenuOpen(false)}
             />
           </div>
