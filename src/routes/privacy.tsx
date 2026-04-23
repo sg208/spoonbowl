@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
@@ -5,6 +6,10 @@ import { Separator } from "@/components/ui/separator"
 const PRIVACY_LAST_UPDATED_ISO = "2026-04-20"
 
 const PrivacyPage = () => {
+  useEffect(() => {
+    document.title = "Privacy – Spoonbowl"
+  }, [])
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <header className="mb-8">

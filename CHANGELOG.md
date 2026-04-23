@@ -20,6 +20,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`src/lib/README.md`:** Dropped obsolete `legalDates` mention from the config table.
 - **Tooling:** ESLint and Prettier ignore `.claude/**`, `.claire/**`, and root `CLAUDE.md` so local agent/worktree copies do not break `npm run check`.
 
+### Fixed
+
+- **WCAG 2.4.2 Page Title:** All five info/legal routes (`/about`, `/accessibility`, `/disclaimer`, `/privacy`, `/terms`) now set a unique `document.title` via `useEffect`, so the `RouteAnnouncer` announces distinct page names on navigation.
+- **`Footer` return type:** Added explicit `: JSX.Element` return type to satisfy the exported-function rule.
+
 ### Removed
 
 - **`src/lib/config/legalDates.ts`** and split privacy components **`PrivacyCoreSections.tsx`**, **`PrivacyRegionalNotices.tsx`** — privacy body is inline in `privacy.tsx` only.
