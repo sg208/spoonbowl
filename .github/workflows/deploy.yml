@@ -23,7 +23,7 @@ jobs:
         run: npm run build
 
       - name: Upload to Bunny Storage and purge CDN
-        uses: Snider/bunnycdn-gh-action@v2.0.1
+        uses: Snider/bunnycdn-gh-action@3df476080b46e974aa4830e68abacb88ed7908bf # v2.0.1
         with:
           source: dist
           storageZoneName: ${{ secrets.BUNNY_STORAGE_ZONE_NAME }}
