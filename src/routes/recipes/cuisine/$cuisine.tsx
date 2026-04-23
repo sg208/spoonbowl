@@ -1,4 +1,5 @@
 import { createFileRoute, notFound } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { fetchRecipesByCuisine, fetchCuisines } from "@/lib/api"
@@ -44,6 +45,14 @@ const CuisineRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <Helmet>
+        <title>{pageTitle} Recipes – Spoonbowl</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta property="og:title" content={`${pageTitle} Recipes – Spoonbowl`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+      </Helmet>
       <CuisineRecipesBreadcrumb
         pageTitle={pageTitle}
         prefetchCuisinesIndex={prefetchCuisinesIndex}

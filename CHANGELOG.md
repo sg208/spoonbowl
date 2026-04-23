@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **SEO foundations:** `public/robots.txt` and `public/sitemap.xml` (static routes) for crawler discovery.
+- **`react-helmet-async`:** Added as a dependency; `HelmetProvider` wraps the app in `src/main.tsx`.
+- **Per-route meta tags:** All dynamic routes (homepage, recipe detail, cuisine, tag, difficulty, meal-type, about) now set a unique `<title>`, `<meta name="description">`, `<link rel="canonical">`, and Open Graph / Twitter Card tags via `<Helmet>`.
+- **JSON-LD Recipe schema:** Recipe detail pages (`/recipe/$recipeId/$slug`) emit a `application/ld+json` block with full `Recipe` structured data (ingredients, instructions, ratings, nutrition, timing).
+- **Improved base OG tags in `index.html`:** Added `og:type`, `og:site_name`, `og:title`, `og:description`, `twitter:title`, and `twitter:description` as fallbacks for routes not yet rendering JS.
+
+### Security
+
+- **JSON-LD XSS mitigation:** `JSON.stringify` output is sanitised with `.replace(/</g, "\\u003c")` before injection into `<script type="application/ld+json">`, preventing `</script>` breakout from external API data.
+
+### Fixed
+
+- **Recipe detail a11y:** Removed invalid `aria-label` from the step-number `<span>` inside `<ol>` instructions; step position is now conveyed by native list semantics.
+- **Recipe detail Helmet coverage:** Loading and error states now also render a `<Helmet>` with appropriate titles (`"Loading recipe… – Spoonbowl"` / `"Recipe not found – Spoonbowl"`).
+
 ## [1.3.1] - 2026-04-23
 
 ## [1.3.0] - 2026-04-20
@@ -205,8 +222,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
-
-
 [1.3.1]: https://github.com/sg208/spoonbowl/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/sg208/spoonbowl/compare/v1.2.0...v1.3.0
 [1.2.0]: https://github.com/sg208/spoonbowl/compare/v1.1.1...v1.2.0
