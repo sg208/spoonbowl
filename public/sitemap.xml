@@ -1,52 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://YOUR_DOMAIN/</loc>
+    <loc>https://spoonbowl.gint.ing/</loc>
     <priority>1.0</priority>
     <changefreq>daily</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/about</loc>
+    <loc>https://spoonbowl.gint.ing/about</loc>
     <priority>0.4</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/recipes/tags/</loc>
+    <loc>https://spoonbowl.gint.ing/recipes/tags/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/recipes/cuisines/</loc>
+    <loc>https://spoonbowl.gint.ing/recipes/cuisines/</loc>
     <priority>0.8</priority>
     <changefreq>weekly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/recipes/difficulties/</loc>
+    <loc>https://spoonbowl.gint.ing/recipes/difficulties/</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/recipes/meal-types/</loc>
+    <loc>https://spoonbowl.gint.ing/recipes/meal-types/</loc>
     <priority>0.7</priority>
     <changefreq>monthly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/privacy</loc>
+    <loc>https://spoonbowl.gint.ing/privacy</loc>
     <priority>0.2</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/terms</loc>
+    <loc>https://spoonbowl.gint.ing/terms</loc>
     <priority>0.2</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/disclaimer</loc>
+    <loc>https://spoonbowl.gint.ing/disclaimer</loc>
     <priority>0.2</priority>
     <changefreq>yearly</changefreq>
   </url>
   <url>
-    <loc>https://YOUR_DOMAIN/accessibility</loc>
+    <loc>https://spoonbowl.gint.ing/accessibility</loc>
     <priority>0.2</priority>
     <changefreq>yearly</changefreq>
   </url>
