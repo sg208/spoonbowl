@@ -2,7 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { ChefHat } from "lucide-react"
 import { browseLinks, siteLinks } from "@/lib/config/navigationLinks"
 
-export const Footer = () => {
+export const Footer = (): JSX.Element => {
   const currentYear = new Date().getFullYear()
 
   return (

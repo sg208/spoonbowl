@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
@@ -6,6 +7,10 @@ export const Route = createFileRoute("/about")({
 })
 
 const AboutPage = () => {
+  useEffect(() => {
+    document.title = "About – Spoonbowl"
+  }, [])
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <header className="mb-8">
@@ -46,7 +51,7 @@ const AboutPage = () => {
           </p>
           <ul className="list-disc pl-6 space-y-2 text-muted-foreground leading-7">
             <li>Cloudflare handles DNS and front-line network services for the domain.</li>
-            <li>Railway hosts the built application.</li>
+            <li>Bunny.net hosts and delivers the built application via storage and CDN.</li>
           </ul>
           <p className="text-muted-foreground leading-7 mt-3">
             Technical details about what those providers may process when you visit are summarized

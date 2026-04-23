@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { createFileRoute } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
@@ -6,6 +7,10 @@ export const Route = createFileRoute("/accessibility")({
 })
 
 const AccessibilityPage = () => {
+  useEffect(() => {
+    document.title = "Accessibility – Spoonbowl"
+  }, [])
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <header className="mb-8">

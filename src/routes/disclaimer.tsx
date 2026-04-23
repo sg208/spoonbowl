@@ -1,3 +1,4 @@
+import { useEffect } from "react"
 import { createFileRoute } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
@@ -6,6 +7,10 @@ export const Route = createFileRoute("/disclaimer")({
 })
 
 const DisclaimerPage = () => {
+  useEffect(() => {
+    document.title = "Disclaimer – Spoonbowl"
+  }, [])
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <header className="mb-8">
@@ -98,8 +103,8 @@ const DisclaimerPage = () => {
           </h2>
           <p className="text-muted-foreground leading-7">
             The site is delivered using infrastructure providers (for example{" "}
-            <strong>Cloudflare</strong> for DNS and network services and <strong>Railway</strong>{" "}
-            for hosting). Interruptions, regional differences in delivery, or temporary
+            <strong>Cloudflare</strong> for DNS and network services and <strong>Bunny.net</strong>{" "}
+            for hosting and CDN). Interruptions, regional differences in delivery, or temporary
             unavailability may occur and are outside Spoonbowl&apos;s control.
           </p>
         </section>

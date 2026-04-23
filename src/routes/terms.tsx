@@ -1,7 +1,12 @@
+import { useEffect } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
 const TermsPage = () => {
+  useEffect(() => {
+    document.title = "Terms of use – Spoonbowl"
+  }, [])
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <header className="mb-8">
@@ -52,7 +57,7 @@ const TermsPage = () => {
           </h2>
           <p className="text-muted-foreground leading-7">
             <strong className="text-foreground">Cloudflare</strong> (DNS and network services) and{" "}
-            <strong className="text-foreground">Railway</strong> (hosting) help deliver the site.
+            <strong className="text-foreground">Bunny.net</strong> (hosting and CDN) help deliver the site.
             Their terms and policies apply on their side; we summarize visitor-data basics in{" "}
             <Link to="/privacy" className="underline hover:text-foreground transition-colors">
               Privacy
