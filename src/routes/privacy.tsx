@@ -3,7 +3,7 @@ import { createFileRoute, Link } from "@tanstack/react-router"
 import { Separator } from "@/components/ui/separator"
 
 /** ISO date only; update when this page meaningfully changes. */
-const PRIVACY_LAST_UPDATED_ISO = "2026-04-20"
+const PRIVACY_LAST_UPDATED_ISO = "2026-04-23"
 
 const PrivacyPage = () => {
   useEffect(() => {
