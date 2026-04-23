@@ -35,14 +35,19 @@ jobs:
           BUNNY_STORAGE_ZONE_NAME: ${{ secrets.BUNNY_STORAGE_ZONE_NAME }}
           BUNNY_STORAGE_ACCESS_KEY: ${{ secrets.BUNNY_STORAGE_ACCESS_KEY }}
         run: |
-          find dist -type f | while IFS= read -r file; do
+          set -euo pipefail
+          if [[ ! -d dist ]]; then
+            echo "dist directory not found — build may have failed" >&2
+            exit 1
+          fi
+          while IFS= read -r -d '' file; do
             remote_path="${file#dist/}"
             curl -fsSL -X PUT \
               -H "AccessKey: $BUNNY_STORAGE_ACCESS_KEY" \
               -H "Content-Type: application/octet-stream" \
               --data-binary "@$file" \
               "https://storage.bunnycdn.com/$BUNNY_STORAGE_ZONE_NAME/$remote_path"
-          done
+          done < <(find dist -type f -print0)
 
       - name: Purge Bunny pull zone cache
         env:
