@@ -7,6 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import { useRecipeDetail } from "@/hooks/useRecipeQueries"
 import { fetchRecipe } from "@/lib/api"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
+import { slugify } from "@/lib/utils"
 
 const RecipeDetailPage = () => {
   const { recipeId } = Route.useParams()
@@ -44,7 +45,7 @@ const RecipeDetailPage = () => {
   }
 
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
-  const canonicalUrl = window.location.origin + window.location.pathname
+  const canonicalUrl = `${window.location.origin}/recipe/${recipe.id}/${slugify(recipe.name)}`
   const description = `${recipe.name} — a ${recipe.difficulty.toLowerCase()} ${recipe.cuisine} recipe. Ready in ${totalTime} minutes, serves ${recipe.servings}. Full ingredients and step-by-step instructions on Spoonbowl.`
 
   const jsonLd = {
