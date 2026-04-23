@@ -51,7 +51,7 @@ const AboutPage = () => {
           </p>
           <ul className="list-disc pl-6 space-y-2 text-muted-foreground leading-7">
             <li>Cloudflare handles DNS and front-line network services for the domain.</li>
-            <li>Railway hosts the built application.</li>
+            <li>Bunny.net hosts and delivers the built application via storage and CDN.</li>
           </ul>
           <p className="text-muted-foreground leading-7 mt-3">
             Technical details about what those providers may process when you visit are summarized

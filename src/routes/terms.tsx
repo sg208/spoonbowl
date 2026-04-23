@@ -57,7 +57,7 @@ const TermsPage = () => {
           </h2>
           <p className="text-muted-foreground leading-7">
             <strong className="text-foreground">Cloudflare</strong> (DNS and network services) and{" "}
-            <strong className="text-foreground">Railway</strong> (hosting) help deliver the site.
+            <strong className="text-foreground">Bunny.net</strong> (hosting and CDN) help deliver the site.
             Their terms and policies apply on their side; we summarize visitor-data basics in{" "}
             <Link to="/privacy" className="underline hover:text-foreground transition-colors">
               Privacy
