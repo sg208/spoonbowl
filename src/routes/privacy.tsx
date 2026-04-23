@@ -47,9 +47,9 @@ const PrivacyPage = () => {
               what it collects and why.
             </li>
             <li>
-              <strong className="text-foreground">Railway</strong> hosts the built application. When
-              you request a page or file, Railway (and any edge or cache they use to deliver it) may
-              process the same kind of technical data as any host.
+              <strong className="text-foreground">Bunny.net</strong> hosts and delivers the built
+              application via storage and CDN. When you request a page or file, Bunny.net may
+              process the same kind of technical data as any host or CDN provider.
             </li>
             <li>
               Recipe text and images come from third-party recipe data via API. Your browser loads
