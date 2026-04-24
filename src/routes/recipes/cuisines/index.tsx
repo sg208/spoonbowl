@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { useCallback } from "react"
 import { useQueryClient } from "@tanstack/react-query"
 import { Globe, ChefHat, ArrowRight } from "lucide-react"
@@ -31,6 +32,13 @@ const CuisinesIndexPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <Helmet>
+        <title>Recipes by Cuisine</title>
+        <meta
+          name="description"
+          content="Browse recipes by cuisine on Spoonbowl — from Italian and Mexican to Japanese, Indian, and more."
+        />
+      </Helmet>
       <header className="mb-10">
         <div className="flex items-center gap-2 mb-3">
           <Badge className="bg-primary/10 text-primary border-0 font-medium">

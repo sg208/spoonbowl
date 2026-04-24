@@ -19,7 +19,7 @@ const RecipeDetailPage = () => {
     return (
       <>
         <Helmet>
-          <title>Loading recipe… – Spoonbowl</title>
+          <title>Loading recipe…</title>
         </Helmet>
         <RecipeDetailSkeleton />
       </>
@@ -30,7 +30,7 @@ const RecipeDetailPage = () => {
     return (
       <>
         <Helmet>
-          <title>Recipe not found – Spoonbowl</title>
+          <title>Recipe not found</title>
         </Helmet>
         <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center" role="alert">
           <ChefHat className="h-16 w-16 text-muted-foreground mx-auto mb-4" aria-hidden="true" />
@@ -82,16 +82,16 @@ const RecipeDetailPage = () => {
   return (
     <>
       <Helmet>
-        <title>{recipe.name} – Spoonbowl</title>
+        <title>{recipe.name}</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={`${recipe.name} – Spoonbowl`} />
+        <meta property="og:title" content={`${recipe.name} | Spoonbowl`} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonicalUrl} />
         <meta property="og:type" content="article" />
         <meta property="og:image" content={recipe.image} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${recipe.name} – Spoonbowl`} />
+        <meta name="twitter:title" content={`${recipe.name} | Spoonbowl`} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={recipe.image} />
         <script type="application/ld+json">

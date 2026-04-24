@@ -32,10 +32,10 @@ const TagRecipesPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <Helmet>
-        <title>{pageTitle} Recipes – Spoonbowl</title>
+        <title>{pageTitle} Recipes</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta property="og:title" content={`${pageTitle} Recipes – Spoonbowl`} />
+        <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={window.location.origin + window.location.pathname} />
       </Helmet>
@@ -65,7 +65,7 @@ const TagRecipesPage = () => {
         </ol>
       </nav>
 
-      <header className="mb-10">
+      <header className="mb-10" aria-labelledby="tag-page-heading">
         <div className="flex items-start gap-4">
           <span
             className="flex h-14 w-14 sm:h-16 sm:w-16 shrink-0 items-center justify-center rounded-2xl bg-secondary text-3xl sm:text-4xl border border-border"

@@ -48,10 +48,10 @@ const DifficultyRecipesPage = () => {
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
       <Helmet>
-        <title>{pageTitle} Recipes – Spoonbowl</title>
+        <title>{pageTitle} Recipes</title>
         <meta name="description" content={description} />
         <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta property="og:title" content={`${pageTitle} Recipes – Spoonbowl`} />
+        <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={window.location.origin + window.location.pathname} />
       </Helmet>

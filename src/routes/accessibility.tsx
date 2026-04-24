@@ -1,5 +1,5 @@
-import { useEffect } from "react"
 import { createFileRoute } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
 
 export const Route = createFileRoute("/accessibility")({
@@ -7,12 +7,15 @@ export const Route = createFileRoute("/accessibility")({
 })
 
 const AccessibilityPage = () => {
-  useEffect(() => {
-    document.title = "Accessibility – Spoonbowl"
-  }, [])
-
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <Helmet>
+        <title>Accessibility</title>
+        <meta
+          name="description"
+          content="Spoonbowl's accessibility statement — our commitment to WCAG 2.1 Level AA compliance."
+        />
+      </Helmet>
       <header className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Accessibility
