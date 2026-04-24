@@ -1,21 +1,23 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
+import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
 
 export const Route = createFileRoute("/about")({
   component: AboutPage,
 })
 
 const AboutPage = () => {
+  const canonicalUrl = getBrowserCanonicalUrl()
+
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <Helmet>
-        <title>About</title>
+      <Helmet title={formatPageTitle("About")}>
         <meta
           name="description"
           content="Learn about Spoonbowl, a recipe discovery app for browsing and exploring meals from around the world."
         />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
       </Helmet>
       <header className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">

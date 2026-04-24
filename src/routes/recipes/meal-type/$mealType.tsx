@@ -17,6 +17,8 @@ import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
+import { slugify } from "@/lib/utils"
 
 export const Route = createFileRoute("/recipes/meal-type/$mealType")({
   component: MealTypeRecipesPage,
@@ -30,8 +32,10 @@ const MealTypeRecipesPage = () => {
 
   const mealType = slugToMealType(mealTypeSlug, allTypes)
   const pageTitle = mealTypeToPageTitle(mealType)
+  const helmetTitle = pageTitle.replace(/ Recipes$/, "")
   const description = getMealTypeDescription(mealType)
   const emoji = getMealTypeEmoji(mealType)
+  const canonicalUrl = getBrowserCanonicalUrl()
 
   const { data, isLoading, isError } = useRecipesByMealType(mealType, Boolean(mealType))
 
@@ -47,13 +51,12 @@ const MealTypeRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>{pageTitle} Recipes</title>
+      <Helmet title={formatPageTitle(helmetTitle)}>
         <meta name="description" content={description} />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        <meta property="og:title" content={formatPageTitle(helmetTitle)} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>
       <nav aria-label="Breadcrumb" className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
@@ -176,7 +179,7 @@ const MealTypeRecipesPage = () => {
               <Link
                 key={r.id}
                 to="/recipe/$recipeId/$slug"
-                params={{ recipeId: String(r.id), slug: r.name.toLowerCase().replace(/\s+/g, "-") }}
+                params={{ recipeId: String(r.id), slug: slugify(r.name) }}
                 className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
               >
                 {r.name}

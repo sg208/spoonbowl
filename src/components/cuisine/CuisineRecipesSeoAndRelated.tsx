@@ -2,6 +2,7 @@ import { Link } from "@tanstack/react-router"
 import { ArrowLeft } from "lucide-react"
 import type { Recipe } from "@/lib/api"
 import { cuisineToSlug } from "@/lib/utils/cuisineUtils"
+import { slugify } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 
 type CuisineRecipesSeoAndRelatedProps = {
@@ -50,7 +51,7 @@ export const CuisineRecipesSeoAndRelated = ({
             <Link
               key={r.id}
               to="/recipe/$recipeId/$slug"
-              params={{ recipeId: String(r.id), slug: r.name.toLowerCase().replace(/\s+/g, "-") }}
+              params={{ recipeId: String(r.id), slug: slugify(r.name) }}
               className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
             >
               {r.name}

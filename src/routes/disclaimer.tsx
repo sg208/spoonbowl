@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
+import { formatPageTitle } from "@/lib/seo"
 
 export const Route = createFileRoute("/disclaimer")({
   component: DisclaimerPage,
@@ -9,8 +10,7 @@ export const Route = createFileRoute("/disclaimer")({
 const DisclaimerPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <Helmet>
-        <title>Disclaimer</title>
+      <Helmet title={formatPageTitle("Disclaimer")}>
         <meta
           name="description"
           content="Disclaimer for Spoonbowl — recipe content is for informational purposes only."

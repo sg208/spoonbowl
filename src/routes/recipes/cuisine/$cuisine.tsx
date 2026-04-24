@@ -18,6 +18,7 @@ import { CuisineRecipesBreadcrumb } from "@/components/cuisine/CuisineRecipesBre
 import { CuisineRecipesHeader } from "@/components/cuisine/CuisineRecipesHeader"
 import { CuisineRecipesErrorGrid } from "@/components/cuisine/CuisineRecipesErrorGrid"
 import { CuisineRecipesSeoAndRelated } from "@/components/cuisine/CuisineRecipesSeoAndRelated"
+import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
 
 const CuisineRecipesPage = () => {
   const { cuisine, allCuisines } = Route.useLoaderData()
@@ -25,8 +26,10 @@ const CuisineRecipesPage = () => {
   const prefetchCuisinesIndex = usePrefetchCuisinesIndex()
 
   const pageTitle = cuisineToPageTitle(cuisine)
+  const helmetTitle = pageTitle.replace(/ Recipes$/, "")
   const description = getCuisineDescription(cuisine)
   const emoji = getCuisineEmoji(cuisine)
+  const canonicalUrl = getBrowserCanonicalUrl()
 
   const { data, isLoading, isError } = useRecipesByCuisine(cuisine, true)
 
@@ -45,13 +48,12 @@ const CuisineRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>{pageTitle} Recipes</title>
+      <Helmet title={formatPageTitle(helmetTitle)}>
         <meta name="description" content={description} />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
-        <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        <meta property="og:title" content={formatPageTitle(helmetTitle)} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>
       <CuisineRecipesBreadcrumb
         pageTitle={pageTitle}
