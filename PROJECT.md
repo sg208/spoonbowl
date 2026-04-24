@@ -176,6 +176,11 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
 - Dynamic segments use the `$` prefix (`$recipeId`, `$cuisine`, etc.).
 - **Optional refactor / new routes:** put `validateSearch` and loaders next to the route component for typed search params and prefetch; many existing routes use `useQuery` in the component only — that is fine until you choose to consolidate.
 
+### SEO (document titles)
+
+- `index.html` does **not** declare a `<title>`; route pages own titles via `react-helmet-async`.
+- Use `formatPageTitle()` from `src/lib/seo.ts` when setting Helmet titles in routes so titles are consistent (e.g. `Recipe Discovery | Spoonbowl`) and never duplicated.
+
 ### Data fetching
 
 - Prefer **typed wrappers** in `src/lib/api.ts` for all network calls.

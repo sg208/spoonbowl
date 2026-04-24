@@ -8,6 +8,7 @@ import { useRecipeDetail } from "@/hooks/useRecipeQueries"
 import { fetchRecipe } from "@/lib/api"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
 import { slugify } from "@/lib/utils"
+import { formatPageTitle, formatRecipeTitle } from "@/lib/seo"
 
 const RecipeDetailPage = () => {
   const { recipeId } = Route.useParams()
@@ -18,9 +19,7 @@ const RecipeDetailPage = () => {
   if (isLoading) {
     return (
       <>
-        <Helmet>
-          <title>Loading recipe…</title>
-        </Helmet>
+        <Helmet title={formatPageTitle("Loading recipe…")} />
         <RecipeDetailSkeleton />
       </>
     )
@@ -29,9 +28,7 @@ const RecipeDetailPage = () => {
   if (isError || !recipe) {
     return (
       <>
-        <Helmet>
-          <title>Recipe not found</title>
-        </Helmet>
+        <Helmet title={formatPageTitle("Recipe not found")} />
         <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center" role="alert">
           <ChefHat className="h-16 w-16 text-muted-foreground mx-auto mb-4" aria-hidden="true" />
           <h1 className="text-2xl font-bold text-foreground">Recipe not found</h1>
@@ -45,7 +42,10 @@ const RecipeDetailPage = () => {
   }
 
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
-  const canonicalUrl = `${window.location.origin}/recipe/${recipe.id}/${slugify(recipe.name)}`
+  const canonicalUrl =
+    typeof window === "undefined"
+      ? null
+      : `${window.location.origin}/recipe/${recipe.id}/${slugify(recipe.name)}`
   const description = `${recipe.name} — a ${recipe.difficulty.toLowerCase()} ${recipe.cuisine} recipe. Ready in ${totalTime} minutes, serves ${recipe.servings}. Full ingredients and step-by-step instructions on Spoonbowl.`
 
   const jsonLd = {
@@ -81,17 +81,16 @@ const RecipeDetailPage = () => {
 
   return (
     <>
-      <Helmet>
-        <title>{recipe.name}</title>
+      <Helmet title={formatRecipeTitle(recipe.name)}>
         <meta name="description" content={description} />
-        <link rel="canonical" href={canonicalUrl} />
-        <meta property="og:title" content={`${recipe.name} | Spoonbowl`} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
+        <meta property="og:title" content={formatRecipeTitle(recipe.name)} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonicalUrl} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
         <meta property="og:type" content="article" />
         <meta property="og:image" content={recipe.image} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${recipe.name} | Spoonbowl`} />
+        <meta name="twitter:title" content={formatRecipeTitle(recipe.name)} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={recipe.image} />
         <script type="application/ld+json">
@@ -229,7 +228,7 @@ const RecipeDetailPage = () => {
               >
                 Ingredients
               </h2>
-              <ul className="space-y-2.5" role="list">
+              <ul className="space-y-2.5">
                 {recipe.ingredients.map((ingredient, index) => (
                   <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
                     <span

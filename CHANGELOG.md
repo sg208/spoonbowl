@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Page transitions:** Smooth cross-fade on every route change using the View Transitions API (`defaultViewTransition: true` on the router) and CSS `::view-transition-*` pseudo-elements (duration-only; no translate/keyframe slide rules). Automatically disabled for users who prefer reduced motion.
+- **Page title helper:** `src/lib/seo.ts` (`formatPageTitle`) for consistent per-route document titles (e.g. `About | Spoonbowl`) without duplicate `<title>` tags.
+- **Route-specific title formats:** Filter pages (`/recipes/tag/*`, `/recipes/meal-type/*`, `/recipes/cuisine/*`, `/recipes/difficulty/*`) now use `"%s | Spoonbowl"`, and recipe detail pages use `"%s Recipe | Spoonbowl"`.
+- **Meta descriptions for listing routes:** `<title>` and `<meta name="description">` added to `/recipes/cuisines`, `/recipes/difficulties`, `/recipes/meal-types`, and `/recipes/tags` index pages (previously missing).
+
+### Fixed
+
+- **Duplicate document titles in production:** Removed the static `<title>` from `index.html` and standardised Helmet `title` usage (most routes via `formatPageTitle()`, recipe detail via `formatRecipeTitle()`).
+
 ## [1.4.1] - 2026-04-24
 
 ## [1.4.0] - 2026-04-24
@@ -226,8 +237,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
-
-
 [1.4.1]: https://github.com/sg208/spoonbowl/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/sg208/spoonbowl/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/sg208/spoonbowl/compare/v1.3.0...v1.3.1

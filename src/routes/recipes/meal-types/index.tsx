@@ -6,6 +6,7 @@ import { fetchRecipesByMealType } from "@/lib/api"
 import { useMealTypes } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
+import { formatPageTitle } from "@/lib/seo"
 import {
   getMealTypeEmoji,
   getMealTypeDescription,
@@ -32,8 +33,7 @@ const MealTypesIndexPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>Recipes by Meal Type</title>
+      <Helmet title={formatPageTitle("Recipes by Meal Type")}>
         <meta
           name="description"
           content="Browse recipes by meal type on Spoonbowl — breakfast, lunch, dinner, snacks, and more."

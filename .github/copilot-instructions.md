@@ -35,6 +35,7 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 - **Route announcer:** `src/components/RouteAnnouncer.tsx` — `aria-live` SPA a11y; mounted in `RootLayout`.
 - **Routes:** file-based; dynamic segments use `$` (e.g. `$cuisine`, `$recipeId`).
 - **API:** `src/lib/api.ts` — typed wrappers only; avoid raw `fetch` in components.
+- **SEO titles:** set per-route Helmet `title` using `formatPageTitle()` from `src/lib/seo.ts` (don’t add `<title>` to `index.html`).
 - **404 copy:** `src/lib/config/not-found-messages.ts`.
 
 ## Where to change (short)

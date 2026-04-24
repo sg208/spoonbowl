@@ -6,6 +6,7 @@ import { fetchRecipesByDifficulty } from "@/lib/api"
 import { useDifficulties } from "@/hooks/useRecipeQueries"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
+import { formatPageTitle } from "@/lib/seo"
 import {
   getDifficultyEmoji,
   getDifficultyDescription,
@@ -28,8 +29,7 @@ const DifficultiesIndexPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>Recipes by Difficulty</title>
+      <Helmet title={formatPageTitle("Recipes by Difficulty")}>
         <meta
           name="description"
           content="Find recipes by difficulty level on Spoonbowl — easy, medium, and hard recipes for every skill level."

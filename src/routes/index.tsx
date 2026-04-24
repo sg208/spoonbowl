@@ -3,6 +3,7 @@ import type React from "react"
 import { useEffect, useMemo, useState } from "react"
 import { Helmet } from "react-helmet-async"
 import { fetchAllRecipes } from "@/lib/api"
+import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
 import {
   getSessionRandomText,
   headings,
@@ -108,6 +109,7 @@ const HomePage = (): React.JSX.Element => {
     })
   )
   const { data, isLoading, isError } = useAllRecipes()
+  const canonicalUrl = getBrowserCanonicalUrl()
 
   useEffect(() => {
     const mql = window.matchMedia("(min-width: 768px)")
@@ -150,19 +152,18 @@ const HomePage = (): React.JSX.Element => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-8">
-      <Helmet titleTemplate="%s">
-        <title>Spoonbowl - Recipe Discovery</title>
+      <Helmet title={formatPageTitle("Recipe Discovery")}>
         <meta
           name="description"
           content="Discover delicious recipes from around the world. Explore cuisines, meal types, and difficulty levels — then cook something worth eating."
         />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <meta property="og:title" content="Spoonbowl - Recipe Discovery" />
         <meta
           property="og:description"
           content="Discover delicious recipes from around the world. Explore cuisines, meal types, and difficulty levels — then cook something worth eating."
         />
-        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>
       <section aria-labelledby="page-heading" className="mb-10 text-center lg:mb-8">
         <div className="mx-auto max-w-3xl">

@@ -13,6 +13,7 @@ import {
 } from "@/lib/utils/tagUtils"
 import { recipeKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
+import { formatPageTitle } from "@/lib/seo"
 import { Badge } from "@/components/ui/badge"
 
 export const Route = createFileRoute("/recipes/tags/")({
@@ -39,8 +40,7 @@ const TagsIndexPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>Recipes by Category</title>
+      <Helmet title={formatPageTitle("Recipes by Category")}>
         <meta
           name="description"
           content="Explore recipes by category on Spoonbowl — find dishes by ingredient, cooking style, occasion, and more."
