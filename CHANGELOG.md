@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.5.0] - 2026-04-24
+
 ### Added
 
 - **Page transitions:** Smooth cross-fade on every route change using the View Transitions API (`defaultViewTransition: true` on the router) and CSS `::view-transition-*` pseudo-elements (duration-only; no translate/keyframe slide rules). Automatically disabled for users who prefer reduced motion.
@@ -237,6 +239,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+
+[1.5.0]: https://github.com/sg208/spoonbowl/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/sg208/spoonbowl/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/sg208/spoonbowl/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/sg208/spoonbowl/compare/v1.3.0...v1.3.1
