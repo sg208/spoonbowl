@@ -13,6 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Dynamic title template:** `<Helmet titleTemplate="%s | Spoonbowl" defaultTitle="Spoonbowl" />` in `RootLayout` so all per-route titles automatically render as `"Page Name | Spoonbowl"` without duplicating the suffix in each route file.
 - **Meta descriptions for listing routes:** `<title>` and `<meta name="description">` added to `/recipes/cuisines`, `/recipes/difficulties`, `/recipes/meal-types`, and `/recipes/tags` index pages (previously missing).
 
+## [1.4.1] - 2026-04-24
+
 ## [1.4.0] - 2026-04-24
 
 ### Added
@@ -230,6 +232,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+
+[1.4.1]: https://github.com/sg208/spoonbowl/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/sg208/spoonbowl/compare/v1.3.1...v1.4.0
 [1.3.1]: https://github.com/sg208/spoonbowl/compare/v1.3.0...v1.3.1
 [1.3.0]: https://github.com/sg208/spoonbowl/compare/v1.2.0...v1.3.0
