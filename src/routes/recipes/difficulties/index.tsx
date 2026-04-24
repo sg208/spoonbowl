@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { useQueryClient } from "@tanstack/react-query"
 import { BarChart2, ChefHat, ArrowRight } from "lucide-react"
 import { fetchRecipesByDifficulty } from "@/lib/api"
@@ -27,6 +28,13 @@ const DifficultiesIndexPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <Helmet>
+        <title>Recipes by Difficulty</title>
+        <meta
+          name="description"
+          content="Find recipes by difficulty level on Spoonbowl — easy, medium, and hard recipes for every skill level."
+        />
+      </Helmet>
       <header className="mb-10" aria-labelledby="difficulties-page-heading">
         <div className="flex items-center gap-2 mb-3">
           <Badge className="bg-primary/10 text-primary border-0 font-medium">

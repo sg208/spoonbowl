@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { useQueryClient } from "@tanstack/react-query"
 import { UtensilsCrossed, ChefHat, ArrowRight } from "lucide-react"
 import { fetchRecipesByMealType } from "@/lib/api"
@@ -31,6 +32,13 @@ const MealTypesIndexPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <Helmet>
+        <title>Recipes by Meal Type</title>
+        <meta
+          name="description"
+          content="Browse recipes by meal type on Spoonbowl — breakfast, lunch, dinner, snacks, and more."
+        />
+      </Helmet>
       <header className="mb-10" aria-labelledby="meal-types-page-heading">
         <div className="flex items-center gap-2 mb-3">
           <Badge className="bg-primary/10 text-primary border-0 font-medium">

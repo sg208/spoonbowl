@@ -6,7 +6,7 @@ const TermsPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <Helmet>
-        <title>Terms of use – Spoonbowl</title>
+        <title>Terms of use</title>
         <meta
           name="description"
           content="Terms of use for Spoonbowl — a recipe discovery app for browsing and exploring meals."

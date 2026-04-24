@@ -10,7 +10,7 @@ const AboutPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
       <Helmet>
-        <title>About – Spoonbowl</title>
+        <title>About</title>
         <meta
           name="description"
           content="Learn about Spoonbowl, a recipe discovery app for browsing and exploring meals from around the world."
