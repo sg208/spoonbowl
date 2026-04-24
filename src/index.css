@@ -156,6 +156,12 @@
   }
 }
 
+/* Page transition animations via View Transitions API — browser default cross-fade, duration tuned */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 180ms;
+}
+
 /* WCAG 2.3.3: respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   html {
@@ -170,6 +176,13 @@
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+
+  /* View Transition pseudo-elements are outside the element tree and not matched by *.
+     Suppress them explicitly so route cross-fades respect reduced-motion. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms !important;
   }
 }
 
