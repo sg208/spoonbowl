@@ -84,13 +84,13 @@ const RecipeDetailPage = () => {
       <Helmet title={formatRecipeTitle(recipe.name)}>
         <meta name="description" content={description} />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-        <meta property="og:title" content={`${recipe.name} | Spoonbowl`} />
+        <meta property="og:title" content={formatRecipeTitle(recipe.name)} />
         <meta property="og:description" content={description} />
         {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
         <meta property="og:type" content="article" />
         <meta property="og:image" content={recipe.image} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${recipe.name} | Spoonbowl`} />
+        <meta name="twitter:title" content={formatRecipeTitle(recipe.name)} />
         <meta name="twitter:description" content={description} />
         <meta name="twitter:image" content={recipe.image} />
         <script type="application/ld+json">
@@ -228,7 +228,7 @@ const RecipeDetailPage = () => {
               >
                 Ingredients
               </h2>
-              <ul className="space-y-2.5" role="list">
+              <ul className="space-y-2.5">
                 {recipe.ingredients.map((ingredient, index) => (
                   <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
                     <span

@@ -1,10 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router"
+import { createFileRoute, Link, notFound } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
 import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, UtensilsCrossed } from "lucide-react"
-import { fetchRecipesByMealType } from "@/lib/api"
-import { useMealTypes, useRecipesByMealType } from "@/hooks/useRecipeQueries"
-import { recipeKeys } from "@/lib/keys/recipeKeys"
+import { fetchMealTypes, fetchRecipesByMealType } from "@/lib/api"
+import { useRecipesByMealType } from "@/hooks/useRecipeQueries"
+import { recipeKeys, recipeMetaKeys } from "@/lib/keys/recipeKeys"
 import { STALE_TIME_5M_MS } from "@/lib/queryClient"
 import {
   getMealTypeEmoji,
@@ -21,23 +21,40 @@ import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
 import { slugify } from "@/lib/utils"
 
 export const Route = createFileRoute("/recipes/meal-type/$mealType")({
+  loader: async ({ context, params }) => {
+    const mealTypeSlug = params.mealType
+    const allTypes = await context.queryClient.ensureQueryData({
+      queryKey: recipeMetaKeys.mealTypes(),
+      queryFn: fetchMealTypes,
+    })
+
+    if (!allTypes.some((t) => mealTypeToSlug(t) === mealTypeSlug)) {
+      throw notFound()
+    }
+
+    const mealType = slugToMealType(mealTypeSlug, allTypes)
+
+    await context.queryClient.ensureQueryData({
+      queryKey: recipeKeys.byMealType(mealType),
+      queryFn: () => fetchRecipesByMealType(mealType),
+      staleTime: STALE_TIME_5M_MS,
+    })
+
+    return { mealType, allTypes }
+  },
   component: MealTypeRecipesPage,
 })
 
 const MealTypeRecipesPage = () => {
-  const { mealType: mealTypeSlug } = Route.useParams()
+  const { mealType, allTypes } = Route.useLoaderData()
   const queryClient = useQueryClient()
-
-  const { data: allTypes } = useMealTypes()
-
-  const mealType = slugToMealType(mealTypeSlug, allTypes)
   const pageTitle = mealTypeToPageTitle(mealType)
   const helmetTitle = pageTitle.replace(/ Recipes$/, "")
   const description = getMealTypeDescription(mealType)
   const emoji = getMealTypeEmoji(mealType)
   const canonicalUrl = getBrowserCanonicalUrl()
 
-  const { data, isLoading, isError } = useRecipesByMealType(mealType, Boolean(mealType))
+  const { data, isLoading, isError } = useRecipesByMealType(mealType, true)
 
   const recipes = data?.recipes ?? []
 
@@ -189,7 +206,7 @@ const MealTypeRecipesPage = () => {
         </section>
       )}
 
-      {allTypes && allTypes.length > 1 && (
+      {allTypes.length > 1 && (
         <section className="mt-8" aria-labelledby="other-types-heading">
           <h2
             id="other-types-heading"
