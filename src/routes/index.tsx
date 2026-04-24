@@ -150,7 +150,7 @@ const HomePage = (): React.JSX.Element => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-8">
-      <Helmet>
+      <Helmet titleTemplate="%s">
         <title>Spoonbowl - Recipe Discovery</title>
         <meta
           name="description"
