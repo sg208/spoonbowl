@@ -51,7 +51,7 @@ const CuisineRecipesPage = () => {
       <Helmet title={formatPageTitle(helmetTitle)}>
         <meta name="description" content={description} />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-        <meta property="og:title" content={`${pageTitle} | Spoonbowl`} />
+        <meta property="og:title" content={formatPageTitle(helmetTitle)} />
         <meta property="og:description" content={description} />
         {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>

@@ -16,7 +16,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
-- **Duplicate document titles in production:** Removed the static `<title>` from `index.html` and standardised all routes to set Helmet `title` via `formatPageTitle()`.
+- **Duplicate document titles in production:** Removed the static `<title>` from `index.html` and standardised Helmet `title` usage (most routes via `formatPageTitle()`, recipe detail via `formatRecipeTitle()`).
 
 ## [1.4.1] - 2026-04-24
 
