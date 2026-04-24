@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
+import { formatPageTitle } from "@/lib/seo"
 
 /** ISO date only; update when this page meaningfully changes. */
 const PRIVACY_LAST_UPDATED_ISO = "2026-04-23"
@@ -8,8 +9,7 @@ const PRIVACY_LAST_UPDATED_ISO = "2026-04-23"
 const PrivacyPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <Helmet>
-        <title>Privacy</title>
+      <Helmet title={formatPageTitle("Privacy")}>
         <meta
           name="description"
           content="Spoonbowl's privacy policy — we don't track you, sell your data, or use advertising cookies."

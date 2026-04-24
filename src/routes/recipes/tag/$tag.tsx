@@ -9,6 +9,7 @@ import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { slugify } from "@/lib/utils"
+import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
 
 export const Route = createFileRoute("/recipes/tag/$tag")({
   component: TagRecipesPage,
@@ -24,6 +25,7 @@ const TagRecipesPage = () => {
   const pageTitle = tagToPageTitle(tag)
   const description = tagToDescription(tag)
   const emoji = getTagEmoji(tag)
+  const canonicalUrl = getBrowserCanonicalUrl()
 
   const { data, isLoading, isError } = useRecipesByTag(tag, Boolean(tag))
 
@@ -31,13 +33,12 @@ const TagRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>{pageTitle} Recipes</title>
+      <Helmet title={formatPageTitle(`${pageTitle} Recipes`)}>
         <meta name="description" content={description} />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>
       <nav aria-label="Breadcrumb" className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">

@@ -17,6 +17,8 @@ import { RecipeCard } from "@/components/RecipeCard"
 import { RecipeCardSkeleton } from "@/components/RecipeCardSkeleton"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
+import { formatPageTitle, getBrowserCanonicalUrl } from "@/lib/seo"
+import { slugify } from "@/lib/utils"
 
 export const Route = createFileRoute("/recipes/difficulty/$difficulty")({
   component: DifficultyRecipesPage,
@@ -32,6 +34,7 @@ const DifficultyRecipesPage = () => {
   const pageTitle = difficultyToPageTitle(difficulty)
   const description = getDifficultyDescription(difficulty)
   const emoji = getDifficultyEmoji(difficulty)
+  const canonicalUrl = getBrowserCanonicalUrl()
 
   const { data, isLoading, isError } = useRecipesByDifficulty(difficulty, Boolean(allDifficulties))
 
@@ -47,13 +50,12 @@ const DifficultyRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet>
-        <title>{pageTitle} Recipes</title>
+      <Helmet title={formatPageTitle(`${pageTitle} Recipes`)}>
         <meta name="description" content={description} />
-        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
         <meta property="og:description" content={description} />
-        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+        {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>
       <nav aria-label="Breadcrumb" className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
@@ -182,7 +184,7 @@ const DifficultyRecipesPage = () => {
               <Link
                 key={r.id}
                 to="/recipe/$recipeId/$slug"
-                params={{ recipeId: String(r.id), slug: r.name.toLowerCase().replace(/\s+/g, "-") }}
+                params={{ recipeId: String(r.id), slug: slugify(r.name) }}
                 className="text-xs text-muted-foreground hover:text-primary underline underline-offset-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
               >
                 {r.name}

@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
+import { formatPageTitle } from "@/lib/seo"
 
 export const Route = createFileRoute("/accessibility")({
   component: AccessibilityPage,
@@ -9,8 +10,7 @@ export const Route = createFileRoute("/accessibility")({
 const AccessibilityPage = () => {
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
-      <Helmet>
-        <title>Accessibility</title>
+      <Helmet title={formatPageTitle("Accessibility")}>
         <meta
           name="description"
           content="Spoonbowl's accessibility statement — our commitment to WCAG 2.1 Level AA compliance."
