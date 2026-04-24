@@ -8,7 +8,7 @@ import { useRecipeDetail } from "@/hooks/useRecipeQueries"
 import { fetchRecipe } from "@/lib/api"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
 import { slugify } from "@/lib/utils"
-import { formatPageTitle } from "@/lib/seo"
+import { formatPageTitle, formatRecipeTitle } from "@/lib/seo"
 
 const RecipeDetailPage = () => {
   const { recipeId } = Route.useParams()
@@ -81,7 +81,7 @@ const RecipeDetailPage = () => {
 
   return (
     <>
-      <Helmet title={formatPageTitle(recipe.name)}>
+      <Helmet title={formatRecipeTitle(recipe.name)}>
         <meta name="description" content={description} />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
         <meta property="og:title" content={`${recipe.name} | Spoonbowl`} />

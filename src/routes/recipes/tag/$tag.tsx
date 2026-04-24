@@ -23,6 +23,7 @@ const TagRecipesPage = () => {
 
   const tag = slugToTag(tagSlug, allTags)
   const pageTitle = tagToPageTitle(tag)
+  const helmetTitle = pageTitle.replace(/ Recipes$/, "")
   const description = tagToDescription(tag)
   const emoji = getTagEmoji(tag)
   const canonicalUrl = getBrowserCanonicalUrl()
@@ -33,10 +34,10 @@ const TagRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-      <Helmet title={formatPageTitle(`${pageTitle} Recipes`)}>
+      <Helmet title={formatPageTitle(helmetTitle)}>
         <meta name="description" content={description} />
         {canonicalUrl && <link rel="canonical" href={canonicalUrl} />}
-        <meta property="og:title" content={`${pageTitle} Recipes | Spoonbowl`} />
+        <meta property="og:title" content={`${pageTitle} | Spoonbowl`} />
         <meta property="og:description" content={description} />
         {canonicalUrl && <meta property="og:url" content={canonicalUrl} />}
       </Helmet>
