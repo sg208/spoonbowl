@@ -1,5 +1,5 @@
-import { useEffect } from "react"
 import { createFileRoute } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
 
 export const Route = createFileRoute("/disclaimer")({
@@ -7,12 +7,15 @@ export const Route = createFileRoute("/disclaimer")({
 })
 
 const DisclaimerPage = () => {
-  useEffect(() => {
-    document.title = "Disclaimer – Spoonbowl"
-  }, [])
-
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <Helmet>
+        <title>Disclaimer</title>
+        <meta
+          name="description"
+          content="Disclaimer for Spoonbowl — recipe content is for informational purposes only."
+        />
+      </Helmet>
       <header className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Disclaimer
