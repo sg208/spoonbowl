@@ -13,7 +13,7 @@ Recipe discovery **PWA** built with **Vite + React**, featuring fast navigation,
 
 ## Tech stack
 
-- **Production**: **Cloudflare** (DNS + network / edge in front of the domain) and **Railway** (hosts the built application)
+- **Production**: **Cloudflare** (DNS + network) → **Bunny.net** (storage + CDN); deployed via GitHub Actions on push to `main`
 - **Vite** + **React 19**
 - **TanStack Router** (file-based routing in `src/routes/`)
 - **TanStack React Query** (server-state caching)
@@ -48,6 +48,8 @@ These are defined via TanStack Router’s file-based routing:
 - `/recipes/tags` and `/recipes/tag/:tag` — browse by category
 - `/recipes/meal-types` and `/recipes/meal-type/:mealType` — browse by meal type
 - `/recipes/cuisines` and `/recipes/cuisine/:cuisine` — browse by cuisine
+- `/recipes/difficulties` and `/recipes/difficulty/:difficulty` — browse by difficulty
+- `/about` — how the site works
 - `/privacy`, `/terms`, `/disclaimer`, `/accessibility` — policy/accessibility pages (`/privacy` includes GDPR/CCPA/CalOPPA notices; `/gdpr` redirects to `/privacy`)
 
 ## Data source
@@ -79,7 +81,7 @@ In development, caches can make changes feel “sticky.” If you notice odd beh
 
 ## Theming
 
-Theme is controlled by `src/components/theme-provider.tsx` and stored in localStorage under:
+Theme is controlled by `src/components/ThemeProvider.tsx` and stored in localStorage under:
 
 - `spoonbowl-theme`
 

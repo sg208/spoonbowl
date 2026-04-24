@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { useQueryClient } from "@tanstack/react-query"
 import { ArrowLeft, ChefHat, UtensilsCrossed } from "lucide-react"
 import { fetchRecipesByMealType } from "@/lib/api"
@@ -46,6 +47,14 @@ const MealTypeRecipesPage = () => {
 
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+      <Helmet>
+        <title>{pageTitle} Recipes – Spoonbowl</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+        <meta property="og:title" content={`${pageTitle} Recipes – Spoonbowl`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={window.location.origin + window.location.pathname} />
+      </Helmet>
       <nav aria-label="Breadcrumb" className="mb-8">
         <ol className="flex items-center gap-2 text-sm text-muted-foreground flex-wrap">
           <li>

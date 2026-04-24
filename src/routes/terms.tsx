@@ -1,14 +1,18 @@
-import { useEffect } from "react"
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { Separator } from "@/components/ui/separator"
 
 const TermsPage = () => {
-  useEffect(() => {
-    document.title = "Terms of use – Spoonbowl"
-  }, [])
-
   return (
     <div className="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+      <Helmet>
+        <title>Terms of use – Spoonbowl</title>
+        <meta
+          name="description"
+          content="Terms of use for Spoonbowl — a recipe discovery app for browsing and exploring meals."
+        />
+        <link rel="canonical" href={window.location.origin + window.location.pathname} />
+      </Helmet>
       <header className="mb-8">
         <h1 className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl">
           Terms of use
@@ -57,8 +61,9 @@ const TermsPage = () => {
           </h2>
           <p className="text-muted-foreground leading-7">
             <strong className="text-foreground">Cloudflare</strong> (DNS and network services) and{" "}
-            <strong className="text-foreground">Bunny.net</strong> (hosting and CDN) help deliver the site.
-            Their terms and policies apply on their side; we summarize visitor-data basics in{" "}
+            <strong className="text-foreground">Bunny.net</strong> (hosting and CDN) help deliver
+            the site. Their terms and policies apply on their side; we summarize visitor-data basics
+            in{" "}
             <Link to="/privacy" className="underline hover:text-foreground transition-colors">
               Privacy
             </Link>

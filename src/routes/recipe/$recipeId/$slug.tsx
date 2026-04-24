@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router"
+import { Helmet } from "react-helmet-async"
 import { Clock, ChefHat, Users, Star, Flame, ArrowLeft } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -6,6 +7,7 @@ import { Separator } from "@/components/ui/separator"
 import { useRecipeDetail } from "@/hooks/useRecipeQueries"
 import { fetchRecipe } from "@/lib/api"
 import { recipeDetailKeys } from "@/lib/keys/recipeKeys"
+import { slugify } from "@/lib/utils"
 
 const RecipeDetailPage = () => {
   const { recipeId } = Route.useParams()
@@ -14,197 +16,261 @@ const RecipeDetailPage = () => {
   const { data: recipe, isLoading, isError } = useRecipeDetail(id)
 
   if (isLoading) {
-    return <RecipeDetailSkeleton />
+    return (
+      <>
+        <Helmet>
+          <title>Loading recipe… – Spoonbowl</title>
+        </Helmet>
+        <RecipeDetailSkeleton />
+      </>
+    )
   }
 
   if (isError || !recipe) {
     return (
-      <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center" role="alert">
-        <ChefHat className="h-16 w-16 text-muted-foreground mx-auto mb-4" aria-hidden="true" />
-        <h1 className="text-2xl font-bold text-foreground">Recipe not found</h1>
-        <p className="text-muted-foreground mt-2">This recipe doesn't seem to exist.</p>
-        <Button asChild className="mt-6">
-          <Link to="/">Back to Recipes</Link>
-        </Button>
-      </div>
+      <>
+        <Helmet>
+          <title>Recipe not found – Spoonbowl</title>
+        </Helmet>
+        <div className="mx-auto max-w-3xl px-4 sm:px-6 py-16 text-center" role="alert">
+          <ChefHat className="h-16 w-16 text-muted-foreground mx-auto mb-4" aria-hidden="true" />
+          <h1 className="text-2xl font-bold text-foreground">Recipe not found</h1>
+          <p className="text-muted-foreground mt-2">This recipe doesn't seem to exist.</p>
+          <Button asChild className="mt-6">
+            <Link to="/">Back to Recipes</Link>
+          </Button>
+        </div>
+      </>
     )
   }
 
   const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+  const canonicalUrl = `${window.location.origin}/recipe/${recipe.id}/${slugify(recipe.name)}`
+  const description = `${recipe.name} — a ${recipe.difficulty.toLowerCase()} ${recipe.cuisine} recipe. Ready in ${totalTime} minutes, serves ${recipe.servings}. Full ingredients and step-by-step instructions on Spoonbowl.`
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Recipe",
+    name: recipe.name,
+    image: [recipe.image],
+    description,
+    prepTime: `PT${recipe.prepTimeMinutes}M`,
+    cookTime: `PT${recipe.cookTimeMinutes}M`,
+    totalTime: `PT${totalTime}M`,
+    recipeYield: `${recipe.servings} servings`,
+    recipeCuisine: recipe.cuisine,
+    recipeCategory: recipe.mealType.join(", "),
+    keywords: recipe.tags.join(", "),
+    recipeIngredient: recipe.ingredients,
+    recipeInstructions: recipe.instructions.map((step, index) => ({
+      "@type": "HowToStep",
+      position: index + 1,
+      name: `Step ${index + 1}`,
+      text: step,
+    })),
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: recipe.rating,
+      ratingCount: recipe.reviewCount,
+    },
+    nutrition: {
+      "@type": "NutritionInformation",
+      calories: `${recipe.caloriesPerServing} calories`,
+    },
+  }
 
   return (
-    <article
-      className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
-      aria-labelledby="recipe-title"
-    >
-      <nav aria-label="Breadcrumb" className="mb-6">
-        <ol className="flex items-center gap-2 text-sm text-muted-foreground">
-          <li>
-            <Link
-              to="/"
-              className="flex items-center gap-1 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
-            >
-              <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
-              Recipes
-            </Link>
-          </li>
-          <li aria-hidden="true">/</li>
-          <li className="text-foreground font-medium truncate max-w-xs" aria-current="page">
-            {recipe.name}
-          </li>
-        </ol>
-      </nav>
-
-      <div className="space-y-8">
-        <header>
-          <div className="flex items-center gap-2 flex-wrap mb-3">
-            <Badge variant="outline">{recipe.cuisine}</Badge>
-            {recipe.mealType.map((type) => (
-              <Badge key={type} variant="secondary">
-                {type}
-              </Badge>
-            ))}
-          </div>
-          <h1
-            id="recipe-title"
-            className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl text-balance"
-          >
-            {recipe.name}
-          </h1>
-
-          <div className="mt-4 flex items-center gap-1.5 flex-wrap">
-            {recipe.tags.map((tag) => (
-              <span
-                key={tag}
-                className="text-xs px-2 py-0.5 rounded-full bg-accent text-accent-foreground"
+    <>
+      <Helmet>
+        <title>{recipe.name} – Spoonbowl</title>
+        <meta name="description" content={description} />
+        <link rel="canonical" href={canonicalUrl} />
+        <meta property="og:title" content={`${recipe.name} – Spoonbowl`} />
+        <meta property="og:description" content={description} />
+        <meta property="og:url" content={canonicalUrl} />
+        <meta property="og:type" content="article" />
+        <meta property="og:image" content={recipe.image} />
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:title" content={`${recipe.name} – Spoonbowl`} />
+        <meta name="twitter:description" content={description} />
+        <meta name="twitter:image" content={recipe.image} />
+        <script type="application/ld+json">
+          {JSON.stringify(jsonLd).replace(/</g, "\\u003c")}
+        </script>
+      </Helmet>
+      <article
+        className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 sm:py-12"
+        aria-labelledby="recipe-title"
+      >
+        <nav aria-label="Breadcrumb" className="mb-6">
+          <ol className="flex items-center gap-2 text-sm text-muted-foreground">
+            <li>
+              <Link
+                to="/"
+                className="flex items-center gap-1 hover:text-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring rounded"
               >
-                {tag}
-              </span>
-            ))}
-          </div>
-        </header>
+                <ArrowLeft className="h-3.5 w-3.5" aria-hidden="true" />
+                Recipes
+              </Link>
+            </li>
+            <li aria-hidden="true">/</li>
+            <li className="text-foreground font-medium truncate max-w-xs" aria-current="page">
+              {recipe.name}
+            </li>
+          </ol>
+        </nav>
 
-        <div className="relative aspect-[16/8] sm:aspect-[16/7] overflow-hidden rounded-2xl bg-muted">
-          <img
-            src={recipe.image}
-            alt={recipe.name}
-            className="h-full w-full object-cover"
-            loading="eager"
-            decoding="async"
-          />
-        </div>
+        <div className="space-y-8">
+          <header>
+            <div className="flex items-center gap-2 flex-wrap mb-3">
+              <Badge variant="outline">{recipe.cuisine}</Badge>
+              {recipe.mealType.map((type) => (
+                <Badge key={type} variant="secondary">
+                  {type}
+                </Badge>
+              ))}
+            </div>
+            <h1
+              id="recipe-title"
+              className="text-3xl font-extrabold tracking-tight text-foreground sm:text-4xl text-balance"
+            >
+              {recipe.name}
+            </h1>
 
-        <section aria-label="Recipe overview">
-          <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4 rounded-xl bg-secondary/50 p-5 border border-border">
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <Clock className="h-3.5 w-3.5" aria-hidden="true" />
-                Prep Time
-              </dt>
-              <dd className="text-sm font-semibold text-foreground">
-                {recipe.prepTimeMinutes} min
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <Flame className="h-3.5 w-3.5" aria-hidden="true" />
-                Cook Time
-              </dt>
-              <dd className="text-sm font-semibold text-foreground">
-                {recipe.cookTimeMinutes} min
-              </dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <Users className="h-3.5 w-3.5" aria-hidden="true" />
-                Servings
-              </dt>
-              <dd className="text-sm font-semibold text-foreground">{recipe.servings}</dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <Star
-                  className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber"
-                  aria-hidden="true"
-                />
-                Rating
-              </dt>
-              <dd className="text-sm font-semibold text-foreground">
-                {recipe.rating.toFixed(1)}{" "}
-                <span className="font-normal text-muted-foreground text-xs">
-                  ({recipe.reviewCount} reviews)
+            <div className="mt-4 flex items-center gap-1.5 flex-wrap">
+              {recipe.tags.map((tag) => (
+                <span
+                  key={tag}
+                  className="text-xs px-2 py-0.5 rounded-full bg-accent text-accent-foreground"
+                >
+                  {tag}
                 </span>
-              </dd>
+              ))}
             </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground flex items-center gap-1">
-                <ChefHat className="h-3.5 w-3.5" aria-hidden="true" />
-                Difficulty
-              </dt>
-              <dd className="text-sm font-semibold text-foreground">{recipe.difficulty}</dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground">Total Time</dt>
-              <dd className="text-sm font-semibold text-foreground">{totalTime} min</dd>
-            </div>
-            <div className="flex flex-col gap-1">
-              <dt className="text-xs text-muted-foreground">Calories</dt>
-              <dd className="text-sm font-semibold text-foreground">
-                {recipe.caloriesPerServing} / serving
-              </dd>
-            </div>
-          </dl>
-        </section>
+          </header>
 
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
-          <section className="lg:col-span-1" aria-labelledby="ingredients-heading">
-            <h2
-              id="ingredients-heading"
-              className="text-xl font-bold tracking-tight text-foreground mb-4"
-            >
-              Ingredients
-            </h2>
-            <ul className="space-y-2.5" role="list">
-              {recipe.ingredients.map((ingredient, index) => (
-                <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
-                  <span
-                    className="mt-0.5 h-4 w-4 shrink-0 rounded-full bg-primary/15 text-primary flex items-center justify-center text-[10px] font-bold"
+          <div className="relative aspect-[16/8] sm:aspect-[16/7] overflow-hidden rounded-2xl bg-muted">
+            <img
+              src={recipe.image}
+              alt={recipe.name}
+              className="h-full w-full object-cover"
+              loading="eager"
+              decoding="async"
+            />
+          </div>
+
+          <section aria-label="Recipe overview">
+            <dl className="grid grid-cols-2 gap-4 sm:grid-cols-4 rounded-xl bg-secondary/50 p-5 border border-border">
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Clock className="h-3.5 w-3.5" aria-hidden="true" />
+                  Prep Time
+                </dt>
+                <dd className="text-sm font-semibold text-foreground">
+                  {recipe.prepTimeMinutes} min
+                </dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Flame className="h-3.5 w-3.5" aria-hidden="true" />
+                  Cook Time
+                </dt>
+                <dd className="text-sm font-semibold text-foreground">
+                  {recipe.cookTimeMinutes} min
+                </dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Users className="h-3.5 w-3.5" aria-hidden="true" />
+                  Servings
+                </dt>
+                <dd className="text-sm font-semibold text-foreground">{recipe.servings}</dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground flex items-center gap-1">
+                  <Star
+                    className="h-3.5 w-3.5 fill-spoon-amber text-spoon-amber"
                     aria-hidden="true"
-                  >
-                    {index + 1}
+                  />
+                  Rating
+                </dt>
+                <dd className="text-sm font-semibold text-foreground">
+                  {recipe.rating.toFixed(1)}{" "}
+                  <span className="font-normal text-muted-foreground text-xs">
+                    ({recipe.reviewCount} reviews)
                   </span>
-                  {ingredient}
-                </li>
-              ))}
-            </ul>
+                </dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground flex items-center gap-1">
+                  <ChefHat className="h-3.5 w-3.5" aria-hidden="true" />
+                  Difficulty
+                </dt>
+                <dd className="text-sm font-semibold text-foreground">{recipe.difficulty}</dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground">Total Time</dt>
+                <dd className="text-sm font-semibold text-foreground">{totalTime} min</dd>
+              </div>
+              <div className="flex flex-col gap-1">
+                <dt className="text-xs text-muted-foreground">Calories</dt>
+                <dd className="text-sm font-semibold text-foreground">
+                  {recipe.caloriesPerServing} / serving
+                </dd>
+              </div>
+            </dl>
           </section>
 
-          <Separator className="lg:hidden" />
+          <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
+            <section className="lg:col-span-1" aria-labelledby="ingredients-heading">
+              <h2
+                id="ingredients-heading"
+                className="text-xl font-bold tracking-tight text-foreground mb-4"
+              >
+                Ingredients
+              </h2>
+              <ul className="space-y-2.5" role="list">
+                {recipe.ingredients.map((ingredient, index) => (
+                  <li key={index} className="flex items-start gap-2.5 text-sm text-foreground">
+                    <span
+                      className="mt-0.5 h-4 w-4 shrink-0 rounded-full bg-primary/15 text-primary flex items-center justify-center text-[10px] font-bold"
+                      aria-hidden="true"
+                    >
+                      {index + 1}
+                    </span>
+                    {ingredient}
+                  </li>
+                ))}
+              </ul>
+            </section>
 
-          <section className="lg:col-span-2" aria-labelledby="instructions-heading">
-            <h2
-              id="instructions-heading"
-              className="text-xl font-bold tracking-tight text-foreground mb-4"
-            >
-              Instructions
-            </h2>
-            <ol className="space-y-4">
-              {recipe.instructions.map((step, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <span
-                    className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold"
-                    aria-label={`Step ${index + 1}`}
-                  >
-                    {index + 1}
-                  </span>
-                  <p className="text-sm text-foreground leading-relaxed pt-0.5">{step}</p>
-                </li>
-              ))}
-            </ol>
-          </section>
+            <Separator className="lg:hidden" />
+
+            <section className="lg:col-span-2" aria-labelledby="instructions-heading">
+              <h2
+                id="instructions-heading"
+                className="text-xl font-bold tracking-tight text-foreground mb-4"
+              >
+                Instructions
+              </h2>
+              <ol className="space-y-4">
+                {recipe.instructions.map((step, index) => (
+                  <li key={index} className="flex items-start gap-3">
+                    <span
+                      className="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground text-xs font-bold"
+                      aria-hidden="true"
+                    >
+                      {index + 1}
+                    </span>
+                    <p className="text-sm text-foreground leading-relaxed pt-0.5">{step}</p>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          </div>
         </div>
-      </div>
-    </article>
+      </article>
+    </>
   )
 }
 

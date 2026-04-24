@@ -4,7 +4,9 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 **GitHub Copilot:** a condensed mirror for repository-wide instructions lives in [`.github/copilot-instructions.md`](.github/copilot-instructions.md) (stays under Copilot code review’s character limit). **This file (`PROJECT.md`) is canonical** for the full tree, tables, and TanStack patterns.
 
-**Maintenance:** When you change architecture, commands, or major conventions here, update [`.github/copilot-instructions.md`](.github/copilot-instructions.md) so the short mirror stays aligned.
+**Claude Code:** [`CLAUDE.md`](CLAUDE.md) is the token-efficient source of truth Claude reads first — file map, route map, data-fetching decisions, and hard rules. Keep it aligned when architecture changes.
+
+**Maintenance:** When you change architecture, commands, or major conventions here, update [`CLAUDE.md`](CLAUDE.md) and [`.github/copilot-instructions.md`](.github/copilot-instructions.md) so all mirrors stay aligned.
 
 ---
 
@@ -17,7 +19,7 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 | **Server state**  | TanStack React Query — global defaults in `src/lib/queryClient.ts`                                                                                                                                                                                                                                                                                                                          |
 | **UI primitives** | shadcn-style (Radix-based), source-owned in `src/components/ui/*` — CLI config in `components.json`                                                                                                                                                                                                                                                                                         |
 | **PWA**           | `vite-plugin-pwa` + Workbox runtime caching (see `vite.config.ts`)                                                                                                                                                                                                                                                                                                                          |
-| **Deploy**        | **Cloudflare** (DNS and network services in front of the domain) + **Railway** (hosts the built app); aligns with `src/routes/about.tsx`, `privacy.tsx`, and `terms.tsx`. Informational routes: `src/routes/about.tsx`, `src/routes/privacy.tsx`, `src/routes/terms.tsx`, `src/routes/accessibility.tsx`, `src/routes/disclaimer.tsx`; `src/routes/gdpr.tsx` redirects `/gdpr` → `/privacy` |
+| **Deploy**        | **Cloudflare** (DNS + network) → **Bunny.net** (storage + CDN); GitHub Actions on push to `main` (`.github/workflows/deploy.yml`). Aligns with `src/routes/about.tsx`, `privacy.tsx`, `terms.tsx`, and `disclaimer.tsx`. Informational routes: `src/routes/about.tsx`, `privacy.tsx`, `terms.tsx`, `accessibility.tsx`, `disclaimer.tsx`; `src/routes/gdpr.tsx` redirects `/gdpr` → `/privacy` |
 | **Path alias**    | `@` → `./src` (`vite.config.ts` + `tsconfig.app.json` `paths`)                                                                                                                                                                                                                                                                                                                              |
 
 **Today’s codebase note:** recipe-related screens use **`src/lib/keys/recipeKeys.ts`** and **`src/hooks/useRecipeQueries.ts`**. For new queries, extend those (or add a new key file) instead of new inline-only keys (see [TanStack conventions](#tanstack-conventions)).
@@ -93,8 +95,12 @@ Dynamic route segments use the `$` prefix (e.g. `$cuisine`, `$recipeId`).
     │       │   └── $cuisine.tsx
     │       ├── tags/
     │       │   └── index.tsx
-    │       └── tag/
-    │           └── $tag.tsx
+    │       ├── tag/
+    │       │   └── $tag.tsx
+    │       ├── difficulties/
+    │       │   └── index.tsx
+    │       └── difficulty/
+    │           └── $difficulty.tsx
     ├── components/
     │   ├── RootLayout.tsx             # app shell: Navbar/Footer/Outlet + Toaster + RouteAnnouncer
     │   ├── RouteAnnouncer.tsx         # aria-live route-change announcer (SPA a11y)
