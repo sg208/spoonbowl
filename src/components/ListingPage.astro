@@ -1,0 +1,50 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import ListingHeader from "@/components/ListingHeader.astro"
+import RecipeGrid from "@/components/RecipeGrid.astro"
+import IndexList from "@/components/IndexList.astro"
+import type { Recipe } from "@/lib/api"
+import { formatPageTitle } from "@/lib/seo"
+
+export interface Props {
+  /** Page title without the site suffix, e.g. "Italian Cuisine Recipes". */
+  heading: string
+  description: string
+  path: string
+  recipes: Recipe[]
+  parentLabel: string
+  parentHref: string
+  /** Sibling groups shown under "Other ...". */
+  siblings: { name: string; href: string; count: number }[]
+  siblingsLabel: string
+}
+
+const { heading, description, path, recipes, parentLabel, parentHref, siblings, siblingsLabel } =
+  Astro.props
+---
+
+<BaseLayout title={formatPageTitle(heading)} description={description} path={path}>
+  <div class="wrap pb-8">
+    <ListingHeader
+      heading={heading}
+      description={description}
+      parentLabel={parentLabel}
+      parentHref={parentHref}
+      count={recipes.length}
+      images={recipes.map((recipe) => recipe.image)}
+    />
+    <h2 class="sr-only">Recipes</h2>
+    <RecipeGrid recipes={recipes} label={heading} />
+    {siblings.length > 0 && (
+      <section class="mt-24" aria-labelledby="siblings-heading">
+        <h2 id="siblings-heading" class="section-title mb-6" data-reveal>
+          {siblingsLabel}
+        </h2>
+        <IndexList items={siblings} label={siblingsLabel} />
+      </section>
+    )}
+    <a href={parentHref} class="text-link mt-10">
+      All {parentLabel.toLowerCase()}
+    </a>
+  </div>
+</BaseLayout>

@@ -4,64 +4,41 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 
 ## Quick facts
 
-| Key          | Value                                                                         |
-| ------------ | ----------------------------------------------------------------------------- |
-| Stack        | Vite + React 19 + TypeScript + Tailwind CSS v4                                |
-| Router       | TanStack Router — `src/routes/*`; tree in `src/routeTree.gen.ts` (generated)  |
-| Server state | TanStack React Query — `src/lib/queryClient.ts`                               |
-| UI           | shadcn-style in `src/components/ui/*` — `components.json`, `npx shadcn add`   |
-| PWA          | `vite-plugin-pwa` — `vite.config.ts` Workbox                                  |
-| Hosting      | **Cloudflare** (DNS / network edge) + **Railway** (app host); see `README.md` |
-| Alias        | `@` → `./src`                                                                 |
-
-**Queries:** Many routes use inline `queryKey` arrays. Prefer key factories under `src/lib/keys/` when adding or refactoring queries.
+| Key       | Value                                                                        |
+| --------- | ---------------------------------------------------------------------------- |
+| Stack     | Astro 5.18 static (`build.format: directory`) + TypeScript + Tailwind CSS v4 |
+| Pages     | `src/pages/*` (file routes); layout `src/layouts/BaseLayout.astro`           |
+| Data      | Build time only — `src/lib/api.ts` `fetchAllRecipes`, `src/lib/catalog.ts`   |
+| Client JS | Vanilla TS only — `src/scripts/{theme,cook-mode,search}.ts`                  |
+| PWA       | `@vite-pwa/astro` — `astro.config.mjs` Workbox                               |
+| Hosting   | **Cloudflare** (DNS / network edge) + **Bunny.net** (storage + CDN)          |
+| Tooling   | pnpm 10.34.8, vitest 4, Zod 4; alias `@` → `./src`                           |
 
 ## Commands
 
-| Script              | Purpose                                 |
-| ------------------- | --------------------------------------- |
-| `npm run dev`       | Dev server                              |
-| `npm run build`     | Production build (no `tsc`)             |
-| `npm run preview`   | Build + Wrangler local preview (`dist`) |
-| `npm run deploy`    | Build + `wrangler deploy`               |
-| `npm run typecheck` | `tsc --noEmit`                          |
-| `npm run check`     | lint + typecheck + format:check         |
-| `npm run fix`       | lint:fix then format — before commit    |
+| Script            | Purpose                                    |
+| ----------------- | ------------------------------------------ |
+| `pnpm dev`        | Dev server                                 |
+| `pnpm build`      | Static build to `dist/`                    |
+| `pnpm check:dist` | Assert the built `dist/` (run after build) |
+| `pnpm typecheck`  | `astro check`                              |
+| `pnpm test`       | vitest                                     |
+| `pnpm check`      | lint + typecheck + format:check + test     |
+| `pnpm fix`        | lint:fix then format — before commit       |
 
 ## Key paths
 
-- **Generated:** `src/routeTree.gen.ts` — never edit.
-- **Root route:** `src/routes/__root.tsx` → `RootLayout`, 404.
-- **Route announcer:** `src/components/RouteAnnouncer.tsx` — `aria-live` SPA a11y; mounted in `RootLayout`.
-- **Routes:** file-based; dynamic segments use `$` (e.g. `$cuisine`, `$recipeId`).
-- **API:** `src/lib/api.ts` — typed wrappers only; avoid raw `fetch` in components.
-- **SEO titles:** set per-route Helmet `title` using `formatPageTitle()` from `src/lib/seo.ts` (don’t add `<title>` to `index.html`).
+- **Pages:** file-based; dynamic segments use `[param]` (e.g. `[cuisine]`, `[id]`).
+- **API:** `src/lib/api.ts` — the only `fetch` site; never fetch recipe data at runtime.
+- **SEO titles:** `BaseLayout.astro` with `formatPageTitle()` / `formatRecipeTitle()` from `src/lib/seo.ts`; one unique `<title>` per page.
 - **404 copy:** `src/lib/config/not-found-messages.ts`.
-
-## Where to change (short)
-
-| Area                 | Location                                                                                                                                                                                  |
-| -------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Shell / nav / footer | `RootLayout.tsx`, `Navbar.tsx`, `Footer.tsx`                                                                                                                                              |
-| Legal / info copy    | `src/routes/about.tsx`, `src/routes/privacy.tsx`, `src/routes/terms.tsx`, `src/routes/accessibility.tsx`, `src/routes/disclaimer.tsx`; route `/gdpr` → `/privacy` (`src/routes/gdpr.tsx`) |
-| New route            | `src/routes/**`                                                                                                                                                                           |
-| Recipe UI            | `RecipeCard.tsx`, `RecipeCardSkeleton.tsx`, `EmptyRecipes.tsx`, `FeaturedRecipe.tsx`                                                                                                      |
-| Domain helpers       | `src/lib/config/headings.ts`, `src/lib/utils/*Utils.ts`                                                                                                                                   |
-| Styles / tokens      | `src/index.css`                                                                                                                                                                           |
-| PWA caching          | `vite.config.ts`                                                                                                                                                                          |
+- **Legal pages:** `src/pages/{about,privacy,terms,accessibility,disclaimer}.astro`; `/gdpr` redirects to `/privacy` (`src/pages/gdpr.astro`). Ask before editing.
 
 ## Guardrails
 
-- **Router:** `<Link>` / `useNavigate` for in-app navigation; search params as source of truth for filters. Optional: `validateSearch`, `loader`, `ensureQueryData`; invalid `params` → `throw notFound()` in the loader when the UI should 404.
-- **Data:** React Query for server state; no `useEffect`+`useState` fetch for that.
 - **TS:** No `enum` (use const or unions); no bare `any`.
 - **Components:** ~120 lines/file soft cap; a11y before layout polish; `event` not `e` for DOM.
-- **Repo:** ESLint ignores `routeTree.gen.ts`; run `npm run fix` before push.
-
-## TanStack (summary)
-
-- Keys: prefer `src/lib/keys/*` factories; invalidate at appropriate scope.
-- Global defaults in `queryClient.ts`: `staleTime` 5m, `gcTime` 6m, `retry` 2, `refetchOnWindowFocus` false.
-- shadcn: add via CLI; `cn()` from `src/lib/utils.ts`.
+- **Motion:** respect `prefers-reduced-motion`.
+- **Repo:** run `pnpm fix` before push; `pnpm check:dist` must pass after `pnpm build`.
 
 Full tables, tree, and patterns: **[`PROJECT.md`](../PROJECT.md)**.

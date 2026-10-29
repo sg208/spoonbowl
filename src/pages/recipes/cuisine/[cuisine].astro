@@ -1,0 +1,40 @@
+---
+import ListingPage from "@/components/ListingPage.astro"
+import { getCatalog, type CatalogGroup } from "@/lib/catalog"
+import { getCuisineDescription } from "@/lib/config/listingCopy"
+
+export const getStaticPaths = async () => {
+  const { cuisines: groups } = await getCatalog()
+  return groups.map((group) => ({
+    params: { cuisine: group.slug },
+    props: {
+      group,
+      siblings: groups
+        .filter((other) => other.slug !== group.slug)
+        .map((other) => ({
+          name: other.name,
+          href: `/recipes/cuisine/${other.slug}/`,
+          count: other.recipes.length,
+        })),
+    },
+  }))
+}
+
+export interface Props {
+  group: CatalogGroup
+  siblings: { name: string; href: string; count: number }[]
+}
+
+const { group, siblings } = Astro.props
+---
+
+<ListingPage
+  heading={`${group.name} Cuisine Recipes`}
+  description={getCuisineDescription(group.name)}
+  path={`/recipes/cuisine/${group.slug}/`}
+  recipes={group.recipes}
+  parentLabel="Cuisines"
+  parentHref="/recipes/cuisines/"
+  siblings={siblings}
+  siblingsLabel="Other cuisines"
+/>

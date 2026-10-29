@@ -1,0 +1,113 @@
+---
+import type { Recipe } from "@/lib/api"
+import { recipePath } from "@/lib/utils/slug"
+
+export interface Props {
+  recipe: Recipe
+}
+
+const { recipe } = Astro.props
+const minutes = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+---
+
+<section class="cta" aria-labelledby="cta-heading">
+  <div class="cta__text wrap">
+    <h2 id="cta-heading" class="section-title" data-reveal>
+      Cook one tonight
+    </h2>
+    <p data-reveal style="--i: 1">
+      {recipe.name}: {minutes} minutes, serves {recipe.servings}.
+    </p>
+    <a href={recipePath(recipe)} class="bowl-button mt-6" data-reveal style="--i: 2">
+      Start cooking
+    </a>
+  </div>
+  <div class="cta__object drift" aria-hidden="true">
+    <div class="cta__bowl"></div>
+    <img
+      src={recipe.image}
+      alt=""
+      width="400"
+      height="400"
+      loading="lazy"
+      decoding="async"
+      class="bowl-mask"
+    />
+  </div>
+</section>
+
+<style>
+  .cta {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin-top: 8rem;
+    padding-top: 4rem;
+    overflow: hidden;
+    background: var(--surface);
+  }
+  .cta__text {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: var(--text-lead);
+  }
+  .cta__object {
+    position: relative;
+    height: 62vw;
+    margin-top: 3rem;
+  }
+  .cta__bowl {
+    position: absolute;
+    top: 12vw;
+    left: -20vw;
+    width: 140vw;
+    height: 70vw;
+    background: var(--accent-fill);
+    border-radius: var(--bowl);
+  }
+  .cta__object img {
+    position: absolute;
+    top: 0;
+    left: 8vw;
+    width: 70vw;
+    height: 56vw;
+    object-fit: cover;
+  }
+  @media (min-width: 1024px) {
+    .cta {
+      min-height: min(40rem, 90svh);
+      flex-direction: row-reverse;
+      align-items: center;
+      padding-top: 0;
+    }
+    .cta__text {
+      width: 34%;
+      margin: 0 4vw 0 0;
+      flex: none;
+    }
+    .cta__object {
+      flex: 1;
+      align-self: stretch;
+      height: auto;
+      margin-top: 0;
+    }
+    .cta__bowl {
+      left: -10%;
+      width: 100%;
+      height: 50%;
+      top: auto;
+      bottom: 0;
+    }
+    .cta__object img {
+      top: auto;
+      bottom: 0;
+      left: 14%;
+      width: 56%;
+      height: 70%;
+    }
+  }
+</style>

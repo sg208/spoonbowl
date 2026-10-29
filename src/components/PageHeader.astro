@@ -1,0 +1,42 @@
+---
+export interface Props {
+  title: string
+  intro?: string
+  count?: string
+  images?: string[]
+}
+
+const { title, intro, count, images = [] } = Astro.props
+---
+
+<header class="page-head pt-8">
+  <div>
+    <h1 class="page-title" data-reveal>
+      {title}
+    </h1>
+    {count && (
+      <p class="mt-6 flex items-center gap-3 text-lead" data-reveal style="--i: 1">
+        <span class="bowl-bullet" aria-hidden="true"></span>
+        {count}
+      </p>
+    )}
+    {intro && (
+      <p class="muted mt-3 max-w-[65ch] text-lead" data-reveal style="--i: 2">
+        {intro}
+      </p>
+    )}
+  </div>
+  {images.length > 0 && (
+    <div class="page-head__photos" aria-hidden="true">
+      {images.slice(0, 4).map((src, index) => (
+        <div
+          class={`page-head__photo bowl-mask ${index === 0 ? "shutter" : ""}`}
+          data-reveal={index > 0 ? "" : undefined}
+          style={`--i: ${index}`}
+        >
+          <img src={src} alt="" width="400" height="400" loading="eager" decoding="async" />
+        </div>
+      ))}
+    </div>
+  )}
+</header>

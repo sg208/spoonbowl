@@ -7,6 +7,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Stack (breaking):** Migrated from Vite + React + TanStack Router/Query to Astro 5.18 static output (`build.format: directory`); npm replaced by pnpm 10.34.8. Client JS is vanilla TypeScript only (`src/scripts/{theme,cook-mode,search}.ts`).
+- **Data:** Recipes are fetched once at build time (`fetchAllRecipes`, one `limit=0` request, Zod-parsed); no runtime DummyJSON data calls. A failed fetch now fails the build.
+- **PWA:** Moved to `@vite-pwa/astro`; manifest and Workbox live in `astro.config.mjs`; offline navigation falls back to `/404.html`.
+- **Sitemap:** `/sitemap.xml` is replaced by the generated `/sitemap-index.xml`; `robots.txt` points to it.
+- **Titles:** Cuisine and meal-type listing titles are now unique ("X Cuisine Recipes", "X Meal Recipes").
+- **Accessibility:** Removed `RouteAnnouncer`; full-page navigation announces the new `<title>` natively.
+- **CI:** `deploy.yml` uses `pnpm/action-setup` with a frozen lockfile and runs lint, typecheck, test, build and `check:dist` before the Bunny upload.
+- **Design:** Redesigned around a one-motif bowl half-disc direction (`.taste-skill/notes.md`).
+
+### Added
+
+- **Cook mode:** Recipe pages get an ingredient checklist, servings stepper (servings and kcal only; DummyJSON ingredients carry no quantities), step pager, and screen wake lock.
+- **Search:** Accessible combobox over the build-time `/search-index.json`.
+- **Offline catalogue:** Every recipe page and the search index are precached, so the whole catalogue works offline.
+- **Tests:** vitest suite (`pnpm test`) and post-build gate `pnpm check:dist`.
+
 ## [1.5.0] - 2026-04-24
 
 ### Added
@@ -239,7 +257,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
-
 [1.5.0]: https://github.com/sg208/spoonbowl/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/sg208/spoonbowl/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/sg208/spoonbowl/compare/v1.3.1...v1.4.0

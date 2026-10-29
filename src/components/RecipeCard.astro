@@ -1,0 +1,61 @@
+---
+import type { Recipe } from "@/lib/api"
+import { recipePath } from "@/lib/utils/slug"
+
+export interface Props {
+  recipe: Recipe
+  isEager?: boolean
+  index?: number
+  isLarge?: boolean
+}
+
+const { recipe, isEager = false, index = 0, isLarge = false } = Astro.props
+const totalMinutes = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+---
+
+<li data-reveal style={`--i: ${index % 2}`}>
+  <a href={recipePath(recipe)} class="row-link flex min-h-16 items-center gap-5 py-2">
+    <span
+      class:list={[
+        "row-photo bowl-mask block flex-none",
+        isLarge ? "h-24 w-32 sm:h-32 sm:w-44" : "h-12 w-16 sm:h-[3.75rem] sm:w-20",
+      ]}
+    >
+      <img
+        src={recipe.image}
+        alt=""
+        width="176"
+        height="128"
+        loading={isEager ? "eager" : "lazy"}
+        decoding="async"
+        class="h-full w-full object-cover"
+      />
+    </span>
+    <span class="min-w-0">
+      <span class="item-name block text-lead font-bold leading-tight">{recipe.name}</span>
+      <span class="muted block text-small">
+        {recipe.cuisine} · {totalMinutes} min · {recipe.difficulty}
+      </span>
+    </span>
+  </a>
+</li>
+
+<style>
+  .item-name {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    transition:
+      color 200ms ease,
+      text-decoration-color 200ms ease;
+  }
+  .row-link:hover .item-name {
+    color: var(--accent);
+    text-decoration-color: currentColor;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .item-name {
+      transition: none;
+    }
+  }
+</style>

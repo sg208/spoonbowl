@@ -1,0 +1,135 @@
+@import "tailwindcss";
+@import "./motion.css";
+@import "./page.css";
+
+/* Palette roles from .taste-skill/notes.md. Dark is the default; light via [data-theme]. */
+:root {
+  --ground: #150a06;
+  --surface: #201511;
+  --ink: #f5ede6;
+  --muted: #c9b8ab;
+  --accent: #ff7548;
+  --accent-fill: #ff7548;
+  --on-accent: #150a06;
+  /* The one motif: a half-disc bowl, flat rim on top, round underneath. */
+  --bowl: 0 0 50% 50% / 0 0 100% 100%;
+  color-scheme: dark;
+}
+
+:root[data-theme="light"] {
+  --ground: #f6f1ec;
+  --surface: #ece4dc;
+  --ink: #1a0f0a;
+  --muted: #5c4a3e;
+  --accent: #c2410c;
+  color-scheme: light;
+}
+
+/* No-JS fallback: follow the system when the theme script has not set data-theme. */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) {
+    --ground: #f6f1ec;
+    --surface: #ece4dc;
+    --ink: #1a0f0a;
+    --muted: #5c4a3e;
+    --accent: #c2410c;
+    color-scheme: light;
+  }
+}
+
+@theme inline {
+  --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
+  --color-ground: var(--ground);
+  --color-surface: var(--surface);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-accent-fill: var(--accent-fill);
+  --color-on-accent: var(--on-accent);
+  --text-small: 1rem;
+  --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
+  --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
+  --text-head: clamp(2rem, 1rem + 4vw, 4.5rem);
+  --text-display: clamp(2.75rem, 15vw, 4rem);
+}
+
+@layer base {
+  body {
+    @apply bg-ground font-sans text-body text-ink antialiased;
+  }
+  h1,
+  h2,
+  h3 {
+    @apply font-bold;
+  }
+  :focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 3px;
+  }
+  main:focus {
+    outline: none;
+  }
+}
+
+@layer components {
+  .wrap {
+    @apply mx-auto w-full max-w-[96rem] px-5 sm:px-8 lg:px-12;
+  }
+  .display {
+    @apply text-display font-bold uppercase;
+    letter-spacing: -0.03em;
+    line-height: 0.9;
+  }
+  .page-title,
+  .section-title {
+    @apply text-head font-bold uppercase;
+    letter-spacing: -0.03em;
+    line-height: 1;
+  }
+  .muted {
+    @apply text-muted;
+  }
+  .bowl-mask {
+    overflow: hidden;
+    border-radius: var(--bowl);
+  }
+  .bowl-bullet {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.375em;
+    flex: none;
+    background: var(--accent-fill);
+    border-radius: var(--bowl);
+  }
+  .bowl-button {
+    @apply inline-flex min-h-14 items-center justify-center bg-accent-fill px-10 pb-2 font-medium text-on-accent;
+    border-radius: 0 0 999px 999px / 0 0 100% 100%;
+    transition:
+      transform 150ms ease-out,
+      filter 150ms ease-out;
+  }
+  .bowl-button:hover {
+    filter: brightness(1.08);
+  }
+  .bowl-button:active {
+    transform: scale(0.97);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bowl-button:active {
+      transform: none;
+    }
+  }
+  .skip-link {
+    @apply absolute left-3 top-3 z-50 -translate-y-24 bg-ink px-4 py-3 font-medium text-ground;
+  }
+  .skip-link:focus {
+    transform: none;
+  }
+  .text-link {
+    @apply inline-flex min-h-12 items-center font-medium underline underline-offset-4;
+    transition: color 150ms ease;
+  }
+  .text-link:hover {
+    color: var(--accent);
+  }
+}

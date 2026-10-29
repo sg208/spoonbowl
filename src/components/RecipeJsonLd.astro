@@ -1,0 +1,45 @@
+---
+import type { Recipe } from "@/lib/api"
+
+export interface Props {
+  recipe: Recipe
+  description: string
+}
+
+const { recipe, description } = Astro.props
+const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Recipe",
+  name: recipe.name,
+  image: [recipe.image],
+  description,
+  prepTime: `PT${recipe.prepTimeMinutes}M`,
+  cookTime: `PT${recipe.cookTimeMinutes}M`,
+  totalTime: `PT${totalTime}M`,
+  recipeYield: `${recipe.servings} servings`,
+  recipeCuisine: recipe.cuisine,
+  recipeCategory: recipe.mealType.join(", "),
+  keywords: recipe.tags.join(", "),
+  recipeIngredient: recipe.ingredients,
+  recipeInstructions: recipe.instructions.map((step, index) => ({
+    "@type": "HowToStep",
+    position: index + 1,
+    name: `Step ${index + 1}`,
+    text: step,
+  })),
+  aggregateRating: {
+    "@type": "AggregateRating",
+    ratingValue: recipe.rating,
+    ratingCount: recipe.reviewCount,
+  },
+  nutrition: {
+    "@type": "NutritionInformation",
+    calories: `${recipe.caloriesPerServing} calories`,
+  },
+}
+// Escape "<" so recipe text can never close the script element.
+const json = JSON.stringify(jsonLd).replace(/</g, "\\u003c")
+---
+
+<script type="application/ld+json" set:html={json} />

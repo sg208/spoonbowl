@@ -2,8 +2,9 @@ node_modules
 dist
 dist-ssr
 coverage
-src/routeTree.gen.ts
-package-lock.json
+.astro/
+pnpm-lock.yaml
+.taste-skill/
 .claude/**
 .claire/**
 CLAUDE.md

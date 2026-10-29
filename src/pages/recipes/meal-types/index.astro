@@ -1,0 +1,32 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import IndexList from "@/components/IndexList.astro"
+import { getCatalog } from "@/lib/catalog"
+import { formatPageTitle } from "@/lib/seo"
+
+const { mealTypes: groups } = await getCatalog()
+const items = groups.map((group) => ({
+  name: group.name,
+  href: `/recipes/meal-type/${group.slug}/`,
+  count: group.recipes.length,
+  image: group.recipes[0]?.image,
+}))
+---
+
+<BaseLayout
+  title={formatPageTitle("Recipes by Meal Type")}
+  description="Browse recipes by meal type on Spoonbowl — breakfast, lunch, dinner, snacks, and more."
+  path="/recipes/meal-types/"
+>
+  <div class="wrap pb-8">
+    <PageHeader
+      images={items.map((item) => item.image ?? "")}
+      title="Recipes by Meal Type"
+      intro="Whether you're planning breakfast, a hearty dinner, or a late-night snack — browse recipes organized by meal occasion."
+      count={`${items.length} meal types to explore`}
+    />
+    <h2 class="sr-only">All meal types</h2>
+    <IndexList items={items} label="Recipes by Meal Type" />
+  </div>
+</BaseLayout>

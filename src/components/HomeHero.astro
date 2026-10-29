@@ -1,0 +1,94 @@
+---
+export interface Props {
+  count: number
+  href: string
+}
+
+const { count, href } = Astro.props
+---
+
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero__bowl shutter" aria-hidden="true">
+    <span></span>
+  </div>
+  <div class="wrap hero__copy">
+    <h1 id="hero-heading" class="display" data-reveal>
+      Cook it
+      <br />
+      offline.
+    </h1>
+    <p class="hero__lead text-lead" data-reveal style="--i: 1">
+      {count} recipes, saved on your device. Pick one and cook it step by step.
+    </p>
+    <a href={href} class="bowl-button hero__action" data-reveal style="--i: 2">
+      Pick a recipe
+    </a>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding-block: 3rem 0;
+  }
+  .hero__bowl {
+    order: 2;
+  }
+  .hero__copy {
+    position: relative;
+  }
+  .hero__lead {
+    margin-top: 1.5rem;
+    max-width: 28rem;
+  }
+  .hero__action {
+    margin-top: 2rem;
+  }
+  .hero__bowl {
+    height: 44vw;
+    width: 130vw;
+    margin: 3rem 0 0 -15vw;
+    border-radius: var(--bowl);
+    overflow: hidden;
+  }
+  .hero__bowl span {
+    display: block;
+    height: 100%;
+    background: var(--accent-fill);
+  }
+  .hero__copy {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .hero__bowl {
+      height: 30vw;
+      margin-top: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .hero {
+      flex-direction: row;
+      min-height: max(36rem, calc(100svh - 4.5rem));
+      align-items: center;
+      padding-block: 0;
+    }
+    .display {
+      font-size: clamp(4rem, 6.4vw, 6.25rem);
+    }
+    .hero__bowl {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 40%;
+      width: auto;
+      height: auto;
+      aspect-ratio: 2 / 1;
+      margin: 0;
+    }
+  }
+</style>

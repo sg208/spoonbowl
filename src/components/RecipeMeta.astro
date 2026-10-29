@@ -1,0 +1,69 @@
+---
+import type { Recipe } from "@/lib/api"
+
+export interface Props {
+  recipe: Recipe
+}
+
+const { recipe } = Astro.props
+const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+const facts = [
+  { label: "Total time", value: String(totalTime), unit: "min" },
+  { label: "Difficulty", value: recipe.difficulty, unit: "" },
+  { label: "Calories", value: String(recipe.caloriesPerServing), unit: "kcal" },
+  { label: "Servings", value: String(recipe.servings), unit: "" },
+]
+---
+
+<dl class="facts">
+  {facts.map((fact, index) => (
+    <div data-reveal style={`--i: ${index}`}>
+      <dt class="muted">{fact.label}</dt>
+      <dd>
+        {fact.value}
+        {fact.unit && <small>{fact.unit}</small>}
+      </dd>
+    </div>
+  ))}
+</dl>
+<p class="muted mt-6 text-small">
+  Prep {recipe.prepTimeMinutes} min · cook {recipe.cookTimeMinutes} min · rated{" "}
+  {recipe.rating.toFixed(1)} ({recipe.reviewCount} reviews)
+</p>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem 2rem;
+  }
+  .facts div {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .facts dd {
+    white-space: nowrap;
+    font-size: var(--text-head);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+  .facts small {
+    margin-left: 0.25em;
+    font-size: var(--text-lead);
+    font-weight: 500;
+    letter-spacing: 0;
+    text-transform: none;
+  }
+  .facts dt {
+    margin-top: 0.4rem;
+  }
+  @media (min-width: 768px) {
+    .facts {
+      grid-template-columns: repeat(4, auto);
+      justify-content: start;
+      gap: 2rem 4rem;
+    }
+  }
+</style>

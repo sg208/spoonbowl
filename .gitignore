@@ -32,3 +32,9 @@ dist-ssr
 
 # Claude local config
 .claude/rules/
+
+# Astro / taste-skill artifacts
+.astro/
+.taste-skill/inspect/
+.taste-skill/before/
+.taste-skill/after/

@@ -1,0 +1,59 @@
+---
+export interface Props {
+  heading: string
+  description: string
+  parentLabel: string
+  parentHref: string
+  count: number
+  images?: string[]
+}
+
+const { heading, description, parentLabel, parentHref, count, images = [] } = Astro.props
+---
+
+<header class="page-head">
+  <div>
+    <nav aria-label="Breadcrumb">
+      <ol class="flex flex-wrap items-center gap-x-2 text-small">
+        <li>
+          <a href="/" class="text-link">
+            Recipes
+          </a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li>
+          <a href={parentHref} class="text-link">
+            {parentLabel}
+          </a>
+        </li>
+        <li aria-hidden="true">/</li>
+        <li aria-current="page" class="font-medium">
+          {heading}
+        </li>
+      </ol>
+    </nav>
+    <h1 class="page-title mt-6" data-reveal>
+      {heading}
+    </h1>
+    <p class="mt-6 flex items-center gap-3 text-lead" data-reveal style="--i: 1">
+      <span class="bowl-bullet" aria-hidden="true"></span>
+      {count} {count === 1 ? "recipe" : "recipes"}
+    </p>
+    <p class="muted mt-3 max-w-[65ch] text-lead" data-reveal style="--i: 2">
+      {description}
+    </p>
+  </div>
+  {images.length > 0 && (
+    <div class="page-head__photos" aria-hidden="true">
+      {images.slice(0, 4).map((src, index) => (
+        <div
+          class={`page-head__photo bowl-mask ${index === 0 ? "shutter" : ""}`}
+          data-reveal={index > 0 ? "" : undefined}
+          style={`--i: ${index}`}
+        >
+          <img src={src} alt="" width="400" height="400" loading="eager" decoding="async" />
+        </div>
+      ))}
+    </div>
+  )}
+</header>

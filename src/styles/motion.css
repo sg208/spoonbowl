@@ -1,0 +1,65 @@
+/* Motion layer. Content is visible without JS: every hidden start state is gated on `.js`. */
+:root {
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+  @view-transition {
+    navigation: auto;
+  }
+
+  /* Staggered entrance: set once by the IntersectionObserver in BaseLayout. */
+  .js [data-reveal] {
+    opacity: 0;
+    transform: translateY(24px);
+    transition:
+      opacity 700ms var(--ease-out),
+      transform 700ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 80ms);
+  }
+  .js [data-reveal].is-in {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* Signature move: image opens from the top edge while settling from 1.12 scale. */
+  /* The wrapper is observed; its child is clipped (IntersectionObserver ignores clipped targets). */
+  .js .shutter > * {
+    clip-path: inset(0 0 100% 0);
+    transition: clip-path 1100ms var(--ease-in-out);
+  }
+  .js .shutter > img {
+    transform: scale(1.12);
+    transition: transform 1500ms var(--ease-out);
+  }
+  .js .shutter.is-in > * {
+    clip-path: inset(0);
+  }
+  .js .shutter.is-in > img {
+    transform: none;
+  }
+
+  /* One slow drift on the closing photograph. */
+  .drift > img {
+    animation: drift 14s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.06);
+    }
+  }
+
+  .row-link .row-photo {
+    transition: transform 300ms var(--ease-out);
+  }
+  .row-link:hover .row-photo {
+    transform: translateY(2px) scale(1.04);
+  }
+}

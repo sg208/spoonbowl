@@ -1,0 +1,116 @@
+---
+import type { Recipe } from "@/lib/api"
+
+export interface Props {
+  recipe: Recipe
+}
+
+const { recipe } = Astro.props
+const points = [
+  { title: "No ads", text: "Just recipes. No life story before the ingredients." },
+  { title: "Whole cookbook offline", text: "Saved on your device after the first visit." },
+  { title: "Cook mode", text: "One step at a time, with big buttons for floury hands." },
+  { title: "Screen stays on", text: "Keep the screen awake while you cook, where supported." },
+  { title: "Servings scaler", text: "Change the servings and the quantities follow." },
+  { title: "Search", text: "Find a recipe by name or cuisine, even with no signal." },
+]
+---
+
+<section class="features" aria-labelledby="features-heading">
+  <div class="features__photo bowl-mask" data-reveal>
+    <img
+      src={recipe.image}
+      alt={recipe.name}
+      width="400"
+      height="400"
+      loading="lazy"
+      decoding="async"
+    />
+  </div>
+  <div class="features__body">
+    <h2 id="features-heading" class="section-title" data-reveal>
+      Built for the counter
+    </h2>
+    <ul class="features__grid">
+      {points.map((point, index) => (
+        <li data-reveal style={`--i: ${index % 3}`}>
+          <h3>
+            <span class="bowl-bullet" aria-hidden="true"></span>
+            {point.title}
+          </h3>
+          <p class="muted">{point.text}</p>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .features {
+    display: grid;
+    gap: 2.5rem;
+    padding: 6rem 0 2rem;
+    overflow: hidden;
+  }
+  .features__photo {
+    width: 82vw;
+    margin-left: -12vw;
+    aspect-ratio: 1 / 0.9;
+  }
+  .features__photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .features__body {
+    padding-inline: 1.25rem;
+  }
+  .features__grid {
+    display: grid;
+    gap: 1.75rem 2.5rem;
+    margin-top: 2.5rem;
+  }
+  .features__grid h3 {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-size: var(--text-lead);
+    font-weight: 500;
+  }
+  .features__grid li:nth-child(3n + 1) .bowl-bullet {
+    background: var(--accent-fill);
+  }
+  .features__grid li:nth-child(3n + 2) .bowl-bullet {
+    background: var(--ink);
+  }
+  .features__grid li:nth-child(3n) .bowl-bullet {
+    background: var(--muted);
+  }
+  @media (min-width: 640px) {
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    .features__body {
+      padding-inline: 2rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .features {
+      grid-template-columns: 5fr 7fr;
+      align-items: center;
+      gap: 4rem;
+    }
+    .features__photo {
+      width: auto;
+      height: min(78svh, 40rem);
+      margin-left: -12%;
+      aspect-ratio: auto;
+    }
+    .features__body {
+      padding-inline: 0 3rem;
+    }
+    .features__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

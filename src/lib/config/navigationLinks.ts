@@ -6,14 +6,10 @@ export const browseLinks = [
   { id: "difficulties", to: "/recipes/difficulties/", label: "By Difficulty" },
 ] as const
 
-export type BrowseLink = (typeof browseLinks)[number]
-export type BrowseLinkId = BrowseLink["id"]
-
-/** About, policies, and accessibility — single footer / menu group */
 export const siteLinks = [
-  { to: "/about", label: "About" },
-  { to: "/privacy", label: "Privacy" },
-  { to: "/terms", label: "Terms of use" },
-  { to: "/disclaimer", label: "Disclaimer" },
-  { to: "/accessibility", label: "Accessibility" },
+  { to: "/about/", label: "About" },
+  { to: "/privacy/", label: "Privacy" },
+  { to: "/terms/", label: "Terms of use" },
+  { to: "/disclaimer/", label: "Disclaimer" },
+  { to: "/accessibility/", label: "Accessibility" },
 ] as const

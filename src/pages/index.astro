@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import HomeHero from "@/components/HomeHero.astro"
+import Showcase from "@/components/Showcase.astro"
+import MenuList from "@/components/MenuList.astro"
+import Features from "@/components/Features.astro"
+import HowItWorks from "@/components/HowItWorks.astro"
+import HomeCta from "@/components/HomeCta.astro"
+import { getCatalog } from "@/lib/catalog"
+import { formatPageTitle } from "@/lib/seo"
+import { recipePath } from "@/lib/utils/slug"
+
+const { featured, mealTypes, recipes } = await getCatalog()
+const showcaseCuisines = ["Italian", "Japanese", "Mexican", "Thai", "Moroccan"]
+const dishes = showcaseCuisines.flatMap((cuisine) => {
+  const dish = recipes.find((recipe) => recipe.cuisine === cuisine)
+  return dish ? [dish] : []
+})
+const menuGroups = [...mealTypes].sort((a, b) => b.recipes.length - a.recipes.length).slice(0, 4)
+const stageRecipes = [recipes[5], recipes[10], recipes[15]].flatMap((recipe) =>
+  recipe ? [recipe] : []
+)
+const browse = [
+  { to: "/recipes/cuisines/", label: "Cuisine" },
+  { to: "/recipes/meal-types/", label: "Meal type" },
+  { to: "/recipes/difficulties/", label: "Difficulty" },
+  { to: "/recipes/tags/", label: "Category" },
+]
+---
+
+<BaseLayout
+  title={formatPageTitle("Recipe Discovery")}
+  description="Discover delicious recipes from around the world. Explore cuisines, meal types, and difficulty levels — then cook something worth eating."
+  path="/"
+>
+  <HomeHero count={recipes.length} href={recipePath(featured)} />
+  <Showcase dishes={dishes} />
+  <MenuList groups={menuGroups} />
+  <Features recipe={recipes[20] ?? featured} />
+  <HowItWorks recipes={stageRecipes} />
+  <section class="wrap browse" aria-labelledby="browse-heading">
+    <h2 id="browse-heading" class="section-title" data-reveal>
+      Browse by
+    </h2>
+    <p class="browse__links">
+      {browse.map((link) => (
+        <a class="text-link text-lead" href={link.to}>
+          {link.label}
+        </a>
+      ))}
+    </p>
+  </section>
+  <HomeCta recipe={featured} />
+</BaseLayout>
+
+<style>
+  .browse {
+    padding-top: 6rem;
+  }
+  .browse__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 2rem;
+    margin-top: 1rem;
+  }
+</style>

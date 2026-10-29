@@ -1,0 +1,71 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import { formatPageTitle } from "@/lib/seo"
+---
+
+<BaseLayout
+  title={formatPageTitle("About")}
+  description="Learn about Spoonbowl, a recipe discovery app for browsing and exploring meals from around the world."
+  path="/about/"
+>
+  <div class="wrap py-12">
+    <div class="prose-column">
+      <header class="mb-8">
+        <h1 class="page-title">About Spoonbowl</h1>
+        <p class="muted">
+          Spoonbowl is a small, informal project for browsing and discovering recipes. It exists to
+          make exploring meals and ideas a little easier — nothing more official than that.
+        </p>
+      </header>
+
+      <div class="space-y-8">
+        <section aria-labelledby="about-what">
+          <h2 id="about-what" class="mb-3 text-lead font-bold">
+            What this is
+          </h2>
+          <p class="muted">
+            The site focuses on search, filters, and recipe detail pages built from third-party
+            recipe data. Features may shift as the project evolves; there is no service-level
+            promise beyond trying to keep things usable and honest about limits (see the
+            <a href="/disclaimer/" class="underline underline-offset-4 hover:text-accent">
+              Disclaimer
+            </a>
+            ).
+          </p>
+        </section>
+
+        <section aria-labelledby="about-how">
+          <h2 id="about-how" class="mb-3 text-lead font-bold">
+            How it runs
+          </h2>
+          <p class="muted">
+            Delivery works the same way as other small static-plus-app sites we run: a few
+            infrastructure providers keep DNS, hosting, and routing in place. In broad strokes:
+          </p>
+          <ul class="muted list-disc space-y-2 pl-6">
+            <li>Cloudflare handles DNS and front-line network services for the domain.</li>
+            <li>Bunny.net hosts and delivers the built application via storage and CDN.</li>
+          </ul>
+          <p class="muted">
+            Technical details about what those providers may process when you visit are summarized
+            in the
+            <a href="/privacy/" class="underline underline-offset-4 hover:text-accent">
+              Privacy
+            </a>
+            page.
+          </p>
+        </section>
+
+        <section aria-labelledby="about-contact">
+          <h2 id="about-contact" class="mb-3 text-lead font-bold">
+            Contact
+          </h2>
+          <p class="muted">
+            Spoonbowl is an independent, informal project without a public inbox at the moment. When
+            there is a simple way to get in touch, this page will point to it.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

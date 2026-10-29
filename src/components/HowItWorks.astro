@@ -1,0 +1,103 @@
+---
+import type { Recipe } from "@/lib/api"
+
+export interface Props {
+  recipes: Recipe[]
+}
+
+const { recipes } = Astro.props
+const steps = [
+  { title: "Gather", text: "Tick off ingredients as they land on the counter." },
+  { title: "Cook", text: "Move through the method one step at a time." },
+  { title: "Plate", text: "Serve it, then pick the next recipe." },
+]
+---
+
+<section class="how wrap" aria-labelledby="how-heading">
+  <h2 id="how-heading" class="section-title how__heading" data-reveal>
+    How it works
+  </h2>
+  <ol class="how__steps">
+    {steps.map((step, index) => (
+      <li class={`how__step how__step--${index + 1}`} data-reveal style={`--i: ${index}`}>
+        <div class="how__tile">
+          <img
+            src={recipes[index]?.image}
+            alt={recipes[index]?.name ?? ""}
+            width="400"
+            height="400"
+            loading="lazy"
+            decoding="async"
+            class="bowl-mask"
+          />
+        </div>
+        <h3>{step.title}</h3>
+        <p class="muted">{step.text}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .how {
+    padding-block: 6rem 2rem;
+  }
+  .how__steps {
+    display: grid;
+    gap: 2rem;
+    margin-top: 2.5rem;
+  }
+  .how__tile {
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 1rem 1rem 0;
+  }
+  .how__step--1 .how__tile {
+    height: 34vw;
+    background: var(--surface);
+  }
+  .how__step--2 .how__tile {
+    height: 46vw;
+    background: var(--ink);
+  }
+  .how__step--3 .how__tile {
+    height: 62vw;
+    background: var(--accent-fill);
+  }
+  .how__tile img {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+  }
+  .how__step h3 {
+    margin-top: 1rem;
+    font-size: var(--text-lead);
+    font-weight: 500;
+  }
+  @media (min-width: 768px) {
+    .how__steps {
+      grid-template-columns: 3fr 4fr 5fr;
+      align-items: end;
+      gap: 0.625rem;
+    }
+    .how__tile {
+      padding: 1.5rem 0 0;
+      aspect-ratio: 1 / 1.1;
+    }
+    .how__step--1 .how__tile,
+    .how__step--2 .how__tile,
+    .how__step--3 .how__tile {
+      height: auto;
+    }
+    .how__tile img {
+      height: auto;
+      width: 100%;
+      aspect-ratio: 1 / 0.9;
+    }
+    .how__step h3,
+    .how__step p {
+      padding-right: 1rem;
+    }
+  }
+</style>

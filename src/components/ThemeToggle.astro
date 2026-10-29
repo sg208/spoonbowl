@@ -1,0 +1,51 @@
+---
+---
+
+<button type="button" class="theme-toggle" data-theme-toggle aria-pressed="true">
+  Dark mode
+</button>
+
+<style>
+  .theme-toggle {
+    display: inline-flex;
+    min-height: 3rem;
+    min-width: 3rem;
+    align-items: center;
+    padding: 0 0.5rem;
+    font-size: var(--text-small);
+    font-weight: 500;
+    white-space: nowrap;
+    transition: color 150ms ease;
+  }
+  .theme-toggle:hover {
+    color: var(--accent);
+  }
+  .theme-toggle:active {
+    transform: scale(0.97);
+  }
+  .theme-toggle[aria-pressed="true"]::before,
+  .theme-toggle[aria-pressed="false"]::before {
+    content: "";
+    display: inline-block;
+    width: 0.75em;
+    height: 0.375em;
+    margin-right: 0.5em;
+    border-radius: var(--bowl);
+    background: var(--ink);
+  }
+  .theme-toggle[aria-pressed="true"]::before {
+    background: var(--accent-fill);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .theme-toggle {
+      transition: none;
+    }
+    .theme-toggle:active {
+      transform: none;
+    }
+  }
+</style>
+
+<script>
+  import "@/scripts/theme"
+</script>

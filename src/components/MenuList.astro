@@ -1,0 +1,74 @@
+---
+import type { CatalogGroup } from "@/lib/catalog"
+import RecipeGrid from "@/components/RecipeGrid.astro"
+
+export interface Props {
+  groups: CatalogGroup[]
+}
+
+const { groups } = Astro.props
+---
+
+<section class="wrap menu" aria-labelledby="menu-heading">
+  <h2 id="menu-heading" class="section-title" data-reveal>
+    The menu
+  </h2>
+  <nav aria-label="Menu categories" class="menu__jump">
+    {groups.map((group) => (
+      <a href={`#menu-${group.slug}`}>{group.name}</a>
+    ))}
+  </nav>
+  {groups.map((group) => (
+    <section class="menu__group" aria-labelledby={`menu-${group.slug}`}>
+      <div class="menu__head" data-reveal>
+        <h3 id={`menu-${group.slug}`}>{group.name}</h3>
+        <a href={`/recipes/meal-type/${group.slug}/`} class="text-link text-small">
+          All {group.recipes.length} {group.name.toLowerCase()} recipes
+        </a>
+      </div>
+      <RecipeGrid recipes={group.recipes.slice(0, 6)} label={`${group.name} recipes`} />
+    </section>
+  ))}
+</section>
+
+<style>
+  .menu {
+    padding-block: 6rem 2rem;
+  }
+  .menu__jump {
+    display: flex;
+    gap: 0 1.5rem;
+    margin-top: 1rem;
+    overflow-x: auto;
+  }
+  .menu__jump a {
+    display: inline-flex;
+    min-height: 3rem;
+    align-items: center;
+    flex: none;
+    font-weight: 500;
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+  .menu__jump a:hover {
+    color: var(--accent);
+  }
+  .menu__group {
+    margin-top: 7rem;
+    scroll-margin-top: 1rem;
+  }
+  .menu__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+  .menu__head h3 {
+    font-size: var(--text-head);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: uppercase;
+  }
+</style>
