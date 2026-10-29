@@ -1,13 +1,14 @@
 ---
 import type { Recipe } from "@/lib/api"
 import { recipePath } from "@/lib/utils/slug"
+import { totalMinutes } from "@/lib/utils/time"
 
 export interface Props {
   recipe: Recipe
 }
 
 const { recipe } = Astro.props
-const minutes = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+const minutes = totalMinutes(recipe)
 ---
 
 <section class="cta" aria-labelledby="cta-heading">

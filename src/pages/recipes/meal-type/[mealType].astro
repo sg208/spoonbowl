@@ -1,29 +1,15 @@
 ---
 import ListingPage from "@/components/ListingPage.astro"
-import { getCatalog, type CatalogGroup } from "@/lib/catalog"
+import { getCatalog } from "@/lib/catalog"
 import { getMealTypeDescription } from "@/lib/config/listingCopy"
+import { listingPaths, type ListingProps } from "@/lib/listing"
 
 export const getStaticPaths = async () => {
   const { mealTypes: groups } = await getCatalog()
-  return groups.map((group) => ({
-    params: { mealType: group.slug },
-    props: {
-      group,
-      siblings: groups
-        .filter((other) => other.slug !== group.slug)
-        .map((other) => ({
-          name: other.name,
-          href: `/recipes/meal-type/${other.slug}/`,
-          count: other.recipes.length,
-        })),
-    },
-  }))
+  return listingPaths(groups, "mealType", "/recipes/meal-type/")
 }
 
-export interface Props {
-  group: CatalogGroup
-  siblings: { name: string; href: string; count: number }[]
-}
+export type Props = ListingProps
 
 const { group, siblings } = Astro.props
 ---

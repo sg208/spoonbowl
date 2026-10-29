@@ -3,15 +3,11 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import IndexList from "@/components/IndexList.astro"
 import { getCatalog } from "@/lib/catalog"
+import { toIndexItems } from "@/lib/listing"
 import { formatPageTitle } from "@/lib/seo"
 
 const { mealTypes: groups } = await getCatalog()
-const items = groups.map((group) => ({
-  name: group.name,
-  href: `/recipes/meal-type/${group.slug}/`,
-  count: group.recipes.length,
-  image: group.recipes[0]?.image,
-}))
+const items = toIndexItems(groups, "/recipes/meal-type/")
 ---
 
 <BaseLayout

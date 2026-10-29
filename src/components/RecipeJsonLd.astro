@@ -1,5 +1,6 @@
 ---
 import type { Recipe } from "@/lib/api"
+import { totalMinutes } from "@/lib/utils/time"
 
 export interface Props {
   recipe: Recipe
@@ -7,7 +8,7 @@ export interface Props {
 }
 
 const { recipe, description } = Astro.props
-const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+const totalTime = totalMinutes(recipe)
 const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Recipe",

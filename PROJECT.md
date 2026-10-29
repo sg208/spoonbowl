@@ -59,15 +59,15 @@ src/
 │                           tags/ tag/[tag] difficulties/ difficulty/[difficulty]
 ├── layouts/BaseLayout.astro
 ├── components/             Navbar, Footer, RecipeCard, RecipeGrid, EmptyRecipes, ListingPage,
-│                           ListingHeader, IndexList, PageHeader, RecipeMeta, RecipeJsonLd,
+│                           ListingHeader, IndexList, PageHeader, PageHeadPhotos, RecipeMeta, RecipeJsonLd,
 │                           CookMode, SearchBox, ThemeToggle (all .astro)
 ├── scripts/                theme.ts, cook-mode.ts, search.ts
 ├── styles/global.css       Tailwind v4 entry + design tokens
 └── lib/
-    ├── api.ts catalog.ts seo.ts
+    ├── api.ts catalog.ts seo.ts listing.ts
     ├── cook/               pager, scale, wakeLock (+ tests)
     ├── search/             filterRecipes (+ test)
-    ├── utils/slug.ts
+    ├── utils/slug.ts time.ts
     ├── config/             listingCopy, navigationLinks, not-found-messages
     └── __fixtures__/
 scripts/                    check-dist.mjs (+ test)

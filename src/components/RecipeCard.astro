@@ -1,6 +1,7 @@
 ---
 import type { Recipe } from "@/lib/api"
 import { recipePath } from "@/lib/utils/slug"
+import { totalMinutes } from "@/lib/utils/time"
 
 export interface Props {
   recipe: Recipe
@@ -10,7 +11,6 @@ export interface Props {
 }
 
 const { recipe, isEager = false, index = 0, isLarge = false } = Astro.props
-const totalMinutes = recipe.prepTimeMinutes + recipe.cookTimeMinutes
 ---
 
 <li data-reveal style={`--i: ${index % 2}`}>
@@ -34,7 +34,7 @@ const totalMinutes = recipe.prepTimeMinutes + recipe.cookTimeMinutes
     <span class="min-w-0">
       <span class="item-name block text-lead font-bold leading-tight">{recipe.name}</span>
       <span class="muted block text-small">
-        {recipe.cuisine} · {totalMinutes} min · {recipe.difficulty}
+        {recipe.cuisine} · {totalMinutes(recipe)} min · {recipe.difficulty}
       </span>
     </span>
   </a>

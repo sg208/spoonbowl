@@ -1,12 +1,13 @@
 ---
 import type { Recipe } from "@/lib/api"
+import { totalMinutes } from "@/lib/utils/time"
 
 export interface Props {
   recipe: Recipe
 }
 
 const { recipe } = Astro.props
-const totalTime = recipe.prepTimeMinutes + recipe.cookTimeMinutes
+const totalTime = totalMinutes(recipe)
 const facts = [
   { label: "Total time", value: String(totalTime), unit: "min" },
   { label: "Difficulty", value: recipe.difficulty, unit: "" },

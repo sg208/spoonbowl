@@ -1,6 +1,7 @@
 ---
 import type { Recipe } from "@/lib/api"
 import { recipePath } from "@/lib/utils/slug"
+import { totalMinutes } from "@/lib/utils/time"
 import "@/styles/showcase.css"
 
 export interface Props {
@@ -9,7 +10,6 @@ export interface Props {
 
 const { dishes } = Astro.props
 const first = dishes[0]
-const minutes = (dish: Recipe): number => dish.prepTimeMinutes + dish.cookTimeMinutes
 ---
 
 {first && (
@@ -46,7 +46,7 @@ const minutes = (dish: Recipe): number => dish.prepTimeMinutes + dish.cookTimeMi
             aria-pressed={index === 0 ? "true" : "false"}
             data-name={dish.name}
             data-image={dish.image}
-            data-minutes={minutes(dish)}
+            data-minutes={totalMinutes(dish)}
             data-href={recipePath(dish)}
           >
             {dish.name}
@@ -54,7 +54,7 @@ const minutes = (dish: Recipe): number => dish.prepTimeMinutes + dish.cookTimeMi
         ))}
       </div>
       <p class="showcase__fact" aria-live="polite">
-        <span data-showcase-minutes>{minutes(first)}</span> minutes, start to plate.
+        <span data-showcase-minutes>{totalMinutes(first)}</span> minutes, start to plate.
         <a class="text-link" href={recipePath(first)} data-showcase-open>
           Open the recipe
         </a>

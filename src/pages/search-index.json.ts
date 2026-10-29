@@ -2,6 +2,7 @@ import type { APIRoute } from "astro"
 import { getCatalog } from "@/lib/catalog"
 import type { SearchEntry } from "@/lib/search/filterRecipes"
 import { recipePath, slugify } from "@/lib/utils/slug"
+import { totalMinutes } from "@/lib/utils/time"
 
 export const prerender = true
 
@@ -17,7 +18,7 @@ export const GET: APIRoute = async () => {
     mealType: recipe.mealType,
     difficulty: recipe.difficulty,
     image: recipe.image,
-    totalMinutes: recipe.prepTimeMinutes + recipe.cookTimeMinutes,
+    totalMinutes: totalMinutes(recipe),
   }))
   return new Response(JSON.stringify(index), {
     headers: { "Content-Type": "application/json" },

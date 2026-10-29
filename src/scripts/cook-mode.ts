@@ -1,5 +1,5 @@
 import { describePosition } from "@/lib/cook/pager"
-import { clampServings, scaleIngredient } from "@/lib/cook/scale"
+import { clampServings, MAX_SERVINGS, MIN_SERVINGS, scaleIngredient } from "@/lib/cook/scale"
 import { createWakeLock } from "@/lib/cook/wakeLock"
 
 const MISE_TEXT = "Gather everything and check off your ingredients."
@@ -64,8 +64,8 @@ export const initCookMode = (root: HTMLElement): void => {
     labels.forEach((label) => {
       label.textContent = scaleIngredient(label.dataset.ingredient ?? "", factor)
     })
-    minus.disabled = state.servings <= 1
-    plus.disabled = state.servings >= 12
+    minus.disabled = state.servings <= MIN_SERVINGS
+    plus.disabled = state.servings >= MAX_SERVINGS
   }
 
   const handleServings = (delta: number): void => {

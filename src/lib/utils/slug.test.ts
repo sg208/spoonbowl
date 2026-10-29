@@ -5,9 +5,6 @@ import {
   mealTypeToSlug,
   recipePath,
   slugify,
-  slugToCuisine,
-  slugToMealType,
-  slugToTag,
   tagToSlug,
 } from "@/lib/utils/slug"
 import { makeRecipe } from "@/lib/__fixtures__/recipes"
@@ -31,18 +28,14 @@ describe("recipePath", () => {
 describe("listing slugs round-trip", () => {
   it("meal types with spaces", () => {
     expect(mealTypeToSlug("Side dish")).toBe("side-dish")
-    expect(slugToMealType("side-dish", ["Dinner", "Side dish"])).toBe("Side dish")
-    expect(slugToMealType("side-dish")).toBe("Side Dish")
   })
 
   it("tags with hyphens", () => {
     expect(tagToSlug("Stir-fry")).toBe("stir-fry")
-    expect(slugToTag("stir-fry", ["Pizza", "Stir-fry"])).toBe("Stir-fry")
   })
 
   it("cuisines and difficulties", () => {
     expect(cuisineToSlug("Middle Eastern")).toBe("middle-eastern")
-    expect(slugToCuisine("middle-eastern", ["Middle Eastern"])).toBe("Middle Eastern")
     expect(difficultyToSlug("Hard")).toBe("hard")
   })
 })

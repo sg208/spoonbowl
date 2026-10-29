@@ -3,20 +3,16 @@ import BaseLayout from "@/layouts/BaseLayout.astro"
 import PageHeader from "@/components/PageHeader.astro"
 import IndexList from "@/components/IndexList.astro"
 import { getCatalog } from "@/lib/catalog"
+import { toIndexItems } from "@/lib/listing"
 import { formatPageTitle } from "@/lib/seo"
 
 const { tags } = await getCatalog()
-const lettersWithTags = [...new Set(tags.map((tag) => tag.name[0]?.toUpperCase() ?? "#"))].sort()
+const getLetter = (name: string): string => name[0]?.toUpperCase() ?? "#"
+const tagItems = toIndexItems(tags, "/recipes/tag/")
+const lettersWithTags = [...new Set(tagItems.map((item) => getLetter(item.name)))].sort()
 const itemsByLetter = lettersWithTags.map((letter) => ({
   letter,
-  items: tags
-    .filter((tag) => (tag.name[0]?.toUpperCase() ?? "#") === letter)
-    .map((tag) => ({
-      name: tag.name,
-      href: `/recipes/tag/${tag.slug}/`,
-      count: tag.recipes.length,
-      image: tag.recipes[0]?.image,
-    })),
+  items: tagItems.filter((item) => getLetter(item.name) === letter),
 }))
 ---
 

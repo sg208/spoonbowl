@@ -34,7 +34,7 @@ const groupBy = (
       groups.set(slug, group)
     }
   }
-  return [...groups.values()].sort((a, b) => a.name.localeCompare(b.name))
+  return [...groups.values()].sort((left, right) => left.name.localeCompare(right.name))
 }
 
 export const buildCatalog = (recipes: Recipe[]): Catalog => {
@@ -42,7 +42,7 @@ export const buildCatalog = (recipes: Recipe[]): Catalog => {
   const featured = byId.get(FEATURED_RECIPE_ID) ?? recipes[0]
   if (!featured) throw new Error("Catalog is empty")
   const difficulties = groupBy(recipes, (recipe) => [recipe.difficulty], difficultyToSlug).sort(
-    (a, b) => DIFFICULTY_ORDER.indexOf(a.name) - DIFFICULTY_ORDER.indexOf(b.name)
+    (left, right) => DIFFICULTY_ORDER.indexOf(left.name) - DIFFICULTY_ORDER.indexOf(right.name)
   )
   return {
     recipes,

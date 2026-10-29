@@ -30,8 +30,3 @@ export const NOT_FOUND_MESSAGES = [
   "Order up—this page is not on the ticket.",
   "The secret ingredient was… a missing page.",
 ] as const
-
-export const pickRandomNotFoundMessage = (): string => {
-  const index = Math.floor(Math.random() * NOT_FOUND_MESSAGES.length)
-  return NOT_FOUND_MESSAGES[index]!
-}

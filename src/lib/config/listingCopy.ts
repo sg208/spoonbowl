@@ -50,18 +50,7 @@ const CUISINE_TAGS = new Set([
   "Middle Eastern",
   "Asian",
 ])
-const MEAL_TYPE_TAGS = new Set([
-  "Breakfast",
-  "Lunch",
-  "Dinner",
-  "Brunch",
-  "Snack",
-  "Dessert",
-  "Appetizer",
-  "Side dish",
-  "Main course",
-  "Street food",
-])
+const MEAL_TYPE_TAGS = new Set(Object.keys(MEAL_TYPE_DESCRIPTIONS))
 const DIET_TAGS = new Set([
   "Vegetarian",
   "Vegan",

@@ -36,7 +36,9 @@ src/
     ├── seo.ts            formatPageTitle, formatRecipeTitle, toAbsoluteUrl
     ├── cook/             pager, scale, wakeLock (+ tests)
     ├── search/           filterRecipes (+ test)
-    ├── utils/slug.ts     slugify + slug <-> name helpers
+    ├── listing.ts        listingPaths + toIndexItems for listing routes
+    ├── utils/slug.ts     slugify + *ToSlug helpers
+    ├── utils/time.ts     totalMinutes
     ├── config/           listing copy, navigation links, 404 messages
     └── __fixtures__/     test fixtures
 scripts/                  check-dist.mjs (+ test)
