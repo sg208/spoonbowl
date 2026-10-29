@@ -44,6 +44,15 @@ describe("createWakeLock", () => {
     expect(sentinel.release).toHaveBeenCalledTimes(1)
   })
 
+  it("releases a lock granted after release was called", async () => {
+    const { env, sentinel } = makeEnv(true)
+    const lock = createWakeLock(env)
+    const pending = lock.acquire()
+    await lock.release()
+    await expect(pending).resolves.toBe(false)
+    expect(sentinel.release).toHaveBeenCalledTimes(1)
+  })
+
   it("re-acquires on visibilitychange while active, not after release", async () => {
     const { env, request, fire } = makeEnv(true)
     const lock = createWakeLock(env)

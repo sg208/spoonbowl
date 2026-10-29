@@ -40,9 +40,9 @@
     transform: none;
   }
 
-  /* One slow drift on the closing photograph. */
+  /* One slow drift on the closing photograph: in and back, then still (WCAG 2.2.2). */
   .drift > img {
-    animation: drift 14s ease-in-out infinite alternate;
+    animation: drift 14s ease-in-out 2 alternate;
   }
   @keyframes drift {
     from {

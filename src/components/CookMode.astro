@@ -88,10 +88,10 @@ const hasAmounts = recipe.ingredients.some(hasQuantity)
           Start cooking
         </button>
 
+        <p class="cook__sr" role="status" aria-live="polite" data-pager-status></p>
         <div class="cook__pager" data-cook-pager hidden>
           <p class="cook__counter" data-pager-counter></p>
           <p class="cook__step" data-pager-text></p>
-          <p class="cook__sr" role="status" aria-live="polite" data-pager-status></p>
           <div class="cook__nav">
             <button type="button" class="cook__btn" data-pager-prev>
               Previous

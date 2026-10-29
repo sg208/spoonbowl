@@ -25,7 +25,13 @@ export const createWakeLock = (env: WakeLockEnv): WakeLockController => {
   const request = async (): Promise<boolean> => {
     if (!wakeLock) return false
     try {
-      state.sentinel = await wakeLock.request("screen")
+      const sentinel = await wakeLock.request("screen")
+      if (!state.isActive) {
+        // Released while the request was pending: drop the late lock.
+        await sentinel.release()
+        return false
+      }
+      state.sentinel = sentinel
       return true
     } catch {
       // Denied (low battery, hidden tab): cooking continues without the lock.

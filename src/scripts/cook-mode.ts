@@ -57,6 +57,12 @@ export const initCookMode = (root: HTMLElement): void => {
   const wakeLock = createBrowserWakeLock()
   const state = { servings: baseServings, position: 0, isWakeOn: false }
 
+  // Disabling the focused button drops focus to <body>; hand it to a sibling first.
+  const setDisabled = (button: HTMLButtonElement, isDisabled: boolean, fallback: HTMLElement) => {
+    if (isDisabled && document.activeElement === button) fallback.focus()
+    button.disabled = isDisabled
+  }
+
   const renderServings = (): void => {
     const factor = state.servings / baseServings
     count.textContent = String(state.servings)
@@ -64,8 +70,8 @@ export const initCookMode = (root: HTMLElement): void => {
     labels.forEach((label) => {
       label.textContent = scaleIngredient(label.dataset.ingredient ?? "", factor)
     })
-    minus.disabled = state.servings <= MIN_SERVINGS
-    plus.disabled = state.servings >= MAX_SERVINGS
+    setDisabled(minus, state.servings <= MIN_SERVINGS, plus)
+    setDisabled(plus, state.servings >= MAX_SERVINGS, minus)
   }
 
   const handleServings = (delta: number): void => {
@@ -78,7 +84,7 @@ export const initCookMode = (root: HTMLElement): void => {
     const view = describePosition(state.position, steps.length)
     counter.textContent = view.counter
     text.textContent = state.position === 0 ? MISE_TEXT : (steps[state.position - 1] ?? "")
-    prev.disabled = view.isFirst
+    setDisabled(prev, view.isFirst, next)
     next.textContent = view.nextLabel
     pagerStatus.textContent = `${view.counter}. ${text.textContent}`
   }
