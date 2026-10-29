@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import IndexList from "@/components/IndexList.astro"
+import { getCatalog } from "@/lib/catalog"
+import { toIndexItems } from "@/lib/listing"
+import { formatPageTitle } from "@/lib/seo"
+
+const { cuisines: groups } = await getCatalog()
+const items = toIndexItems(groups, "/recipes/cuisine/")
+---
+
+<BaseLayout
+  title={formatPageTitle("Recipes by Cuisine")}
+  description="Browse recipes by cuisine on Spoonbowl — from Italian and Mexican to Japanese, Indian, and more."
+  path="/recipes/cuisines/"
+>
+  <div class="wrap pb-8">
+    <PageHeader
+      images={items.map((item) => item.image ?? "")}
+      title="Recipes by Cuisine"
+      intro="Travel the world from your kitchen — explore recipes grouped by regional and cultural cooking styles."
+      count={`${items.length} cuisines to explore`}
+    />
+    <h2 class="sr-only">All cuisines</h2>
+    <IndexList items={items} label="Recipes by Cuisine" />
+  </div>
+</BaseLayout>

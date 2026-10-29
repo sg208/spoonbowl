@@ -1,0 +1,28 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import IndexList from "@/components/IndexList.astro"
+import { getCatalog } from "@/lib/catalog"
+import { toIndexItems } from "@/lib/listing"
+import { formatPageTitle } from "@/lib/seo"
+
+const { difficulties: groups } = await getCatalog()
+const items = toIndexItems(groups, "/recipes/difficulty/")
+---
+
+<BaseLayout
+  title={formatPageTitle("Recipes by Difficulty")}
+  description="Find recipes by difficulty level on Spoonbowl — easy, medium, and hard recipes for every skill level."
+  path="/recipes/difficulties/"
+>
+  <div class="wrap pb-8">
+    <PageHeader
+      images={items.map((item) => item.image ?? "")}
+      title="Recipes by Difficulty"
+      intro="Find recipes that match your skill level — from quick weeknight meals to ambitious weekend projects."
+      count={`${items.length} difficulty levels to explore`}
+    />
+    <h2 class="sr-only">All difficulty levels</h2>
+    <IndexList items={items} label="Recipes by Difficulty" />
+  </div>
+</BaseLayout>

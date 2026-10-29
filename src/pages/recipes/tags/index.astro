@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import PageHeader from "@/components/PageHeader.astro"
+import IndexList from "@/components/IndexList.astro"
+import { getCatalog } from "@/lib/catalog"
+import { toIndexItems } from "@/lib/listing"
+import { formatPageTitle } from "@/lib/seo"
+
+const { tags } = await getCatalog()
+const getLetter = (name: string): string => name[0]?.toUpperCase() ?? "#"
+const tagItems = toIndexItems(tags, "/recipes/tag/")
+const lettersWithTags = [...new Set(tagItems.map((item) => getLetter(item.name)))].sort()
+const itemsByLetter = lettersWithTags.map((letter) => ({
+  letter,
+  items: tagItems.filter((item) => getLetter(item.name) === letter),
+}))
+---
+
+<BaseLayout
+  title={formatPageTitle("Recipes by Category")}
+  description="Explore recipes by category on Spoonbowl — find dishes by ingredient, cooking style, occasion, and more."
+  path="/recipes/tags/"
+>
+  <div class="wrap pb-8">
+    <PageHeader
+      images={tags.map((tag) => tag.recipes[0]?.image ?? "")}
+      title="Recipes by Category"
+      intro="Explore every cuisine, ingredient, and cooking style. Find exactly what you're craving — from quick weeknight stir-fries to weekend Italian feasts."
+      count={`${tags.length} categories to explore`}
+    />
+    {itemsByLetter.map(({ letter, items }) => (
+      <section class="mt-10" aria-labelledby={`letter-${letter}`}>
+        <h2 id={`letter-${letter}`} class="section-title mt-6">
+          {letter}
+        </h2>
+        <IndexList items={items} label={`Categories starting with ${letter}`} />
+      </section>
+    ))}
+  </div>
+</BaseLayout>

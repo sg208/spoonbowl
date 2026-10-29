@@ -1,0 +1,92 @@
+---
+export interface Item {
+  name: string
+  href: string
+  count: number
+  note?: string
+  image?: string
+}
+
+export interface Props {
+  items: Item[]
+  label: string
+}
+
+const { items, label } = Astro.props
+---
+
+<ul class="index-list" aria-label={label}>
+  {items.map((item, index) => (
+    <li data-reveal style={`--i: ${index % 2}`}>
+      <a href={item.href} class="row-link">
+        {item.image ? (
+          <span class="row-photo bowl-mask">
+            <img src={item.image} alt="" width="128" height="96" loading="lazy" decoding="async" />
+          </span>
+        ) : (
+          <span class="bowl-bullet" aria-hidden="true" />
+        )}
+        <span class="min-w-0">
+          <span class="item-name block text-lead font-bold leading-tight">{item.name}</span>
+          <span class="muted block text-small">
+            {item.count} {item.count === 1 ? "recipe" : "recipes"}
+            {item.note ? ` · ${item.note}` : ""}
+          </span>
+        </span>
+      </a>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .index-list {
+    display: grid;
+    gap: 0.75rem 4rem;
+  }
+  @media (min-width: 640px) {
+    .row-photo {
+      width: 8rem;
+      height: 6rem;
+    }
+  }
+  @media (min-width: 768px) {
+    .index-list {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  .row-link {
+    display: flex;
+    min-height: 4rem;
+    align-items: center;
+    gap: 1.25rem;
+    padding-block: 0.25rem;
+  }
+  .row-photo {
+    display: block;
+    flex: none;
+    width: 6rem;
+    height: 4.5rem;
+  }
+  .row-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .item-name {
+    text-decoration: underline;
+    text-decoration-color: transparent;
+    text-underline-offset: 4px;
+    transition:
+      color 200ms ease,
+      text-decoration-color 200ms ease;
+  }
+  .row-link:hover .item-name {
+    color: var(--accent);
+    text-decoration-color: currentColor;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .item-name {
+      transition: none;
+    }
+  }
+</style>

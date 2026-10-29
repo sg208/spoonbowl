@@ -1,0 +1,45 @@
+---
+import { browseLinks } from "@/lib/config/navigationLinks"
+import SearchBox from "@/components/SearchBox.astro"
+import ThemeToggle from "@/components/ThemeToggle.astro"
+
+const pathname = Astro.url.pathname
+const isCurrent = (to: string): boolean => (to === "/" ? pathname === "/" : pathname.startsWith(to))
+---
+
+<header class="bg-ground">
+  <div class="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
+    <a
+      href="/"
+      class="inline-flex min-h-12 items-center gap-2 text-lead font-bold"
+      aria-label="Spoonbowl home"
+    >
+      <span class="bowl-bullet" aria-hidden="true" style="width:1em;height:0.5em"></span>
+      <span>Spoonbowl</span>
+    </a>
+    <nav aria-label="Primary" class="order-last w-full sm:order-none sm:w-auto">
+      <ul class="flex items-center gap-x-5 overflow-x-auto whitespace-nowrap">
+        {browseLinks.map((link) => (
+          <li>
+            <a
+              href={link.to}
+              aria-current={isCurrent(link.to) ? "page" : undefined}
+              class:list={[
+                "inline-flex min-h-12 shrink-0 items-center text-small font-medium transition-colors hover:text-accent",
+                { "text-accent underline underline-offset-4": isCurrent(link.to) },
+              ]}
+            >
+              {link.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+    <div class="flex w-full items-center gap-3 sm:w-auto">
+      <div class="min-w-0 flex-1 sm:w-56 sm:flex-none">
+        <SearchBox />
+      </div>
+      <ThemeToggle />
+    </div>
+  </div>
+</header>

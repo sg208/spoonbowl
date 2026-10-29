@@ -1,0 +1,88 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import { getCatalog } from "@/lib/catalog"
+import { NOT_FOUND_MESSAGES } from "@/lib/config/not-found-messages"
+import { formatPageTitle } from "@/lib/seo"
+import { recipePath } from "@/lib/utils/slug"
+
+const { recipes } = await getCatalog()
+// Build-time pick: the 404 page is static, so the suggestion is fixed per deploy.
+const message = NOT_FOUND_MESSAGES[Math.floor(Math.random() * NOT_FOUND_MESSAGES.length)]
+const recipe = recipes[Math.floor(Math.random() * recipes.length)]
+---
+
+<BaseLayout
+  title={formatPageTitle("Page not found")}
+  description="This page could not be found. Pick a recipe instead."
+  path="/404/"
+>
+  <div class="wrap not-found">
+    <div class="not-found__copy">
+      <h1 class="display" data-reveal>
+        Page not
+        <br />
+        found
+      </h1>
+      <p class="mt-6 max-w-[65ch] text-lead" data-reveal style="--i: 1">
+        {message}
+      </p>
+      {recipe && (
+        <p class="mt-4 max-w-[65ch] text-lead" data-reveal style="--i: 2">
+          Hungry anyway? Try{" "}
+          <a
+            href={recipePath(recipe)}
+            class="font-medium underline underline-offset-4 hover:text-accent"
+          >
+            {recipe.name}
+          </a>
+          .
+        </p>
+      )}
+      <a href="/" class="bowl-button mt-8" data-reveal style="--i: 3">
+        Back to all recipes
+      </a>
+    </div>
+    {recipe && (
+      <div class="not-found__bowl shutter" aria-hidden="true">
+        <span class="bowl-mask">
+          <img
+            src={recipe.image}
+            alt=""
+            width="400"
+            height="400"
+            loading="eager"
+            decoding="async"
+          />
+        </span>
+      </div>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .not-found {
+    display: grid;
+    gap: 3rem;
+    padding-block: 4rem 2rem;
+    align-items: center;
+  }
+  .not-found__bowl > span {
+    display: block;
+    background: var(--accent-fill);
+    padding: 1.5rem 1.5rem 0;
+    border-radius: var(--bowl);
+  }
+  .not-found__bowl img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1 / 0.8;
+    object-fit: cover;
+    border-radius: var(--bowl);
+  }
+  @media (min-width: 900px) {
+    .not-found {
+      grid-template-columns: 1fr 1fr;
+      gap: 5rem;
+    }
+  }
+</style>

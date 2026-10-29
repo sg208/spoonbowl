@@ -1,0 +1,26 @@
+---
+import ListingPage from "@/components/ListingPage.astro"
+import { getCatalog } from "@/lib/catalog"
+import { getDifficultyDescription } from "@/lib/config/listingCopy"
+import { listingPaths, type ListingProps } from "@/lib/listing"
+
+export const getStaticPaths = async () => {
+  const { difficulties: groups } = await getCatalog()
+  return listingPaths(groups, "difficulty", "/recipes/difficulty/")
+}
+
+export type Props = ListingProps
+
+const { group, siblings } = Astro.props
+---
+
+<ListingPage
+  heading={`${group.name} Recipes`}
+  description={getDifficultyDescription(group.name)}
+  path={`/recipes/difficulty/${group.slug}/`}
+  recipes={group.recipes}
+  parentLabel="Difficulty levels"
+  parentHref="/recipes/difficulties/"
+  siblings={siblings}
+  siblingsLabel="Other difficulty levels"
+/>

@@ -1,0 +1,110 @@
+.showcase {
+  display: grid;
+  gap: 2.5rem;
+  padding-block: 6rem 4rem;
+}
+.showcase__list {
+  min-width: 0;
+}
+.showcase__stage {
+  position: relative;
+  width: min(100%, 38rem);
+  aspect-ratio: 1 / 0.9;
+  margin-inline: auto;
+}
+.showcase__disc {
+  position: absolute;
+  inset: 22% 0 auto;
+  aspect-ratio: 2 / 1;
+  background: var(--accent-fill);
+  border-radius: var(--bowl);
+}
+.showcase__photo {
+  position: absolute;
+  inset: 0 11% auto;
+  aspect-ratio: 1 / 0.8;
+}
+.showcase__photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 150ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .showcase__photo img,
+  .showcase__links a,
+  .showcase__picker button {
+    transition: none;
+  }
+}
+.showcase__heading {
+  font-size: var(--text-lead);
+  font-weight: 500;
+  color: var(--muted);
+}
+.showcase__links a,
+.showcase__picker button {
+  display: flex;
+  min-height: 3rem;
+  align-items: center;
+  padding-block: 0.25rem;
+  font: inherit;
+  font-size: clamp(1.75rem, 2.9vw, 2.75rem);
+  font-weight: 700;
+  line-height: 1.15;
+  text-align: left;
+  color: var(--muted);
+  transition: color 200ms ease;
+}
+.showcase__links a:hover,
+.showcase__picker button:hover {
+  color: var(--ink);
+}
+.showcase__picker button[aria-pressed="true"] {
+  color: var(--ink);
+}
+.showcase__picker button[aria-pressed="true"]::before {
+  content: "";
+  width: 0.5em;
+  height: 0.25em;
+  margin-right: 0.4em;
+  flex: none;
+  background: var(--accent-fill);
+  border-radius: var(--bowl);
+}
+.showcase__picker {
+  display: none;
+}
+.js .showcase__picker {
+  display: block;
+}
+.js .showcase__links {
+  display: none;
+}
+.showcase__fact {
+  margin-top: 1.5rem;
+  font-size: var(--text-lead);
+}
+@media (max-width: 1023px) {
+  .js .showcase__picker {
+    display: flex;
+    gap: 1.5rem;
+    overflow-x: auto;
+    scroll-snap-type: x proximity;
+  }
+  .showcase__picker button {
+    flex: none;
+    white-space: nowrap;
+  }
+}
+@media (min-width: 1024px) {
+  .showcase {
+    grid-template-columns: 1fr 1fr;
+    align-items: end;
+    gap: 4rem;
+  }
+  .showcase__stage {
+    order: 2;
+    width: 100%;
+  }
+}

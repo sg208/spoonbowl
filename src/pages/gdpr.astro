@@ -1,0 +1,23 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import { formatPageTitle } from "@/lib/seo"
+---
+
+<BaseLayout
+  title={formatPageTitle("GDPR")}
+  description="Spoonbowl's GDPR information lives on the privacy page."
+  path="/privacy/"
+>
+  <meta slot="head" http-equiv="refresh" content="0; url=/privacy/" />
+  <meta slot="head" name="robots" content="noindex" />
+  <div class="wrap py-12">
+    <h1 class="page-title">GDPR</h1>
+    <p class="prose-column mt-4">
+      This information has moved. Continue to the
+      <a href="/privacy/" class="underline underline-offset-4 hover:text-accent">
+        privacy page
+      </a>
+      .
+    </p>
+  </div>
+</BaseLayout>

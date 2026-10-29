@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://spoonbowl.gint.ing/sitemap.xml
+Sitemap: https://spoonbowl.gint.ing/sitemap-index.xml

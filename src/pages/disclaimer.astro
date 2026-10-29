@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro"
+import { formatPageTitle } from "@/lib/seo"
+---
+
+<BaseLayout
+  title={formatPageTitle("Disclaimer")}
+  description="Disclaimer for Spoonbowl — recipe content is for informational purposes only."
+  path="/disclaimer/"
+>
+  <div class="wrap py-12">
+    <div class="prose-column">
+      <header class="mb-8">
+        <h1 class="page-title">Disclaimer</h1>
+      </header>
+
+      <div class="space-y-8">
+        <section aria-label="Introduction">
+          <p class="muted">
+            Spoonbowl provides recipe discovery for general information and inspiration. The
+            following limitations apply to all content on this site.
+          </p>
+        </section>
+
+        <section aria-labelledby="disclaimer-untested">
+          <h2 id="disclaimer-untested" class="mb-3 text-lead font-bold">
+            Recipes may not be tested
+          </h2>
+          <p class="muted">
+            Recipe content is sourced from third-party data and may not have been tested or verified
+            by Spoonbowl. Ingredient lists, instructions, timing, yields, and results may vary. Use
+            your own judgment when cooking or baking.
+          </p>
+        </section>
+
+        <section aria-labelledby="disclaimer-safety">
+          <h2 id="disclaimer-safety" class="mb-3 text-lead font-bold">
+            Food safety and preparation
+          </h2>
+          <p class="muted">
+            You are solely responsible for safe food handling, including cooking temperatures,
+            cross-contamination, storage, and allergen management. Spoonbowl does not guarantee that
+            any recipe is safe or appropriate for your situation.
+          </p>
+        </section>
+
+        <section aria-labelledby="disclaimer-dietary">
+          <h2 id="disclaimer-dietary" class="mb-3 text-lead font-bold">
+            Dietary labels and tags
+          </h2>
+          <p class="muted">
+            Tags, categories, and similar labels (for example meal type, cuisine, or terms that may
+            suggest a dietary pattern) are provided for organization and browsing only. They are
+            <strong>not</strong> medical, nutritional, or dietary claims, have not been clinically
+            validated or proven for any health outcome, and may not meet strict dietary standards
+            for specific conditions. Always verify ingredients and suitability with your own
+            requirements.
+          </p>
+        </section>
+
+        <section aria-labelledby="disclaimer-medical">
+          <h2 id="disclaimer-medical" class="mb-3 text-lead font-bold">
+            Not medical or professional advice
+          </h2>
+          <p class="muted">
+            Nothing on Spoonbowl is intended as medical, nutrition, or therapeutic advice. For
+            questions about allergies, intolerances, chronic conditions, or special diets, consult a
+            qualified healthcare or nutrition professional.
+          </p>
+        </section>
+
+        <section aria-labelledby="disclaimer-liability">
+          <h2 id="disclaimer-liability" class="mb-3 text-lead font-bold">
+            Limitation of liability
+          </h2>
+          <p class="muted">
+            To the fullest extent permitted by applicable law, Spoonbowl and its operators are not
+            liable for any loss or damage arising from your use of recipe content or reliance on any
+            information on this site. Your use is at your own risk.
+          </p>
+        </section>
+
+        <section aria-labelledby="disclaimer-availability">
+          <h2 id="disclaimer-availability" class="mb-3 text-lead font-bold">
+            Site availability
+          </h2>
+          <p class="muted">
+            The site is delivered using infrastructure providers (for example
+            <strong>Cloudflare</strong> for DNS and network services and <strong>Bunny.net</strong>
+            for hosting and CDN). Interruptions, regional differences in delivery, or temporary
+            unavailability may occur and are outside Spoonbowl&apos;s control.
+          </p>
+        </section>
+      </div>
+    </div>
+  </div>
+</BaseLayout>

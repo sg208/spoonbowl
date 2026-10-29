@@ -1,0 +1,23 @@
+---
+import type { Recipe } from "@/lib/api"
+import RecipeCard from "@/components/RecipeCard.astro"
+import EmptyRecipes from "@/components/EmptyRecipes.astro"
+
+export interface Props {
+  recipes: Recipe[]
+  label: string
+  isLarge?: boolean
+}
+
+const { recipes, label, isLarge = false } = Astro.props
+---
+
+{recipes.length === 0 ? (
+  <EmptyRecipes />
+) : (
+  <ul class="grid gap-x-16 gap-y-3 md:grid-cols-2" aria-label={label}>
+    {recipes.map((recipe, index) => (
+      <RecipeCard recipe={recipe} isEager={index < 4} index={index} isLarge={isLarge} />
+    ))}
+  </ul>
+)}
