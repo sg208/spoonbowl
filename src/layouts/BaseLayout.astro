@@ -77,14 +77,6 @@ const imageUrl = image ?? toAbsoluteUrl("/icons/icon-512x512.png")
       {
         const targets = document.querySelectorAll("[data-reveal], .shutter")
         const show = (el) => el.classList.add("is-in")
-        // A view-transition arrival is captured fully revealed (motion.css); keep what's on screen that way.
-        // pagereveal can fire before this script runs, so check the live transition state instead.
-        const isArrivingViaTransition =
-          CSS.supports("selector(:active-view-transition)") &&
-          document.documentElement.matches(":active-view-transition")
-        if (isArrivingViaTransition) {
-          targets.forEach((el) => el.getBoundingClientRect().top < innerHeight && show(el))
-        }
         if (!("IntersectionObserver" in window)) targets.forEach(show)
         else {
           const observer = new IntersectionObserver(

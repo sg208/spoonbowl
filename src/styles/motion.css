@@ -8,9 +8,6 @@
   html {
     scroll-behavior: smooth;
   }
-  @view-transition {
-    navigation: auto;
-  }
 
   /* Staggered entrance: set once by the IntersectionObserver in BaseLayout. */
   .js [data-reveal] {
@@ -41,18 +38,6 @@
   }
   .js .shutter.is-in > img {
     transform: none;
-  }
-
-  /* The incoming page is captured on its first frame: skip entrances so the crossfade lands on real content. */
-  .js:active-view-transition [data-reveal] {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-  .js:active-view-transition .shutter > * {
-    clip-path: inset(0);
-    transform: none;
-    transition: none;
   }
 
   /* One slow drift on the closing photograph. */

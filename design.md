@@ -19,7 +19,7 @@
 ## Key decisions
 
 - **Build-time data**: one fetch per build; a failed fetch fails the build. WHY: fast delivery, no runtime API dependency; deploy never uploads a broken build. `src/lib/api.ts`
-- **No ClientRouter / RouteAnnouncer**: MPA reloads announce the new `<title>` natively; CSS `@view-transition` adds polish under `prefers-reduced-motion: no-preference`. `src/styles/motion.css`
+- **No ClientRouter / RouteAnnouncer / view transitions**: MPA reloads announce the new `<title>` natively. `@view-transition` was removed (jittered against reveal entrances). `src/styles/motion.test.ts`
 - **Plain `<img>` to cdn.dummyjson.com**: `astro:assets` remote optimisation would add ~50 files per Bunny deploy (one curl each) for little offline gain
 - **Vanilla TS over islands**: cook mode + search are ~100–150 lines each; a framework runtime is not worth it
 - **Directory URLs + identity `manifestTransforms`**: keeps `/x/` URLs from the SPA and makes `/x/` hit the precache. `astro.config.mjs`
