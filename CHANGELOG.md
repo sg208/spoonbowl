@@ -7,23 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### Changed
+## [2.0.0] - 2026-10-30
 
-- **Stack (breaking):** Migrated from Vite + React + TanStack Router/Query to Astro 5.18 static output (`build.format: directory`); npm replaced by pnpm 10.34.8. Client JS is vanilla TypeScript only (`src/scripts/{theme,cook-mode,search}.ts`).
-- **Data:** Recipes are fetched once at build time (`fetchAllRecipes`, one `limit=0` request, Zod-parsed); no runtime DummyJSON data calls. A failed fetch now fails the build.
-- **PWA:** Moved to `@vite-pwa/astro`; manifest and Workbox live in `astro.config.mjs`; offline navigation falls back to `/404.html`.
-- **Sitemap:** `/sitemap.xml` is replaced by the generated `/sitemap-index.xml`; `robots.txt` points to it.
-- **Titles:** Cuisine and meal-type listing titles are now unique ("X Cuisine Recipes", "X Meal Recipes").
-- **Accessibility:** Removed `RouteAnnouncer`; full-page navigation announces the new `<title>` natively.
-- **CI:** `deploy.yml` uses `pnpm/action-setup` with a frozen lockfile and runs lint, typecheck, test, build and `check:dist` before the Bunny upload.
-- **Design:** Redesigned around a one-motif bowl half-disc direction (`.taste-skill/notes.md`).
+### Breaking changes
+
+- **Astro static site replaces the React SPA**: Vite + React + TanStack Router/Query are gone. The site is Astro 5.18 static output (`build.format: directory`), and client JS is vanilla TypeScript in `src/scripts/`. The host must serve `/x/` from `x/index.html`.
+- **pnpm only**: npm is replaced by pnpm 10.34.8 (`packageManager` is pinned). `npm install` / `npm ci` and `package-lock.json` no longer apply.
+- **Sitemap URL moved**: `/sitemap.xml` is replaced by `/sitemap-index.xml`, and `robots.txt` points to it. Resubmit it in Search Console.
+- **Build needs DummyJSON**: recipes are fetched once at build time (`fetchAllRecipes`, one `limit=0` request, Zod-parsed). A failed fetch fails the build, and there is no snapshot fallback.
+- **Wrong-slug recipe links 404**: old SPA links with a wrong slug (for example `/recipe/38/anything`) are no longer redirected.
 
 ### Added
 
-- **Cook mode:** Recipe pages get an ingredient checklist, servings stepper (servings and kcal only; DummyJSON ingredients carry no quantities), step pager, and screen wake lock.
-- **Search:** Accessible combobox over the build-time `/search-index.json`.
-- **Offline catalogue:** Every recipe page and the search index are precached, so the whole catalogue works offline.
-- **Tests:** vitest suite (`pnpm test`) and post-build gate `pnpm check:dist`.
+- **Cook mode**: recipe pages have an ingredient checklist, a servings stepper, a step pager and a screen wake lock. The stepper changes servings and kcal only, because DummyJSON ingredients carry no quantities.
+- **Search**: an accessible combobox searches the build-time `/search-index.json`.
+- **Offline catalogue**: every recipe page and the search index are precached, so the whole catalogue works offline.
+- **Tests**: a vitest suite (`pnpm test`) and a post-build gate (`pnpm check:dist`).
+
+### Changed
+
+- **No runtime data calls**: the browser makes no DummyJSON data requests. Images still load from `cdn.dummyjson.com`.
+- **PWA**: now built with `@vite-pwa/astro`. The manifest and Workbox config live in `astro.config.mjs`, and offline navigation falls back to `/404.html`.
+- **Titles**: cuisine and meal-type listing titles are unique ("X Cuisine Recipes", "X Meal Recipes").
+- **Route announcements**: `RouteAnnouncer` is removed. Full-page navigation announces the new `<title>` natively.
+- **CI**: `deploy.yml` uses `pnpm/action-setup` with a frozen lockfile and runs lint, typecheck, test, build and `check:dist` before the Bunny upload.
+- **Design**: the site is redesigned around a bowl half-disc motif (`.taste-skill/notes.md`).
 
 ## [1.5.0] - 2026-04-24
 
@@ -257,6 +265,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+[2.0.0]: https://github.com/sg208/spoonbowl/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/sg208/spoonbowl/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/sg208/spoonbowl/compare/v1.4.0...v1.4.1
 [1.4.0]: https://github.com/sg208/spoonbowl/compare/v1.3.1...v1.4.0
