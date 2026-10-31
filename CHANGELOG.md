@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.0.1] - 2026-10-31
+
+### Changed
+
+- **CI builds on Node 24**: `.github/workflows/deploy.yml` sets `node-version: 24` (was 22), so the deploy build runs on the same Node major as local development.
+
 ## [2.0.0] - 2026-10-30
 
 ### Breaking changes
@@ -265,6 +271,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+[2.0.1]: https://github.com/sg208/spoonbowl/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/sg208/spoonbowl/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/sg208/spoonbowl/compare/v1.4.1...v1.5.0
 [1.4.1]: https://github.com/sg208/spoonbowl/compare/v1.4.0...v1.4.1
