@@ -8,6 +8,6 @@ describe("seo helpers", () => {
   })
 
   it("builds absolute canonical urls on the site origin", () => {
-    expect(toAbsoluteUrl("/recipes/tags/")).toBe("https://spoonbowl.gint.ing/recipes/tags/")
+    expect(toAbsoluteUrl("/recipes/tags/")).toBe("https://spoonbowl.engg.app/recipes/tags/")
   })
 })

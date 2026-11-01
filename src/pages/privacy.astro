@@ -2,15 +2,16 @@
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import { formatPageTitle } from "@/lib/seo"
 
-const PRIVACY_LAST_UPDATED_ISO = "2026-04-23"
-const lastUpdated = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZone: "UTC" }).format(
+const PRIVACY_LAST_UPDATED_ISO = "2026-11-01"
+const lastUpdated = new Intl.DateTimeFormat("en-GB", { dateStyle: "long", timeZone: "UTC" }).format(
   new Date(PRIVACY_LAST_UPDATED_ISO + "T00:00:00Z")
 )
+const linkClass = "underline underline-offset-4 hover:text-accent"
 ---
 
 <BaseLayout
   title={formatPageTitle("Privacy")}
-  description="Spoonbowl's privacy policy — we don't track you, sell your data, or use advertising cookies."
+  description="What Spoonbowl stores in your browser, which services your browser contacts, and what the host sees."
   path="/privacy/"
 >
   <div class="wrap py-12">
@@ -18,97 +19,96 @@ const lastUpdated = new Intl.DateTimeFormat("en-US", { dateStyle: "long", timeZo
       <header class="mb-8">
         <h1 class="page-title">Privacy</h1>
         <p class="muted">
-          Spoonbowl is a small recipe discovery site. We do not run Google Analytics, advertising
-          trackers, or similar analytics products for profiling visitors.
+          Spoonbowl is a static recipe site. It has no accounts, no sign-up forms, no analytics, no
+          advertising and no cookies. We don't collect personal data, and we have none to sell.
         </p>
       </header>
 
       <div class="space-y-8">
-        <section aria-labelledby="privacy-browsing">
-          <h2 id="privacy-browsing" class="mb-3 text-lead font-bold">
-            What you share by simply browsing
+        <section aria-labelledby="privacy-host">
+          <h2 id="privacy-host" class="mb-3 text-lead font-bold">
+            Hosting
           </h2>
           <p class="muted">
-            When you open a page, technical information travels the way it always does on the web:
-            your browser asks servers for files, and those servers see data such as your IP address,
-            the page or file requested, and rough timing. That is ordinary internet plumbing, not
-            something unique to Spoonbowl.
+            The site is served by a Cloudflare Worker from the domain spoonbowl.engg.app, and
+            Cloudflare also runs its DNS. Like any web host, Cloudflare receives the usual request
+            details when your browser asks for a page: your IP address, user agent, the address
+            requested and the time. It may keep these in standard request logs. Cloudflare's own
+            privacy policy covers how it handles that data.
           </p>
         </section>
 
-        <section aria-labelledby="privacy-services">
-          <h2 id="privacy-services" class="mb-3 text-lead font-bold">
-            Who helps us deliver the site
+        <section aria-labelledby="privacy-third-parties">
+          <h2 id="privacy-third-parties" class="mb-3 text-lead font-bold">
+            Other services your browser contacts
           </h2>
-          <p class="muted">We rely on a few services so the site loads and stays online:</p>
           <ul class="muted list-disc space-y-2 pl-6">
             <li>
-              <strong>Cloudflare</strong> sits in front of the domain for DNS and network services
-              (for example routing, security, and performance). Cloudflare processes visitor traffic
-              as part of that role. Its own policies describe what it collects and why.
+              Recipe photos load from <code>cdn.dummyjson.com</code>, the image host for DummyJSON.
+              That server sees the same kind of request details as any web server.
             </li>
             <li>
-              <strong>Bunny.net</strong> hosts and delivers the built application via storage and
-              CDN. When you request a page or file, Bunny.net may process the same kind of technical
-              data as any host or CDN provider.
+              Recipe text comes from <code>dummyjson.com</code>, but only when the site is built.
+              Your browser never requests recipe data from it.
             </li>
             <li>
-              Recipe text and images come from third-party recipe data via API. Your browser loads
-              those assets through the same request path as the app, and image hosts or CDNs
-              involved with that data may see technical data tied to those requests, the way any
-              external content would.
+              Links to GitHub (the source code and the issue tracker) only contact GitHub if you
+              follow them.
             </li>
           </ul>
-        </section>
-
-        <section aria-labelledby="privacy-client">
-          <h2 id="privacy-client" class="mb-3 text-lead font-bold">
-            Fonts, offline cache, and storage
-          </h2>
-          <p class="muted">
-            Fonts are bundled locally where we package them — we avoid remote font services in the
-            page head for our own UI typography. Light, dark, and system theme preference is stored
-            in <strong>browser localStorage</strong> under the key
-            <code>spoonbowl-theme</code> (see
-            <code>ThemeProvider.tsx</code>) so your choice survives visits. The optional sidebar
-            layout primitive in
-            <code>sidebar.tsx</code> can set a first-party <strong>cookie</strong> (
-            <code>sidebar_state</code>) to remember expanded or collapsed chrome when that component
-            is used—Spoonbowl’s current shell does not mount it, but the pattern may appear in
-            future layouts. A service worker may cache pages and same-origin assets on your device
-            for speed and a simple offline fallback; that cache stays on your device. These
-            mechanisms exist to preserve UI choices and technical behavior on this site only, not
-            for marketing, profiling, or cross-site tracking.
+          <p class="muted mt-3">
+            The Jost typeface is bundled with the site, so no font service is contacted.
           </p>
         </section>
 
-        <section aria-labelledby="privacy-children">
-          <h2 id="privacy-children" class="mb-3 text-lead font-bold">
-            Children
+        <section aria-labelledby="privacy-device">
+          <h2 id="privacy-device" class="mb-3 text-lead font-bold">
+            What stays on your device
           </h2>
-          <p class="muted">
-            Spoonbowl is general-audience recipe browsing and is not aimed at collecting data from
-            children. Direct contact channels are not available at the moment; when a clear way to
-            reach us exists, parents and guardians can use it for concerns.
+          <ul class="muted list-disc space-y-2 pl-6">
+            <li>
+              Your light or dark theme choice is saved in localStorage under
+              <code>spoonbowl-theme</code>.
+            </li>
+            <li>
+              Ingredients you tick off in cook mode are saved in localStorage under
+              <code>spoonbowl-checked-</code> followed by the recipe number, so the list survives a
+              reload.
+            </li>
+            <li>
+              A service worker caches the pages, the search index and recipe photos so the site
+              works offline.
+            </li>
+          </ul>
+          <p class="muted mt-3">
+            None of this is sent anywhere. Clearing the site data in your browser removes all of it.
           </p>
         </section>
 
-        <section aria-labelledby="privacy-updates">
-          <h2 id="privacy-updates" class="mb-3 text-lead font-bold">
-            Updates
+        <section aria-labelledby="privacy-contact">
+          <h2 id="privacy-contact" class="mb-3 text-lead font-bold">
+            Questions and changes
           </h2>
           <p class="muted mb-3 text-small">
             Last updated:
             <time datetime={PRIVACY_LAST_UPDATED_ISO}>{lastUpdated}</time>
           </p>
           <p class="muted">
-            If our stack or practices change in a way that matters for privacy, we will update this
-            page to reflect that. This is a transparency page, not a contract; for rules about using
-            the site, see
-            <a href="/terms/" class="underline underline-offset-4 hover:text-accent">
-              Terms of use
+            If the site starts handling data differently, this page will change first. Questions go
+            to the
+            <a
+              href="https://github.com/sg208/spoonbowl/issues"
+              class={linkClass}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub issue tracker<span class="sr-only"> (opens GitHub in a new tab)</span>
             </a>
-            .
+            . The rules for using the site are on the
+            <a href="/terms/" class={linkClass}>
+              terms of use
+            </a>{" "}
+            page.
           </p>
         </section>
       </div>

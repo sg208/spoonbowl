@@ -1,11 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import { formatPageTitle } from "@/lib/seo"
+
+const linkClass = "underline underline-offset-4 hover:text-accent"
 ---
 
 <BaseLayout
   title={formatPageTitle("Terms of use")}
-  description="Terms of use for Spoonbowl — a recipe discovery app for browsing and exploring meals."
+  description="Terms of use for Spoonbowl, a demo recipe site: content as-is, no warranty, third-party recipes and photos."
   path="/terms/"
 >
   <div class="wrap py-12">
@@ -13,92 +15,85 @@ import { formatPageTitle } from "@/lib/seo"
       <header class="mb-8">
         <h1 class="page-title">Terms of use</h1>
         <p class="muted">
-          By using Spoonbowl, you agree to these terms. If something here does not work for you,
-          please stop using the site.
+          Spoonbowl is a demo and portfolio project. It is free to use and has no accounts or paid
+          features.
         </p>
       </header>
 
       <div class="space-y-8">
-        <section aria-labelledby="terms-what">
-          <h2 id="terms-what" class="mb-3 text-lead font-bold">
-            What Spoonbowl is
+        <section aria-labelledby="terms-content">
+          <h2 id="terms-content" class="mb-3 text-lead font-bold">
+            The content
           </h2>
           <p class="muted">
-            Spoonbowl offers recipe discovery for browsing and inspiration — informational, not a
-            cooking service or professional advice. Nothing here replaces qualified help for
-            allergies, health conditions, or special diets. Our
-            <a href="/disclaimer/" class="underline underline-offset-4 hover:text-accent">
-              Disclaimer
-            </a>
-            states content limits; it is part of how we expect the site to be used.
+            Recipes, quantities and photos come from DummyJSON, a public sample-data service. They
+            have not been tested by us and may be wrong or unsuitable for your diet. The
+            <a href="/disclaimer/" class={linkClass}>
+              disclaimer
+            </a>{" "}
+            covers food safety, allergies and dietary labels.
           </p>
         </section>
 
-        <section aria-labelledby="terms-ip">
-          <h2 id="terms-ip" class="mb-3 text-lead font-bold">
-            Intellectual property
+        <section aria-labelledby="terms-warranty">
+          <h2 id="terms-warranty" class="mb-3 text-lead font-bold">
+            No warranty
           </h2>
           <p class="muted">
-            The Spoonbowl name, site design, and original UI copy belong to the project. Recipe text
-            and images come from third-party APIs; they remain subject to those sources&apos; terms
-            and rights. Build dependencies stay under their open-source licenses. Do not copy our
-            branding or scrape in ways that violate those rules.
+            The site and its content are provided as is, without any warranty. It may change, break
+            or go offline at any time. To the extent the law allows, we are not liable for any loss
+            that comes from using it.
           </p>
         </section>
 
-        <section aria-labelledby="terms-third-party">
-          <h2 id="terms-third-party" class="mb-3 text-lead font-bold">
-            Third-party services
+        <section aria-labelledby="terms-ownership">
+          <h2 id="terms-ownership" class="mb-3 text-lead font-bold">
+            Who owns what
           </h2>
           <p class="muted">
-            <strong>Cloudflare</strong> (DNS and network services) and
-            <strong>Bunny.net</strong> (hosting and CDN) help deliver the site. Their terms and
-            policies apply on their side; we summarize visitor-data basics in
-            <a href="/privacy/" class="underline underline-offset-4 hover:text-accent">
-              Privacy
+            Recipe text and photos belong to their owners and fall under DummyJSON's terms. The
+            source code is public on
+            <a
+              href="https://github.com/sg208/spoonbowl"
+              class={linkClass}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub<span class="sr-only"> (opens GitHub in a new tab)</span>
             </a>
-            . Recipe data and outbound links may involve other services we do not control.
+            . The repository has no license file yet, so the code is not licensed for reuse beyond
+            what GitHub's own terms allow. Open-source dependencies keep their own licenses.
           </p>
         </section>
 
         <section aria-labelledby="terms-use">
           <h2 id="terms-use" class="mb-3 text-lead font-bold">
-            Acceptable use
+            Fair use of the site
           </h2>
           <p class="muted">
-            Use Spoonbowl lawfully for personal browsing. Do not probe or overload the site, send
-            malicious code, or run abusive automation.
-          </p>
-        </section>
-
-        <section aria-labelledby="terms-changes">
-          <h2 id="terms-changes" class="mb-3 text-lead font-bold">
-            Changes and availability
-          </h2>
-          <p class="muted">
-            We may change features or these terms. The site may be unavailable at times. We do not
-            promise uninterrupted access.
-          </p>
-        </section>
-
-        <section aria-labelledby="terms-legal">
-          <h2 id="terms-legal" class="mb-3 text-lead font-bold">
-            Warranties, liability, and privacy
-          </h2>
-          <p class="muted">
-            THE SITE IS PROVIDED &quot;AS IS&quot; AND &quot;AS AVAILABLE.&quot; TO THE FULLEST
-            EXTENT PERMITTED BY LAW, SPOONBOWL DISCLAIMS WARRANTIES AND IS NOT LIABLE FOR INDIRECT
-            OR CONSEQUENTIAL DAMAGES FROM YOUR USE. RECIPE INFORMATION MAY BE WRONG OR UNSUITABLE
-            FOR YOUR DIET — SEE THE
-            <a href="/disclaimer/" class="underline underline-offset-4 hover:text-accent">
-              DISCLAIMER
-            </a>
-            . YOUR TOTAL CLAIMS RELATED TO FREE BROWSING ARE CAPPED AT WHAT YOU PAID: ZERO. For how
-            technical data may be processed when you visit, see
-            <a href="/privacy/" class="underline underline-offset-4 hover:text-accent">
-              Privacy
+            Please don't try to overload or attack the site. Bugs and questions are welcome on the
+            <a
+              href="https://github.com/sg208/spoonbowl/issues"
+              class={linkClass}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              issue tracker<span class="sr-only"> (opens GitHub in a new tab)</span>
             </a>
             .
+          </p>
+        </section>
+
+        <section aria-labelledby="terms-privacy">
+          <h2 id="terms-privacy" class="mb-3 text-lead font-bold">
+            Privacy
+          </h2>
+          <p class="muted">
+            What the site stores and which services your browser contacts is on the
+            <a href="/privacy/" class={linkClass}>
+              privacy
+            </a>{" "}
+            page.
           </p>
         </section>
       </div>
