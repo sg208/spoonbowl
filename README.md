@@ -30,21 +30,21 @@ pnpm build && pnpm preview
 
 ## Scripts
 
-| Command             | What it does                                                    |
-| ------------------- | --------------------------------------------------------------- |
-| `pnpm dev`          | Start the Astro dev server                                      |
-| `pnpm build`        | Build the static site into `dist/` (fetches DummyJSON once)     |
-| `pnpm preview`      | Serve the built `dist/` locally                                 |
-| `pnpm typecheck`    | Run `astro check`                                               |
-| `pnpm lint`         | Run ESLint, including the Astro accessibility rules             |
-| `pnpm lint:fix`     | ESLint with `--fix`                                             |
-| `pnpm format`       | Format everything with Prettier                                 |
-| `pnpm format:check` | Check formatting without writing                                |
-| `pnpm fix`          | `lint:fix`, then `format`                                       |
-| `pnpm test`         | Run the Vitest suite once                                       |
-| `pnpm check:dist`   | Check the built `dist/` (run it after `pnpm build`)             |
-| `pnpm check`        | Lint, typecheck, format check and tests in one go               |
-| `pnpm deploy`       | Build, then `wrangler deploy` to Cloudflare                     |
+| Command             | What it does                                                |
+| ------------------- | ----------------------------------------------------------- |
+| `pnpm dev`          | Start the Astro dev server                                  |
+| `pnpm build`        | Build the static site into `dist/` (fetches DummyJSON once) |
+| `pnpm preview`      | Serve the built `dist/` locally                             |
+| `pnpm typecheck`    | Run `astro check`                                           |
+| `pnpm lint`         | Run ESLint, including the Astro accessibility rules         |
+| `pnpm lint:fix`     | ESLint with `--fix`                                         |
+| `pnpm format`       | Format everything with Prettier                             |
+| `pnpm format:check` | Check formatting without writing                            |
+| `pnpm fix`          | `lint:fix`, then `format`                                   |
+| `pnpm test`         | Run the Vitest suite once                                   |
+| `pnpm check:dist`   | Check the built `dist/` (run it after `pnpm build`)         |
+| `pnpm check`        | Lint, typecheck, format check and tests in one go           |
+| `pnpm deploy`       | Build, then `wrangler deploy` to Cloudflare                 |
 
 ## Tests
 
