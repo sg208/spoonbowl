@@ -103,6 +103,5 @@ The live site, `spoonbowl.gint.ing`, is currently served from Railway, and `wran
 
 ## More docs
 
-- `AGENTS.md` collects the rules, commands and gotchas for coding agents
 - `design.md` covers the architecture and the main decisions
 - `CHANGELOG.md` lists the releases
