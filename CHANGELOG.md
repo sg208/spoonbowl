@@ -52,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Titles**: cuisine and meal-type listing titles are unique ("X Cuisine Recipes", "X Meal Recipes").
 - **Route announcements**: `RouteAnnouncer` is removed. Full-page navigation announces the new `<title>` natively.
 - **CI**: `deploy.yml` uses `pnpm/action-setup` with a frozen lockfile and runs lint, typecheck, test, build and `check:dist` before the Bunny upload.
-- **Design**: the site is redesigned around a bowl half-disc motif (`.taste-skill/notes.md`).
+- **Design**: the site is redesigned around a bowl half-disc motif.
 
 ## [1.5.0] - 2026-04-24
 
@@ -103,7 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Footer & mobile menu:** Merged former “Legal” and “Accessibility” into a single **Information** column; `navigationLinks` now exports one **`siteLinks`** list (About, Privacy, Terms of use, Disclaimer, Accessibility). Desktop footer grid uses four columns on large screens.
 - **`MobileBottomNav`:** Home, Search, and Menu icons are grouped, centered, ~1.5× size, inside a **width-fit** centered pill (`left-1/2 -translate-x-1/2 w-fit`) instead of a full-width bar with `justify-between`.
 - **`src/lib/README.md`:** Dropped obsolete `legalDates` mention from the config table.
-- **Tooling:** ESLint and Prettier ignore `.claude/**`, `.claire/**`, and root `CLAUDE.md` so local agent/worktree copies do not break `npm run check`.
+- **Tooling:** ESLint and Prettier ignore local editor and worktree folders so they do not break `npm run check`.
 
 ### Fixed
 
@@ -153,7 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed kebab-case hook files to camelCase (`use-recipe-queries.ts` → `useRecipeQueries.ts`, `use-mobile.ts` → `useMobile.ts`, `use-prefetch-recipe-detail.ts` → `usePrefetchRecipeDetail.ts`, `use-prefetch-cuisines-index.ts` → `usePrefetchCuisinesIndex.ts`); updated all import sites.
 - Renamed `theme-provider.tsx` → `ThemeProvider.tsx` and `mode-toggle.tsx` → `ModeToggle.tsx` for consistent PascalCase component filenames.
 - Reorganised `src/lib/` — domain utilities moved to `src/lib/utils/` (`cuisineUtils`, `difficultyUtils`, `mealTypeUtils`, `tagUtils`) and app-wide constants moved to `src/lib/config/` (`headings`, `legalDates`, `navigationLinks`, `not-found-messages`); all import paths updated.
-- Added `.claude/rules/` to `.gitignore` to prevent local Claude config symlinks from being committed.
+- Ignored local editor config folders in `.gitignore`.
 
 ### Added
 
