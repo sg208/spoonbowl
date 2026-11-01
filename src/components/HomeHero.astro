@@ -1,94 +1,123 @@
 ---
+import type { Recipe } from "@/lib/api"
+import { recipePath } from "@/lib/utils/slug"
+import { totalMinutes } from "@/lib/utils/time"
+
 export interface Props {
   count: number
-  href: string
+  recipe: Recipe
 }
 
-const { count, href } = Astro.props
+const { count, recipe } = Astro.props
+const href = recipePath(recipe)
 ---
 
-<section class="hero" aria-labelledby="hero-heading">
-  <div class="hero__bowl shutter" aria-hidden="true">
-    <span></span>
-  </div>
-  <div class="wrap hero__copy">
+<section class="hero wrap" aria-labelledby="hero-heading">
+  <div class="hero__copy">
     <h1 id="hero-heading" class="display" data-reveal>
-      Cook it
-      <br />
-      offline.
+      Recipes you can cook from.
     </h1>
     <p class="hero__lead text-lead" data-reveal style="--i: 1">
-      {count} recipes, saved on your device. Pick one and cook it step by step.
+      {count} recipes saved on your device. Cook mode walks you through one step at a time, with big
+      buttons for floury hands and the screen kept awake.
     </p>
-    <a href={href} class="bowl-button hero__action" data-reveal style="--i: 2">
-      Pick a recipe
-    </a>
+    <div class="hero__actions" data-reveal style="--i: 2">
+      <a href={`${href}#cook-heading`} class="bowl-button">
+        Try cook mode
+      </a>
+      <a href="/recipes/cuisines/" class="text-link">
+        Browse recipes
+      </a>
+    </div>
   </div>
+  <figure class="hero__stage">
+    <div class="hero__rim" aria-hidden="true"></div>
+    <div class="hero__photo bowl-mask shutter">
+      <img
+        src={recipe.image}
+        alt={recipe.name}
+        width="600"
+        height="600"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+      />
+    </div>
+    <figcaption class="hero__caption">
+      <a href={href} class="text-link">
+        {recipe.name}
+      </a>
+      <span class="muted">
+        {totalMinutes(recipe)} min · serves {recipe.servings}
+      </span>
+    </figcaption>
+  </figure>
 </section>
 
 <style>
   .hero {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    padding-block: 3rem 0;
-  }
-  .hero__bowl {
-    order: 2;
-  }
-  .hero__copy {
-    position: relative;
+    display: grid;
+    gap: 3rem;
+    padding-block: 2.5rem 4rem;
+    align-items: center;
   }
   .hero__lead {
     margin-top: 1.5rem;
-    max-width: 28rem;
+    max-width: 34rem;
+    line-height: 1.5;
   }
-  .hero__action {
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem 1.75rem;
     margin-top: 2rem;
   }
-  .hero__bowl {
-    height: 44vw;
-    width: 130vw;
-    margin: 3rem 0 0 -15vw;
+  .hero__stage {
+    position: relative;
+    width: min(100%, 36rem);
+    margin: 0 auto;
+    padding-top: 4%;
+  }
+  .hero__rim {
+    position: absolute;
+    inset: 26% -4% auto;
+    aspect-ratio: 2 / 1;
+    background: var(--surface-2);
     border-radius: var(--bowl);
-    overflow: hidden;
   }
-  .hero__bowl span {
-    display: block;
+  .hero__photo {
+    position: relative;
+    width: 84%;
+    margin-inline: auto;
+    aspect-ratio: 1 / 0.86;
+  }
+  .hero__photo img {
+    width: 100%;
     height: 100%;
-    background: var(--accent-fill);
+    object-fit: cover;
   }
-  .hero__copy {
+  .hero__caption {
+    position: relative;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  @media (min-width: 768px) and (max-width: 1023px) {
-    .hero__bowl {
-      height: 30vw;
-      margin-top: 2rem;
-    }
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: baseline;
+    gap: 0 0.75rem;
+    margin-top: 1.25rem;
+    text-align: center;
   }
   @media (min-width: 1024px) {
     .hero {
-      flex-direction: row;
-      min-height: max(36rem, calc(100svh - 4.5rem));
-      align-items: center;
-      padding-block: 0;
+      grid-template-columns: 6fr 5fr;
+      gap: 4rem;
+      padding-block: 4rem 2rem;
     }
     .display {
-      font-size: clamp(4rem, 6.4vw, 6.25rem);
+      font-size: clamp(3.5rem, 5.4vw, 5.25rem);
     }
-    .hero__bowl {
-      position: absolute;
-      top: 0;
-      bottom: 0;
-      left: 40%;
-      width: auto;
-      height: auto;
-      aspect-ratio: 2 / 1;
-      margin: 0;
+    .hero__stage {
+      width: 100%;
     }
   }
 </style>

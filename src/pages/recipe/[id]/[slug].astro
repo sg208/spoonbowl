@@ -79,10 +79,13 @@ const description = `${recipe.name} — a ${recipe.difficulty.toLowerCase()} ${r
           </p>
           <h2 class="sr-only">Facts</h2>
           <RecipeMeta recipe={recipe} />
+          <a href="#cook-heading" class="bowl-button mt-8" data-reveal style="--i: 2">
+            Cook this recipe
+          </a>
         </div>
       </header>
     </div>
-    <div class="mt-16">
+    <div class="mt-8">
       <CookMode recipe={recipe} />
     </div>
     {related.length > 0 && (
@@ -101,7 +104,7 @@ const description = `${recipe.name} — a ${recipe.difficulty.toLowerCase()} ${r
     display: grid;
     gap: 2rem;
     padding-block: 1.5rem 3rem;
-    align-items: end;
+    align-items: center;
   }
   .hero-recipe__title {
     max-width: 20ch;
