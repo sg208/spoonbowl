@@ -8,5 +8,8 @@
   "assets": {
     "directory": "dist",
   },
+  "routes": [{ "pattern": "spoonbowl.engg.app", "custom_domain": true }],
+  "workers_dev": false,
+  "preview_urls": false,
   "compatibility_flags": ["nodejs_compat"],
 }

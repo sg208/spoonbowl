@@ -85,7 +85,7 @@ If the site seems stuck on an old version while you work on it, do a hard refres
 
 Pushing to `main` runs `.github/workflows/deploy.yml`. It installs with `pnpm install --frozen-lockfile`, then lints, typechecks, tests, builds and runs `check:dist`. After that it uploads `dist/` to Bunny Storage and purges the Bunny pull zone. A second workflow, `release.yml`, reads the `[Unreleased]` section of `CHANGELOG.md` and, when it has entries, bumps the version, tags a GitHub release and opens a PR that brings the bump back to `develop`.
 
-The live site, `spoonbowl.gint.ing`, is currently served from Railway, and `wrangler.jsonc` sets up a Cloudflare deploy too. The project has not settled on a single host yet.
+The live site is https://spoonbowl.engg.app, served by a Cloudflare Worker (static assets) on the sg208 account and configured in `wrangler.jsonc`. `pnpm deploy` builds and runs `wrangler deploy`; it needs `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` in the environment.
 
 ## Project layout
 
