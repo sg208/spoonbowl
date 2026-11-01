@@ -7,10 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.1.0] - 2026-11-01
+
 ### Added
 
 - **Cook mode remembers your ticks**: ingredient ticks are saved per recipe on the device, with a "2 of 6 gathered" count and a Clear ticks button.
 - **Step mode progress and keys**: a segmented progress bar, larger Previous/Next buttons that stay in reach on phones, and Esc to leave step mode.
+- **Phone menu**: below 640px the header fits in two rows, with the links behind a Menu button. Escape closes it and returns focus, search stays visible, and the links still show without JavaScript.
+- **Search clear button**: the search box has a labelled clear button you can reach with the keyboard. It empties the query, closes the list and puts focus back in the input.
 
 ### Security
 
@@ -19,8 +23,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Tooling**: ESLint 10 with `eslint-plugin-astro` 3, Vitest 5, and `@types/node` 24 to match the Node 24 runtime.
-- **Design refresh**: a quieter, warmer look. Sentence-case Jost headings, a saffron accent on warm charcoal and stone grounds, the bowl motif used at smaller scale, and a home page that leads with cook mode. App icons follow the new palette, and on phones the header fits in two rows with the links behind a Menu button.
-- **Release workflow no longer uses npm**: `release.yml` bumps the `package.json` version with Node and stops staging the missing `package-lock.json`, which made the release step fail.
+- **Design refresh**: a quieter, warmer look. Sentence-case Jost headings, a saffron accent on warm charcoal and stone grounds, and the bowl motif at a smaller scale. App icons follow the new palette.
+- **Home page leads with cook mode**: the hero holds a real dish and links into cook mode, a walkthrough built from a real recipe shows how it works, and every recipe header has a Cook this recipe link.
+- **Release workflow no longer uses npm**: `release.yml` bumps the `package.json` version with Node and stops staging the missing `package-lock.json`, which made the release step fail. It now does nothing when `[Unreleased]` is empty, creates releases with `gh release create`, and skips the backport PR if one is already open.
 
 ## [2.0.1] - 2026-10-31
 
@@ -286,6 +291,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+[2.1.0]: https://github.com/sg208/spoonbowl/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/sg208/spoonbowl/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/sg208/spoonbowl/compare/v1.5.0...v2.0.0
 [1.5.0]: https://github.com/sg208/spoonbowl/compare/v1.4.1...v1.5.0
