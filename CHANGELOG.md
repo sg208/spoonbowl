@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.1] - 2026-11-01
+
+### Changed
+
+- **Deploys run the full gate first**: `pnpm run deploy` now runs `pnpm check`, builds, runs `pnpm check:dist` and only then `wrangler deploy`, so nothing ships without passing lint, typecheck and tests.
+- **No more Bunny deploy on push**: the `.github/workflows/deploy.yml` workflow is gone. Pushing to `main` only runs `release.yml`; the live site is deployed with `pnpm run deploy`.
+- **Privacy page covers error reports**: `/privacy/` now says that Cloudflare asks your browser to report failed connections (Network Error Logging).
+
+### Fixed
+
+- **Links without a trailing slash work again**: once the service worker was installed, opening `/accessibility` or `/privacy` (no trailing slash) showed "Page not found". The service worker now redirects them to the slashed address (`/accessibility/`), offline too, and ignores query strings when it looks up a cached page.
+
 ## [2.2.0] - 2026-11-01
 
 ### Added
@@ -303,6 +315,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+[2.2.1]: https://github.com/sg208/spoonbowl/compare/v2.2.0...v2.2.1
 [2.2.0]: https://github.com/sg208/spoonbowl/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/sg208/spoonbowl/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/sg208/spoonbowl/compare/v2.0.0...v2.0.1
