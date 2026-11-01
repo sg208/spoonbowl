@@ -37,8 +37,12 @@ const page = (title, { skip = true, h1 = 1, main = 1, pwa = true, links = footer
   footer(links) +
   "</body></html>"
 
-const sw = (recipeCount) =>
-  "self.skipWaiting();clientsClaim();/^https:\\/\\/cdn\\.dummyjson\\.com/;[" +
+const swRedirect = "{denylist:[]};Response.redirect(url,301);"
+
+const sw = (recipeCount, { redirect = true } = {}) =>
+  "self.skipWaiting();clientsClaim();/^https:\\/\\/cdn\\.dummyjson\\.com/;" +
+  (redirect ? swRedirect : "") +
+  "[" +
   Array.from({ length: recipeCount }, (_, i) => `{url:"recipe/${i + 1}/s/index.html"}`).join(",") +
   ',{url:"search-index.json"}]'
 
@@ -107,7 +111,7 @@ describe("check-dist", () => {
     const root = makeDist()
     rmSync(join(root, "recipe/7"), { recursive: true })
     write(root, "about/index.html", page("Home | Spoonbowl"))
-    write(root, "sw.js", sw(3))
+    write(root, "sw.js", sw(3, { redirect: false }))
     write(root, "index.html", page("Home | Spoonbowl", { skip: false, h1: 2 }))
     write(root, "robots.txt", "User-agent: *\n")
     write(root, "gdpr/index.html", "<p>no redirect</p>")
@@ -119,6 +123,7 @@ describe("check-dist", () => {
       "recipe/7/s/",
       "duplicate title",
       "precache",
+      "slashless",
       "skip link",
       "h1",
       "robots.txt",
