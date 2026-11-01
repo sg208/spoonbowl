@@ -41,7 +41,7 @@ Astro 7 runs with `@vite-pwa/astro` 1.2 via a `pnpm.peerDependencyRules` overrid
 | `pnpm check:dist` | `scripts/check-dist.mjs` — post-build assertions on `dist/` |
 | `pnpm check`      | lint + typecheck + format:check + test                      |
 | `pnpm fix`        | lint:fix + format — before commit                           |
-| `pnpm deploy`     | `pnpm build` + `wrangler deploy`                            |
+| `pnpm run deploy` | `pnpm build` + `wrangler deploy`                            |
 
 ---
 
