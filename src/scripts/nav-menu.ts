@@ -15,6 +15,10 @@ export const initNavMenu = (): void => {
 
   const handleKeydown = (event: KeyboardEvent): void => {
     if (event.key !== "Escape" || toggle.getAttribute("aria-expanded") !== "true") return
+    // Only when focus is in the menu, so Escape in search or cook mode keeps its own meaning.
+    const target = event.target as Node | null
+    const isInMenu = !!target && (toggle.contains(target) || panel.contains(target))
+    if (!isInMenu) return
     setOpen(false)
     toggle.focus()
   }

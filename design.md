@@ -28,8 +28,8 @@
 
 ## Design system
 
-- **Direction**: taste-skill `one-motif` (seed 1426093563), refined to a quieter register: the bowl half-disc is still the only shape (photo masks, buttons, bullets, footer mark), but at smaller scale; the hero holds a real dish in the bowl instead of a flat accent field. `.taste-skill/notes.md`
+- **Direction**: one-motif, refined to a quieter register: the bowl half-disc is still the only shape (photo masks, buttons, bullets, footer mark), but at smaller scale; the hero holds a real dish in the bowl instead of a flat accent field
 - **Type**: Jost (self-hosted, `@fontsource/jost`), sentence case, weight 500 for headings; page titles one step larger than section titles
 - **Palette**: warm charcoal ground (dark) / stone ground (light); one saffron accent (`#e9a03f` dark, `#8c4a0c` light) on actions, the progress bar and the motif. Every text pair ≥ 4.5:1. Roles in `src/styles/global.css`
 - **Cook mode first**: home hero and recipe header link straight to cook mode; step mode shows a segmented progress bar, a large step, 72px Prev/Next (sticky on phones), Arrow keys + Esc; ingredient ticks persist per recipe (`src/scripts/cook-checklist.ts`, `src/lib/cook/checklist.ts`)
-- **Gate**: taste-skill `inspect.mjs` 0 FAIL at 1440/768/390 for `/`, `/recipes/cuisine/italian/`, a recipe page
+- **Gate**: visual check at 1440/768/390 for `/`, `/recipes/cuisine/italian/`, a recipe page

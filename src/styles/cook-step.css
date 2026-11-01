@@ -67,7 +67,7 @@
   color: var(--accent);
 }
 .cook__tool[aria-pressed="true"]::after {
-  content: " (on)";
+  content: " (on)" / "";
 }
 .cook__keys {
   color: var(--muted);

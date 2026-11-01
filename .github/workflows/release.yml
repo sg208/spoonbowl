@@ -88,16 +88,19 @@ jobs:
             if (unreleasedMatch) {
               const unreleasedContent = unreleasedMatch[1].trim();
               core.setOutput('unreleased', unreleasedContent);
+              core.setOutput('has_changes', unreleasedContent ? 'true' : 'false');
 
               const bump = unreleasedContent.includes('### Added') ? 'minor' : 'patch';
               core.setOutput('bump_type', bump);
             } else {
               core.setOutput('unreleased', '');
+              core.setOutput('has_changes', 'false');
               core.setOutput('bump_type', 'patch');
             }
 
       # Calculate next version from package.json
       - name: Calculate next version
+        if: steps.changelog.outputs.has_changes == 'true'
         id: version
         uses: actions/github-script@v7
         with:
@@ -115,6 +118,7 @@ jobs:
 
       # Update package.json version
       - name: Update package.json
+        if: steps.changelog.outputs.has_changes == 'true'
         env:
           NEXT_VERSION: ${{ steps.version.outputs.next }}
         run: |
@@ -122,6 +126,7 @@ jobs:
 
       # Update CHANGELOG with new version entry
       - name: Update CHANGELOG
+        if: steps.changelog.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
@@ -149,6 +154,7 @@ jobs:
 
       # Prepare release notes: prefer CodeRabbit, fall back to CHANGELOG
       - name: Prepare release notes
+        if: steps.changelog.outputs.has_changes == 'true'
         id: release_notes
         env:
           CODERABBIT_NOTES: ${{ steps.coderabbit.outputs.notes }}
@@ -166,6 +172,7 @@ jobs:
 
       # Commit version bump + CHANGELOG update back to main
       - name: Commit version update
+        if: steps.changelog.outputs.has_changes == 'true'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
@@ -176,25 +183,30 @@ jobs:
 
       # Create GitHub Release
       - name: Create GitHub Release
-        uses: actions/create-release@v1
+        if: steps.changelog.outputs.has_changes == 'true'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ steps.version.outputs.next }}
-          release_name: v${{ steps.version.outputs.next }}
-          body: ${{ steps.release_notes.outputs.notes }}
-          draft: false
-          prerelease: false
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAG: v${{ steps.version.outputs.next }}
+          NOTES: ${{ steps.release_notes.outputs.notes }}
+        run: |
+          printf '%s\n' "$NOTES" | gh release create "$TAG" --title "$TAG" --target main --notes-file -
 
       # Open a PR to backport the version bump back to develop
       - name: Create backport PR to develop
+        if: steps.changelog.outputs.has_changes == 'true'
         uses: actions/github-script@v7
         with:
           script: |
             const newVersion = '${{ steps.version.outputs.next }}';
+            const { owner, repo } = context.repo;
+            const open = await github.rest.pulls.list({ owner, repo, head: `${owner}:main`, base: 'develop', state: 'open' });
+            if (open.data.length > 0) {
+              core.info(`Backport PR already open: ${open.data[0].html_url}`);
+              return;
+            }
             await github.rest.pulls.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
+              owner,
+              repo,
               title: `chore(release): backport v${newVersion} to develop`,
               body: `Syncs the version bump and CHANGELOG update from the v${newVersion} release back to \`develop\`.`,
               head: 'main',

@@ -100,7 +100,7 @@ const isCurrent = (to: string): boolean => (to === "/" ? pathname === "/" : path
     }
   }
   @media (prefers-reduced-motion: reduce) {
-    .nav-toggle::before {
+    :global(.js) .nav-toggle::before {
       transition: none;
     }
   }

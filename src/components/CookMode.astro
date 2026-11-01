@@ -70,7 +70,7 @@ const hasAmounts = recipe.ingredients.some(hasQuantity)
       <div class="cook__col cook__col--gather">
         <div class="cook__subhead">
           <h3 class="cook__sub">Ingredients</h3>
-          <p class="cook__progress" data-check-progress hidden></p>
+          <p class="cook__progress" role="status" data-check-progress hidden></p>
         </div>
         <ul class="cook__ingredients">
           {recipe.ingredients.map((ingredient, i) => (

@@ -7,7 +7,7 @@
 .cook__sr {
   position: absolute;
   width: 1px;
-  height: 1px; /* taste-skill-ignore: visually hidden */
+  height: 1px;
   overflow: hidden;
   clip-path: inset(50%);
   white-space: nowrap;

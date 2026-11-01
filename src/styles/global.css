@@ -2,7 +2,7 @@
 @import "./motion.css";
 @import "./page.css";
 
-/* Palette roles from .taste-skill/notes.md. Dark is the default; light via [data-theme]. */
+/* Palette roles (see design.md). Dark is the default; light via [data-theme]. */
 :root {
   --ground: #16110e;
   --surface: #211a16;

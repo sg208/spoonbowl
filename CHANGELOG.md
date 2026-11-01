@@ -261,7 +261,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Removed
 
-- Bolt.new references: `.bolt/config.json`, README demo link, and default Bolt OG/Twitter image URLs in `index.html`.
+- Bolt.new references: the Bolt config file, README demo link, and default Bolt OG/Twitter image URLs in `index.html`.
 
 ### Changed
 
