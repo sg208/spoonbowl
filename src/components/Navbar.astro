@@ -11,14 +11,14 @@ const isCurrent = (to: string): boolean => (to === "/" ? pathname === "/" : path
   <div class="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
     <a
       href="/"
-      class="inline-flex min-h-12 items-center gap-2 text-lead font-bold"
+      class="inline-flex min-h-12 items-center gap-2 text-lead font-medium"
       aria-label="Spoonbowl home"
     >
       <span class="bowl-bullet" aria-hidden="true" style="width:1em;height:0.5em"></span>
       <span>Spoonbowl</span>
     </a>
     <nav aria-label="Primary" class="order-last w-full sm:order-none sm:w-auto">
-      <ul class="flex items-center gap-x-5 overflow-x-auto whitespace-nowrap">
+      <ul class="flex flex-wrap items-center gap-x-5 whitespace-nowrap">
         {browseLinks.map((link) => (
           <li>
             <a

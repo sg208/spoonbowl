@@ -1,5 +1,5 @@
 const STORAGE_KEY = "spoonbowl-theme"
-const THEME_COLORS = { dark: "#150a06", light: "#f6f1ec" } as const
+const THEME_COLORS = { dark: "#16110e", light: "#f7f3ee" } as const
 
 type Theme = keyof typeof THEME_COLORS
 
