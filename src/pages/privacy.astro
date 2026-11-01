@@ -33,7 +33,9 @@ const linkClass = "underline underline-offset-4 hover:text-accent"
             The site is served by a Cloudflare Worker from the domain spoonbowl.engg.app, and
             Cloudflare also runs its DNS. Like any web host, Cloudflare receives the usual request
             details when your browser asks for a page: your IP address, user agent, the address
-            requested and the time. It may keep these in standard request logs. Cloudflare's own
+            requested and the time. It may keep these in standard request logs. Cloudflare also asks
+            your browser to report failed connections to it (Network Error Logging), so if a page
+            fails to load your browser may send Cloudflare a short error report. Cloudflare's own
             privacy policy covers how it handles that data.
           </p>
         </section>

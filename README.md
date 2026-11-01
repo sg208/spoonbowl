@@ -46,7 +46,7 @@ pnpm build && pnpm preview
 | `pnpm test`         | Run the Vitest suite once                                   |
 | `pnpm check:dist`   | Check the built `dist/` (run it after `pnpm build`)         |
 | `pnpm check`        | Lint, typecheck, format check and tests in one go           |
-| `pnpm run deploy`   | Build, then `wrangler deploy` to Cloudflare                 |
+| `pnpm run deploy`   | `check`, build, `check:dist`, then `wrangler deploy`        |
 
 ## Tests
 
@@ -91,7 +91,7 @@ The live site is a Cloudflare Worker that serves `dist/` as static assets. The c
 pnpm run deploy
 ```
 
-That builds the site and runs `wrangler deploy`. It needs wrangler 4 and the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` environment variables.
+That runs `pnpm check`, builds the site, runs `pnpm check:dist` and then `wrangler deploy`, so nothing ships without passing lint and tests. It needs wrangler 4 and the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` environment variables.
 
 One GitHub workflow runs on pushes to `main`. `release.yml` reads the `[Unreleased]` section of `CHANGELOG.md` and, when it has entries, bumps the version, tags a GitHub release and opens a PR that brings the bump back to `develop`.
 

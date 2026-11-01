@@ -18,7 +18,7 @@
     "test": "vitest run",
     "check:dist": "node scripts/check-dist.mjs",
     "check": "pnpm lint && pnpm typecheck && pnpm format:check && pnpm test",
-    "deploy": "pnpm build && wrangler deploy"
+    "deploy": "pnpm check && pnpm build && pnpm check:dist && wrangler deploy"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.4",
