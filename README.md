@@ -93,7 +93,7 @@ pnpm run deploy
 
 That builds the site and runs `wrangler deploy`. It needs wrangler 4 and the `CLOUDFLARE_API_TOKEN` and `CLOUDFLARE_ACCOUNT_ID` environment variables.
 
-Two GitHub workflows run on pushes to `main`. `deploy.yml` lints, typechecks, tests, builds and runs `check:dist`, then uploads `dist/` to Bunny Storage and purges the Bunny pull zone. That upload is separate from the live site. It reads four repository secrets: `BUNNY_STORAGE_ZONE_NAME`, `BUNNY_STORAGE_ACCESS_KEY`, `BUNNY_PULL_ZONE_ID` and `BUNNY_PULL_ZONE_KEY`. `release.yml` reads the `[Unreleased]` section of `CHANGELOG.md` and, when it has entries, bumps the version, tags a GitHub release and opens a PR that brings the bump back to `develop`.
+One GitHub workflow runs on pushes to `main`. `release.yml` reads the `[Unreleased]` section of `CHANGELOG.md` and, when it has entries, bumps the version, tags a GitHub release and opens a PR that brings the bump back to `develop`.
 
 ## Project layout
 
