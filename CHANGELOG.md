@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Cook mode remembers your ticks**: ingredient ticks are saved per recipe on the device, with a "2 of 6 gathered" count and a Clear ticks button.
+- **Step mode progress and keys**: a segmented progress bar, larger Previous/Next buttons that stay in reach on phones, and Esc to leave step mode.
+
 ### Security
 
 - **Astro 7**: Astro moves from 5.18 to 7.4, which clears the critical and high advisories `pnpm audit` reported for `astro`, `sharp`, `zod` and `esbuild`. `@vite-pwa/astro` stays on 1.2 through a `pnpm.peerDependencyRules` override, because 2.0 builds a broken service worker.
@@ -14,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Tooling**: ESLint 10 with `eslint-plugin-astro` 3, Vitest 5, and `@types/node` 24 to match the Node 24 runtime.
+- **Design refresh**: a quieter, warmer look. Sentence-case Jost headings, a saffron accent on warm charcoal and stone grounds, the bowl motif used at smaller scale, and a home page that leads with cook mode.
 - **Release workflow no longer uses npm**: `release.yml` bumps the `package.json` version with Node and stops staging the missing `package-lock.json`, which made the release step fail.
 
 ## [2.0.1] - 2026-10-31
