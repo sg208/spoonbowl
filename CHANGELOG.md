@@ -19,7 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Tooling**: ESLint 10 with `eslint-plugin-astro` 3, Vitest 5, and `@types/node` 24 to match the Node 24 runtime.
-- **Design refresh**: a quieter, warmer look. Sentence-case Jost headings, a saffron accent on warm charcoal and stone grounds, the bowl motif used at smaller scale, and a home page that leads with cook mode.
+- **Design refresh**: a quieter, warmer look. Sentence-case Jost headings, a saffron accent on warm charcoal and stone grounds, the bowl motif used at smaller scale, and a home page that leads with cook mode. App icons follow the new palette, and on phones the header fits in two rows with the links behind a Menu button.
 - **Release workflow no longer uses npm**: `release.yml` bumps the `package.json` version with Node and stops staging the missing `package-lock.json`, which made the release step fail.
 
 ## [2.0.1] - 2026-10-31
