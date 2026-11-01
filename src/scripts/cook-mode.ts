@@ -2,11 +2,11 @@ import { describePosition } from "@/lib/cook/pager"
 import { clampServings, MAX_SERVINGS, MIN_SERVINGS, scaleIngredient } from "@/lib/cook/scale"
 import { createWakeLock } from "@/lib/cook/wakeLock"
 
-const MISE_TEXT = "Gather everything and check off your ingredients."
+const MISE_TEXT = "Gather everything and tick off your ingredients."
 
 const createBrowserWakeLock = () =>
   createWakeLock({
-    wakeLock: "wakeLock" in navigator ? navigator.wakeLock : undefined, // navigator.wakeLock
+    wakeLock: "wakeLock" in navigator ? navigator.wakeLock : undefined,
     visibilityState: () => document.visibilityState,
     onVisibilityChange: (listener) => {
       document.addEventListener("visibilitychange", listener) // re-acquire when tab is visible again
@@ -14,43 +14,45 @@ const createBrowserWakeLock = () =>
     },
   })
 
-export const initCookMode = (root: HTMLElement): void => {
-  const find = <T extends HTMLElement>(selector: string): T | null =>
+const queryAll = (root: HTMLElement) => {
+  const find = <T extends HTMLElement = HTMLElement>(selector: string) =>
     root.querySelector<T>(selector)
-  const servingsBox = find("[data-cook-servings]")
-  const count = find("[data-servings-count]")
-  const kcalTotal = find("[data-kcal-total]")
-  const servingsStatus = find("[data-servings-status]")
-  const note = find("[data-amounts-note]")
-  const minus = find<HTMLButtonElement>("[data-servings-minus]")
-  const plus = find<HTMLButtonElement>("[data-servings-plus]")
-  const start = find<HTMLButtonElement>("[data-cook-start]")
-  const pager = find("[data-cook-pager]")
-  const counter = find("[data-pager-counter]")
-  const text = find("[data-pager-text]")
-  const pagerStatus = find("[data-pager-status]")
-  const prev = find<HTMLButtonElement>("[data-pager-prev]")
-  const next = find<HTMLButtonElement>("[data-pager-next]")
-  const exit = find<HTMLButtonElement>("[data-pager-exit]")
-  const wakeToggle = find<HTMLButtonElement>("[data-wake-toggle]")
-  if (!servingsBox || !count || !kcalTotal || !servingsStatus || !note || !minus || !plus) return
-  if (
-    !start ||
-    !pager ||
-    !counter ||
-    !text ||
-    !pagerStatus ||
-    !prev ||
-    !next ||
-    !exit ||
-    !wakeToggle
-  )
-    return
+  const parts = {
+    servingsBox: find("[data-cook-servings]"),
+    count: find("[data-servings-count]"),
+    kcalTotal: find("[data-kcal-total]"),
+    servingsStatus: find("[data-servings-status]"),
+    note: find("[data-amounts-note]"),
+    minus: find<HTMLButtonElement>("[data-servings-minus]"),
+    plus: find<HTMLButtonElement>("[data-servings-plus]"),
+    start: find<HTMLButtonElement>("[data-cook-start]"),
+    pager: find("[data-cook-pager]"),
+    bar: find("[data-pager-bar]"),
+    counter: find("[data-pager-counter]"),
+    text: find("[data-pager-text]"),
+    pagerStatus: find("[data-pager-status]"),
+    prev: find<HTMLButtonElement>("[data-pager-prev]"),
+    next: find<HTMLButtonElement>("[data-pager-next]"),
+    exit: find<HTMLButtonElement>("[data-pager-exit]"),
+    wakeToggle: find<HTMLButtonElement>("[data-wake-toggle]"),
+  }
+  const isComplete = Object.values(parts).every(Boolean)
+  return isComplete
+    ? (parts as { [K in keyof typeof parts]: NonNullable<(typeof parts)[K]> })
+    : null
+}
+
+export const initCookMode = (root: HTMLElement): void => {
+  const parts = queryAll(root)
+  if (!parts) return
+  const { servingsBox, count, kcalTotal, servingsStatus, note, minus, plus, start } = parts
+  const { pager, bar, counter, text, pagerStatus, prev, next, exit, wakeToggle } = parts
 
   const baseServings = Number(root.dataset.baseServings) || 1
   const kcalPerServing = Number(root.dataset.kcal) || 0
   const hasAmounts = root.dataset.hasAmounts === "true"
   const labels = [...root.querySelectorAll<HTMLElement>("[data-ingredient]")]
+  const segments = [...bar.children]
   const steps = [...root.querySelectorAll<HTMLElement>("[data-steps] > li")].map(
     (item) => item.textContent ?? ""
   )
@@ -84,6 +86,9 @@ export const initCookMode = (root: HTMLElement): void => {
     const view = describePosition(state.position, steps.length)
     counter.textContent = view.counter
     text.textContent = state.position === 0 ? MISE_TEXT : (steps[state.position - 1] ?? "")
+    segments.forEach((segment, index) =>
+      segment.classList.toggle("is-done", index <= state.position)
+    )
     setDisabled(prev, view.isFirst, next)
     next.textContent = view.nextLabel
     pagerStatus.textContent = `${view.counter}. ${text.textContent}`
@@ -101,7 +106,10 @@ export const initCookMode = (root: HTMLElement): void => {
     start.hidden = true
     pager.hidden = false
     renderPager()
-    next.focus()
+    // Wide screens keep the checklist beside the step; phones jump straight to the step.
+    const scrollTarget = window.matchMedia("(min-width: 900px)").matches ? root : pager
+    scrollTarget.scrollIntoView({ block: "start" })
+    next.focus({ preventScroll: true })
     void setWake(wakeLock.isSupported)
   }
 
@@ -120,9 +128,12 @@ export const initCookMode = (root: HTMLElement): void => {
   }
 
   const handleKeydown = (event: KeyboardEvent): void => {
-    if (root.dataset.mode !== "step") return
+    if (root.dataset.mode !== "step" || event.altKey || event.ctrlKey || event.metaKey) return
     if (event.key === "ArrowRight") handleStep(1)
     else if (event.key === "ArrowLeft") handleStep(-1)
+    else if (event.key === "Escape") handleExit()
+    else return
+    event.preventDefault()
   }
 
   servingsBox.hidden = false

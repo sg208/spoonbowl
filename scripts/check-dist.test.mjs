@@ -63,8 +63,8 @@ const makeDist = () => {
     "manifest.webmanifest",
     JSON.stringify({
       name: "Spoonbowl - Recipe Discovery",
-      theme_color: "#f97316",
-      background_color: "#fffbeb",
+      theme_color: "#16110e",
+      background_color: "#16110e",
       icons: [
         { src: "/icons/icon-192x192.png", sizes: "192x192" },
         { src: "/icons/icon-512x512.png", sizes: "512x512" },

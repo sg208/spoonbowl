@@ -54,7 +54,7 @@ const { groups } = Astro.props
     color: var(--accent);
   }
   .menu__group {
-    margin-top: 7rem;
+    margin-top: 4.5rem;
     scroll-margin-top: 1rem;
   }
   .menu__head {
@@ -65,10 +65,9 @@ const { groups } = Astro.props
     margin-bottom: 1.5rem;
   }
   .menu__head h3 {
-    font-size: var(--text-head);
-    font-weight: 700;
+    font-size: clamp(1.5rem, 1rem + 1.6vw, 2.25rem);
+    font-weight: 500;
     line-height: 1;
     letter-spacing: -0.03em;
-    text-transform: uppercase;
   }
 </style>

@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Cook mode remembers your ticks**: ingredient ticks are saved per recipe on the device, with a "2 of 6 gathered" count and a Clear ticks button.
+- **Step mode progress and keys**: a segmented progress bar, larger Previous/Next buttons that stay in reach on phones, and Esc to leave step mode.
+
 ### Security
 
 - **Astro 7**: Astro moves from 5.18 to 7.4, which clears the critical and high advisories `pnpm audit` reported for `astro`, `sharp`, `zod` and `esbuild`. `@vite-pwa/astro` stays on 1.2 through a `pnpm.peerDependencyRules` override, because 2.0 builds a broken service worker.
@@ -14,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - **Tooling**: ESLint 10 with `eslint-plugin-astro` 3, Vitest 5, and `@types/node` 24 to match the Node 24 runtime.
+- **Design refresh**: a quieter, warmer look. Sentence-case Jost headings, a saffron accent on warm charcoal and stone grounds, the bowl motif used at smaller scale, and a home page that leads with cook mode. App icons follow the new palette, and on phones the header fits in two rows with the links behind a Menu button.
 - **Release workflow no longer uses npm**: `release.yml` bumps the `package.json` version with Node and stops staging the missing `package-lock.json`, which made the release step fail.
 
 ## [2.0.1] - 2026-10-31
@@ -46,7 +52,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Titles**: cuisine and meal-type listing titles are unique ("X Cuisine Recipes", "X Meal Recipes").
 - **Route announcements**: `RouteAnnouncer` is removed. Full-page navigation announces the new `<title>` natively.
 - **CI**: `deploy.yml` uses `pnpm/action-setup` with a frozen lockfile and runs lint, typecheck, test, build and `check:dist` before the Bunny upload.
-- **Design**: the site is redesigned around a bowl half-disc motif (`.taste-skill/notes.md`).
+- **Design**: the site is redesigned around a bowl half-disc motif.
 
 ## [1.5.0] - 2026-04-24
 
@@ -97,7 +103,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **Footer & mobile menu:** Merged former “Legal” and “Accessibility” into a single **Information** column; `navigationLinks` now exports one **`siteLinks`** list (About, Privacy, Terms of use, Disclaimer, Accessibility). Desktop footer grid uses four columns on large screens.
 - **`MobileBottomNav`:** Home, Search, and Menu icons are grouped, centered, ~1.5× size, inside a **width-fit** centered pill (`left-1/2 -translate-x-1/2 w-fit`) instead of a full-width bar with `justify-between`.
 - **`src/lib/README.md`:** Dropped obsolete `legalDates` mention from the config table.
-- **Tooling:** ESLint and Prettier ignore `.claude/**`, `.claire/**`, and root `CLAUDE.md` so local agent/worktree copies do not break `npm run check`.
+- **Tooling:** ESLint and Prettier ignore local editor and worktree folders so they do not break `npm run check`.
 
 ### Fixed
 
@@ -147,7 +153,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Renamed kebab-case hook files to camelCase (`use-recipe-queries.ts` → `useRecipeQueries.ts`, `use-mobile.ts` → `useMobile.ts`, `use-prefetch-recipe-detail.ts` → `usePrefetchRecipeDetail.ts`, `use-prefetch-cuisines-index.ts` → `usePrefetchCuisinesIndex.ts`); updated all import sites.
 - Renamed `theme-provider.tsx` → `ThemeProvider.tsx` and `mode-toggle.tsx` → `ModeToggle.tsx` for consistent PascalCase component filenames.
 - Reorganised `src/lib/` — domain utilities moved to `src/lib/utils/` (`cuisineUtils`, `difficultyUtils`, `mealTypeUtils`, `tagUtils`) and app-wide constants moved to `src/lib/config/` (`headings`, `legalDates`, `navigationLinks`, `not-found-messages`); all import paths updated.
-- Added `.claude/rules/` to `.gitignore` to prevent local Claude config symlinks from being committed.
+- Ignored local editor config folders in `.gitignore`.
 
 ### Added
 

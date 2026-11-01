@@ -30,7 +30,7 @@ const imageUrl = image ?? toAbsoluteUrl("/icons/icon-512x512.png")
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalUrl} />
-    <meta name="theme-color" content="#150a06" />
+    <meta name="theme-color" content="#16110e" />
     <script is:inline>
       document.documentElement.classList.add("js")
       // Set the theme before first paint to avoid a flash (localStorage, else system preference).
@@ -42,7 +42,7 @@ const imageUrl = image ?? toAbsoluteUrl("/icons/icon-512x512.png")
         document.documentElement.dataset.theme = isLight ? "light" : "dark"
         document
           .querySelector('meta[name="theme-color"]')
-          .setAttribute("content", isLight ? "#f6f1ec" : "#150a06")
+          .setAttribute("content", isLight ? "#f7f3ee" : "#16110e")
       } catch {
         document.documentElement.dataset.theme = "dark"
       }

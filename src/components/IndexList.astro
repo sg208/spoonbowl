@@ -27,7 +27,7 @@ const { items, label } = Astro.props
           <span class="bowl-bullet" aria-hidden="true" />
         )}
         <span class="min-w-0">
-          <span class="item-name block text-lead font-bold leading-tight">{item.name}</span>
+          <span class="item-name block text-lead font-medium leading-tight">{item.name}</span>
           <span class="muted block text-small">
             {item.count} {item.count === 1 ? "recipe" : "recipes"}
             {item.note ? ` · ${item.note}` : ""}

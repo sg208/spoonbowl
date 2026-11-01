@@ -19,7 +19,12 @@ const minutes = totalMinutes(recipe)
     <p data-reveal style="--i: 1">
       {recipe.name}: {minutes} minutes, serves {recipe.servings}.
     </p>
-    <a href={recipePath(recipe)} class="bowl-button mt-6" data-reveal style="--i: 2">
+    <a
+      href={`${recipePath(recipe)}#cook-heading`}
+      class="bowl-button mt-6"
+      data-reveal
+      style="--i: 2"
+    >
       Start cooking
     </a>
   </div>
@@ -67,7 +72,7 @@ const minutes = totalMinutes(recipe)
     left: -20vw;
     width: 140vw;
     height: 70vw;
-    background: var(--accent-fill);
+    background: var(--ground);
     border-radius: var(--bowl);
   }
   .cta__object img {

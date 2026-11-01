@@ -11,7 +11,7 @@ const points = [
   { title: "Whole cookbook offline", text: "Saved on your device after the first visit." },
   { title: "Cook mode", text: "One step at a time, with big buttons for floury hands." },
   { title: "Screen stays on", text: "Keep the screen awake while you cook, where supported." },
-  { title: "Servings scaler", text: "Change the servings and the quantities follow." },
+  { title: "Servings scaler", text: "Change the servings and the calories follow." },
   { title: "Search", text: "Find a recipe by name or cuisine, even with no signal." },
 ]
 ---
@@ -77,15 +77,6 @@ const points = [
     font-size: var(--text-lead);
     font-weight: 500;
   }
-  .features__grid li:nth-child(3n + 1) .bowl-bullet {
-    background: var(--accent-fill);
-  }
-  .features__grid li:nth-child(3n + 2) .bowl-bullet {
-    background: var(--ink);
-  }
-  .features__grid li:nth-child(3n) .bowl-bullet {
-    background: var(--muted);
-  }
   @media (min-width: 640px) {
     .features__grid {
       grid-template-columns: repeat(2, 1fr);
@@ -108,9 +99,6 @@ const points = [
     }
     .features__body {
       padding-inline: 0 3rem;
-    }
-    .features__grid {
-      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>
