@@ -2,6 +2,11 @@ import { defineConfig } from "astro/config"
 import sitemap from "@astrojs/sitemap"
 import tailwindcss from "@tailwindcss/vite"
 import AstroPWA from "@vite-pwa/astro"
+import {
+  isSlashlessNavigation,
+  redirectToTrailingSlash,
+  slashlessPagePattern,
+} from "./src/lib/pwa/trailingSlash.mjs"
 
 export default defineConfig({
   site: "https://spoonbowl.engg.app",
@@ -38,11 +43,15 @@ export default defineConfig({
         skipWaiting: true,
         clientsClaim: true,
         navigateFallback: "/404.html",
+        navigateFallbackDenylist: [slashlessPagePattern],
         directoryIndex: "index.html",
+        // Static pages never read the query string, so `/x/?ref=y` should still hit the precache.
+        ignoreURLParametersMatching: [/.*/],
         // Keep literal `x/index.html` precache urls; the integration's default rewrites them to
         // slashless `x`, which misses `/x/` requests and makes install fetch URLs the host may not serve.
         manifestTransforms: [async (entries) => ({ manifest: entries, warnings: [] })],
         runtimeCaching: [
+          { urlPattern: isSlashlessNavigation, handler: redirectToTrailingSlash },
           {
             urlPattern: /^https:\/\/cdn\.dummyjson\.com/,
             handler: "CacheFirst",
