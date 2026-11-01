@@ -1,0 +1,44 @@
+---
+import "@/styles/cook-step.css"
+
+export interface Props {
+  stepCount: number
+}
+
+const { stepCount } = Astro.props
+// Position 0 is mise en place, then one segment per step.
+const segments = Array.from({ length: stepCount + 1 }, (_, index) => index)
+---
+
+<p class="cook__sr" role="status" aria-live="polite" data-pager-status></p>
+<div class="cook__pager" data-cook-pager hidden>
+  <div class="cook__bar" aria-hidden="true" data-pager-bar>
+    {segments.map(() => (
+      <span></span>
+    ))}
+  </div>
+  <p class="cook__counter" data-pager-counter></p>
+  <p class="cook__step" data-pager-text></p>
+  <div class="cook__nav">
+    <button type="button" class="cook__btn" data-pager-prev aria-keyshortcuts="ArrowLeft">
+      Previous
+    </button>
+    <button
+      type="button"
+      class="cook__btn cook__btn--primary"
+      data-pager-next
+      aria-keyshortcuts="ArrowRight"
+    >
+      Next
+    </button>
+  </div>
+  <div class="cook__tools">
+    <button type="button" class="cook__tool" data-pager-exit aria-keyshortcuts="Escape">
+      Exit cook mode
+    </button>
+    <button type="button" class="cook__tool" data-wake-toggle aria-pressed="false" hidden>
+      Keep screen on
+    </button>
+    <p class="cook__keys">Arrow keys step through, Esc exits.</p>
+  </div>
+</div>
