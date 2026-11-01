@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Security
+
+- **Astro 7**: Astro moves from 5.18 to 7.4, which clears the critical and high advisories `pnpm audit` reported for `astro`, `sharp`, `zod` and `esbuild`. `@vite-pwa/astro` stays on 1.2 through a `pnpm.peerDependencyRules` override, because 2.0 builds a broken service worker.
+
+### Changed
+
+- **Tooling**: ESLint 10 with `eslint-plugin-astro` 3, Vitest 5, and `@types/node` 24 to match the Node 24 runtime.
+- **Release workflow no longer uses npm**: `release.yml` bumps the `package.json` version with Node and stops staging the missing `package-lock.json`, which made the release step fail.
+
 ## [2.0.1] - 2026-10-31
 
 ### Changed

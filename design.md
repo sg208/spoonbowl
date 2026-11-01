@@ -2,7 +2,7 @@
 
 ## Architecture
 
-- **Shape**: Astro 5 static site (`output: static`, `build.format: directory`) — `astro.config.mjs`
+- **Shape**: Astro 7 static site (`output: static`, `build.format: directory`) — `astro.config.mjs`
 - **Pages**: `src/pages/**` → one HTML file per route; dynamic routes via `getStaticPaths` from the catalogue
 - **Client JS**: vanilla TS only — `src/scripts/{theme,cook-mode,search,showcase}.ts`; no UI framework
 - **Styles**: Tailwind v4 + tokens `src/styles/global.css`; motion `src/styles/motion.css`; cook mode `src/styles/cook.css`
@@ -23,7 +23,7 @@
 - **Plain `<img>` to cdn.dummyjson.com**: `astro:assets` remote optimisation would add ~50 files per Bunny deploy (one curl each) for little offline gain
 - **Vanilla TS over islands**: cook mode + search are ~100–150 lines each; a framework runtime is not worth it
 - **Directory URLs + identity `manifestTransforms`**: keeps `/x/` URLs from the SPA and makes `/x/` hit the precache. `astro.config.mjs`
-- **Astro pinned to 5.x**: `@vite-pwa/astro` 1.2 peers Astro ≤5
+- **`@vite-pwa/astro` held at 1.2 on Astro 7**: 1.2 peers Astro ≤5 (overridden in `package.json` `pnpm.peerDependencyRules`); 2.0 emits a `sw.js` with unresolved `@vite-pwa/workbox-swkit` imports
 - **Cook mode scaling**: DummyJSON ingredients have no quantities (0/417), so servings + kcal scale and the page says so. `src/lib/cook/scale.ts`
 
 ## Design system
