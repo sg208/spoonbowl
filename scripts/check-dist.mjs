@@ -112,6 +112,10 @@ const checkServiceWorker = () => {
     if (!sw.includes(needle)) fail(`sw.js missing ${needle}`)
   })
   if (!/cdn\\?\.dummyjson\\?\.com/.test(sw)) fail("sw.js missing cdn.dummyjson.com runtime rule")
+  // Pages build to `x/index.html`; without the redirect, slashless `/x` navigations get the 404 page.
+  if (!/denylist:/.test(sw) || !/Response\.redirect\(/.test(sw)) {
+    fail("sw.js missing the slashless /x → /x/ navigation redirect")
+  }
   const precached = count(sw, /url:\s*["']recipe\//g)
   if (precached < 50) fail(`sw.js precache has ${precached} recipe/ urls, expected >= 50`)
 }
