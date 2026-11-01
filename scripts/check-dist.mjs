@@ -156,6 +156,7 @@ const FOOTER_LINKS = [
   "/accessibility/",
   "/privacy/",
   "/terms/",
+  "/disclaimer/",
   "https://github.com/sg208/spoonbowl",
 ]
 
@@ -206,7 +207,7 @@ const run = () => {
   checkTitles(files.filter((file) => file.endsWith(".html")))
   checkLandmarks("home", "index.html")
   checkLandmarks("listing page", "recipes/cuisines/index.html")
-  ;["accessibility", "privacy", "terms"].forEach((name) =>
+  ;["accessibility", "privacy", "terms", "disclaimer"].forEach((name) =>
     checkLandmarks(`${name} page`, `${name}/index.html`)
   )
 }

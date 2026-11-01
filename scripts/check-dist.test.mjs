@@ -24,6 +24,7 @@ const footerHrefs = [
   "/accessibility/",
   "/privacy/",
   "/terms/",
+  "/disclaimer/",
   "https://github.com/sg208/spoonbowl",
 ]
 
