@@ -116,4 +116,4 @@ Two GitHub workflows run on pushes to `main`. `deploy.yml` lints, typechecks, te
 
 ## License
 
-The repository has no license file yet, so no open-source license applies to the code. Recipe text and photos come from DummyJSON and belong to their owners.
+The code is MIT licensed (see `LICENSE`). Recipe text and photos come from DummyJSON and belong to their owners.
