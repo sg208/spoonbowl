@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.0] - 2026-11-01
+
+### Added
+
+- **Accessibility, privacy and terms pages**: `/accessibility/`, `/privacy/` and `/terms/` describe what the site does today: the WCAG 2.2 AA target and its known gaps, the two localStorage keys, the service worker cache, and as-is terms of use. The footer links all three.
+- **Source on GitHub**: the footer links the public repository, and the code is MIT-licensed (`LICENSE`).
+
+### Changed
+
+- **New address, spoonbowl.engg.app**: a Cloudflare Worker serves the site (`wrangler.jsonc`), deployed with `pnpm run deploy`. Canonical URLs, the sitemap and `robots.txt` use the new domain.
+- **About and disclaimer pages**: the hosting copy names Cloudflare only, and questions go to the GitHub issue tracker.
+
 ## [2.1.0] - 2026-11-01
 
 ### Added
@@ -291,6 +303,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Dependencies updated for ESLint 9, Prettier 3, and related tooling.
 
 [0.0.2]: https://github.com/sg208/spoonbowl/compare/v0.0.1...v0.0.2
+[2.2.0]: https://github.com/sg208/spoonbowl/compare/v2.1.0...v2.2.0
 [2.1.0]: https://github.com/sg208/spoonbowl/compare/v2.0.1...v2.1.0
 [2.0.1]: https://github.com/sg208/spoonbowl/compare/v2.0.0...v2.0.1
 [2.0.0]: https://github.com/sg208/spoonbowl/compare/v1.5.0...v2.0.0
