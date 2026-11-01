@@ -4,7 +4,7 @@ import tailwindcss from "@tailwindcss/vite"
 import AstroPWA from "@vite-pwa/astro"
 
 export default defineConfig({
-  site: "https://spoonbowl.gint.ing",
+  site: "https://spoonbowl.engg.app",
   output: "static",
   build: { format: "directory" },
   integrations: [

@@ -39,16 +39,11 @@ import { formatPageTitle } from "@/lib/seo"
             How it runs
           </h2>
           <p class="muted">
-            Delivery works the same way as other small static-plus-app sites we run: a few
-            infrastructure providers keep DNS, hosting, and routing in place. In broad strokes:
+            Spoonbowl is built ahead of time into static pages. A Cloudflare Worker serves those
+            pages from spoonbowl.engg.app, and Cloudflare also runs the DNS.
           </p>
-          <ul class="muted list-disc space-y-2 pl-6">
-            <li>Cloudflare handles DNS and front-line network services for the domain.</li>
-            <li>Bunny.net hosts and delivers the built application via storage and CDN.</li>
-          </ul>
           <p class="muted">
-            Technical details about what those providers may process when you visit are summarized
-            in the
+            What Cloudflare may log when you visit is covered in the
             <a href="/privacy/" class="underline underline-offset-4 hover:text-accent">
               Privacy
             </a>
@@ -61,8 +56,16 @@ import { formatPageTitle } from "@/lib/seo"
             Contact
           </h2>
           <p class="muted">
-            Spoonbowl is an independent, informal project without a public inbox at the moment. When
-            there is a simple way to get in touch, this page will point to it.
+            There is no public inbox. Questions, bugs and ideas go to the
+            <a
+              href="https://github.com/sg208/spoonbowl/issues"
+              class="underline underline-offset-4 hover:text-accent"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub issue tracker<span class="sr-only"> (opens GitHub in a new tab)</span>
+            </a>
+            .
           </p>
         </section>
       </div>
