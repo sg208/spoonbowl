@@ -12,8 +12,8 @@ export default defineConfig(
       ".astro/**",
       "node_modules/**",
       "coverage/**",
-      ".claude/**",
-      ".taste-skill/**",
+      // Local dot-directories (editor and tool state) are never source.
+      ".*/**",
     ],
   },
   js.configs.recommended,

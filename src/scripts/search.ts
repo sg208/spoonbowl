@@ -7,7 +7,8 @@ export const initSearch = (root: HTMLElement): void => {
   const list = root.querySelector<HTMLElement>("[data-search-list]")
   const empty = root.querySelector<HTMLElement>("[data-search-empty]")
   const status = root.querySelector<HTMLElement>("[data-search-status]")
-  if (!input || !list || !empty || !status) return
+  const clear = root.querySelector<HTMLButtonElement>("[data-search-clear]")
+  if (!input || !list || !empty || !status || !clear) return
 
   const state: { index: SearchEntry[] | null; loading: Promise<void> | null; active: number } = {
     index: null,
@@ -75,7 +76,19 @@ export const initSearch = (root: HTMLElement): void => {
     return state.loading
   }
 
+  const syncClear = (): void => {
+    clear.hidden = input.value === ""
+  }
+
+  const handleClear = (): void => {
+    input.value = ""
+    syncClear()
+    close()
+    input.focus()
+  }
+
   const handleInput = async (): Promise<void> => {
+    syncClear()
     if (!input.value.trim()) return close()
     await load()
     if (state.index) render(filterRecipes(state.index, input.value))
@@ -96,6 +109,7 @@ export const initSearch = (root: HTMLElement): void => {
     } else if (event.key === "Escape") {
       if (!list.hidden || !empty.hidden || input.value) event.preventDefault()
       input.value = ""
+      syncClear()
       close()
     }
   }
@@ -103,6 +117,7 @@ export const initSearch = (root: HTMLElement): void => {
   input.addEventListener("focus", () => void load())
   input.addEventListener("input", () => void handleInput())
   input.addEventListener("keydown", handleKeydown)
+  clear.addEventListener("click", handleClear)
   root.addEventListener("focusout", (event) => {
     if (!root.contains(event.relatedTarget as Node | null)) close()
   })

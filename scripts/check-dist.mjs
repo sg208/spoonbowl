@@ -95,8 +95,8 @@ const checkManifest = () => {
   const manifest = readJson("manifest.webmanifest")
   if (!manifest) return
   if (manifest.name !== "Spoonbowl - Recipe Discovery") fail("manifest name mismatch")
-  if (manifest.theme_color !== "#f97316") fail("manifest theme_color mismatch")
-  if (manifest.background_color !== "#fffbeb") fail("manifest background_color mismatch")
+  if (manifest.theme_color !== "#16110e") fail("manifest theme_color mismatch")
+  if (manifest.background_color !== "#16110e") fail("manifest background_color mismatch")
   const icons = manifest.icons ?? []
   if (icons.length !== 3) fail(`manifest has ${icons.length} icons, expected 3`)
   icons.forEach((icon) => {

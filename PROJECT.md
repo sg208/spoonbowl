@@ -4,9 +4,7 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 **GitHub Copilot:** a condensed mirror lives in [`.github/copilot-instructions.md`](.github/copilot-instructions.md) (stays under Copilot code review's character limit). **This file is canonical** for the full tree and tables.
 
-**Claude Code:** [`CLAUDE.md`](CLAUDE.md) is the token-efficient source of truth Claude reads first — file map, route map, data-fetching decisions, and hard rules. Keep it aligned when architecture changes.
-
-**Maintenance:** When you change architecture, commands, or major conventions here, update [`CLAUDE.md`](CLAUDE.md), [`AGENTS.md`](AGENTS.md), and [`.github/copilot-instructions.md`](.github/copilot-instructions.md).
+**Maintenance:** When you change architecture, commands, or major conventions here, update [`.github/copilot-instructions.md`](.github/copilot-instructions.md) too.
 
 ---
 
@@ -14,18 +12,18 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 | Key            | Value                                                                                                                        |
 | -------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **Stack**      | Astro 5.18 static (`output: static`, `build.format: directory`) + TypeScript + Tailwind CSS v4 (Vite plugin)                 |
+| **Stack**      | Astro 7.4 static (`output: static`, `build.format: directory`) + TypeScript + Tailwind CSS v4 (Vite plugin)                  |
 | **Pages**      | File-based in `src/pages/*`; shell in `src/layouts/BaseLayout.astro`                                                         |
 | **Data**       | Build time only: `src/lib/api.ts` `fetchAllRecipes` (one `limit=0` fetch, Zod 4 parse) → `src/lib/catalog.ts` `getCatalog()` |
 | **Client JS**  | Vanilla TS only: `src/scripts/{theme,cook-mode,search}.ts`                                                                   |
 | **PWA**        | `@vite-pwa/astro` 1.2 — manifest + Workbox in `astro.config.mjs`; `navigateFallback` `/404.html`                             |
 | **SEO**        | `@astrojs/sitemap` → `/sitemap-index.xml`; `public/robots.txt` points to it                                                  |
-| **Tooling**    | pnpm 10.34.8 (`packageManager`), vitest 4, ESLint 9 (+ astro, jsx-a11y), Prettier (+ astro plugin)                           |
+| **Tooling**    | pnpm 10.34.8 (`packageManager`), vitest 5, ESLint 10 (+ astro, jsx-a11y), Prettier (+ astro plugin)                          |
 | **Deploy**     | **Cloudflare** (DNS + network) → **Bunny.net** (storage + CDN); GitHub Actions on push to `main` (`deploy.yml`)              |
 | **Path alias** | `@` → `./src` (`tsconfig.json`, `vitest.config.ts`)                                                                          |
-| **Design**     | One-motif direction (bowl half-disc) — `.taste-skill/notes.md`; competitive report `docs/competitive-report.md`              |
+| **Design**     | One-motif direction (bowl half-disc) — `design.md`; competitive report `docs/competitive-report.md`                          |
 
-Astro is pinned to 5.x because `@vite-pwa/astro` 1.2 supports Astro ≤5.
+Astro 7 runs with `@vite-pwa/astro` 1.2 via a `pnpm.peerDependencyRules` override (1.2 peers Astro ≤5; 2.0 emits a broken `sw.js`).
 
 ---
 
@@ -78,7 +76,7 @@ public/                     robots.txt, icons/
 
 ## Where to change X
 
-See [`CLAUDE.md`](CLAUDE.md) § Where to change X.
+See the project tree above and the folder map in [`STRUCTURE.md`](STRUCTURE.md).
 
 ---
 
@@ -118,7 +116,6 @@ See [`CLAUDE.md`](CLAUDE.md) § Where to change X.
 ### Repo hygiene
 
 - Run `pnpm fix` before pushing; `pnpm check:dist` must pass after `pnpm build`.
-- `.claude/rules/` is git-ignored; `react.md` and `tanstack-query.md` there are legacy.
 - Legal pages (`privacy`, `terms`, `disclaimer`, `accessibility`, `about`): ask before editing.
 
 ### PWA

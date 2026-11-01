@@ -1,101 +1,107 @@
 # Spoonbowl
 
-Recipe discovery **PWA** built with **Astro** as a static site, featuring a cook mode, offline access to the whole catalogue, and a polished, accessible UI.
+Spoonbowl is a recipe site you can cook from. It is a static Astro build that works as a PWA, so once it is installed the whole catalogue is available offline. Every recipe page has a cook mode with an ingredient checklist, a servings stepper, a one-step-at-a-time pager and a screen wake lock so the phone stays on while your hands are busy.
 
-- **Browse recipes** on the home feed and open rich recipe detail pages
-- **Explore by category (tags)**, **meal type**, and **cuisine**
-- **Cook mode** on every recipe: ingredient checklist, servings stepper, step-by-step pager, and screen wake lock
-- **Search** with an accessible combobox over a build-time index
-- **PWA + offline-friendly caching**: the whole catalogue is precached; images are cached at runtime
-- **Light/Dark/System** theme toggle
+You can browse recipes from the home feed, or by category (tags), meal type, cuisine and difficulty. A search box built on an accessible combobox looks recipes up in an index generated at build time. The theme follows your system setting, and you can switch it to light or dark yourself.
 
-## Demo
+## Stack
 
-- **Live demo**: (add link)
+- Astro 7, static output with `build.format: directory`; pages are file routes in `src/pages/`
+- TypeScript, with plain TS for the client scripts in `src/scripts/` (there is no UI framework)
+- Tailwind CSS 4 through its Vite plugin; design tokens are in `src/styles/global.css`
+- Zod 4 checks the recipe data when the site is built
+- `@vite-pwa/astro` and Workbox handle the service worker, configured in `astro.config.mjs`
+- pnpm 10 (pinned in `packageManager`), Vitest 5, ESLint 10 and Prettier
 
-## Tech stack
+You need Node 24 (CI builds on 24) and pnpm. If you have Corepack, `corepack enable` picks up the pinned pnpm version.
 
-- **Production**: **Cloudflare** (DNS + network) → **Bunny.net** (storage + CDN); deployed via GitHub Actions on push to `main`
-- **Astro 5** static output (`build.format: directory`), file-based pages in `src/pages/`
-- **Vanilla TypeScript** for client scripts (`src/scripts/`); no UI framework
-- **Tailwind CSS v4** (design tokens in `src/styles/global.css`)
-- **Zod 4** validates the DummyJSON response at build time
-- **PWA**: `@vite-pwa/astro` + Workbox (configured in `astro.config.mjs`)
-- **pnpm 10** and **vitest 4**
-
-## Quick start
+## Running it
 
 ```bash
 pnpm install
 pnpm dev
 ```
 
-Open the printed local URL (typically `http://localhost:4321`).
-
-### Scripts
+The dev server prints a local URL, usually `http://localhost:4321`. The service worker does not run in dev. To try offline behaviour, build the site and preview it:
 
 ```bash
-pnpm dev          # start dev server
-pnpm build        # production build (fetches DummyJSON once)
-pnpm preview      # preview the built dist
-pnpm typecheck    # astro check
-pnpm lint         # eslint
-pnpm test         # vitest
-pnpm check:dist   # assert the built dist (run after pnpm build)
-pnpm check        # lint + typecheck + format:check + test
-pnpm fix          # lint:fix + format
-pnpm deploy       # build, then wrangler deploy (Cloudflare)
+pnpm build && pnpm preview
 ```
 
-## App routes
+## Scripts
 
-These are generated from `src/pages/`:
+| Command             | What it does                                                |
+| ------------------- | ----------------------------------------------------------- |
+| `pnpm dev`          | Start the Astro dev server                                  |
+| `pnpm build`        | Build the static site into `dist/` (fetches DummyJSON once) |
+| `pnpm preview`      | Serve the built `dist/` locally                             |
+| `pnpm typecheck`    | Run `astro check`                                           |
+| `pnpm lint`         | Run ESLint, including the Astro accessibility rules         |
+| `pnpm lint:fix`     | ESLint with `--fix`                                         |
+| `pnpm format`       | Format everything with Prettier                             |
+| `pnpm format:check` | Check formatting without writing                            |
+| `pnpm fix`          | `lint:fix`, then `format`                                   |
+| `pnpm test`         | Run the Vitest suite once                                   |
+| `pnpm check:dist`   | Check the built `dist/` (run it after `pnpm build`)         |
+| `pnpm check`        | Lint, typecheck, format check and tests in one go           |
+| `pnpm deploy`       | Build, then `wrangler deploy` to Cloudflare                 |
 
-- `/` — recipe feed
-- `/recipe/:id/:slug` — recipe detail
-- `/recipes/tags` and `/recipes/tag/:tag` — browse by category
-- `/recipes/meal-types` and `/recipes/meal-type/:mealType` — browse by meal type
-- `/recipes/cuisines` and `/recipes/cuisine/:cuisine` — browse by cuisine
-- `/recipes/difficulties` and `/recipes/difficulty/:difficulty` — browse by difficulty
-- `/about` — how the site works
-- `/privacy`, `/terms`, `/disclaimer`, `/accessibility` — policy/accessibility pages (`/privacy` includes GDPR/CCPA/CalOPPA notices; `/gdpr` redirects to `/privacy`)
+## Tests
 
-## Data source
+The tests use Vitest and sit next to the code they cover as `src/**/*.test.ts`. They cover the API client and its Zod parsing, the catalogue, listing pages, slugs, time totals, SEO titles, search filtering, and the cook-mode pager, servings scaling and wake lock. One more test, `scripts/check-dist.test.mjs`, checks the dist checker itself.
 
-Spoonbowl reads recipes from **DummyJSON** once, at build time:
+`pnpm check:dist` runs after a build. It confirms that every page has exactly one unique `<title>`, that the manifest and service worker are linked, and that the service worker precaches the recipe pages and caches images from `cdn.dummyjson.com`.
 
-- Request: `https://dummyjson.com/recipes?limit=0`
-- No API keys or environment variables required.
-- No recipe data is requested at runtime; images load from `cdn.dummyjson.com`.
+Before you push, run:
 
-See `fetchAllRecipes` in `src/lib/api.ts` and `getCatalog()` in `src/lib/catalog.ts`.
+```bash
+pnpm check && pnpm build && pnpm check:dist
+```
 
-## Caching & PWA behavior
+## Data
 
-PWA setup lives in `astro.config.mjs` and uses Workbox:
+The recipes come from DummyJSON. The build makes one request to `https://dummyjson.com/recipes?limit=0` and turns the result into static pages. If that request fails, the build fails; there is no snapshot to fall back on. Visitors' browsers never request recipe data, only the images from `cdn.dummyjson.com`. The fetch code is `fetchAllRecipes` in `src/lib/api.ts`, and `getCatalog()` in `src/lib/catalog.ts` builds the catalogue from it.
 
-- **Pages and `search-index.json`**: precached, so the whole catalogue works offline
-- **Recipe images CDN** (`https://cdn.dummyjson.com`): `CacheFirst` at runtime
-- Offline navigation falls back to `/404.html`
+The site needs no API keys or environment variables. The GitHub deploy workflow reads four repository secrets: `BUNNY_STORAGE_ZONE_NAME`, `BUNNY_STORAGE_ACCESS_KEY`, `BUNNY_PULL_ZONE_ID` and `BUNNY_PULL_ZONE_KEY`.
 
-In development, caches can make changes feel “sticky.” If you notice odd behavior, try a hard refresh or unregister the service worker in DevTools.
+## Routes
 
-## Project structure
+- `/` is the recipe feed
+- `/recipe/:id/:slug` is a recipe page with cook mode
+- `/recipes/tags` and `/recipes/tag/:tag` list recipes by category
+- `/recipes/meal-types` and `/recipes/meal-type/:mealType` list them by meal type
+- `/recipes/cuisines` and `/recipes/cuisine/:cuisine` list them by cuisine
+- `/recipes/difficulties` and `/recipes/difficulty/:difficulty` list them by difficulty
+- `/about` explains how the site works
+- `/privacy`, `/terms`, `/disclaimer` and `/accessibility` are the policy pages; `/gdpr` redirects to `/privacy`
 
-- `src/pages/` — pages (Astro file routes)
-- `src/layouts/` — `BaseLayout.astro`
-- `src/lib/` — API, catalogue, slugs, SEO, cook-mode and search logic
-- `src/components/` — Astro components (navbar, cards, cook mode, etc.)
-- `src/scripts/` — vanilla TS client scripts
-- `public/icons/` — PWA icons
+## Offline and caching
 
-## Theming
+Every page and `search-index.json` are precached, so the full catalogue works offline after the first visit. Images from `cdn.dummyjson.com` are cached the first time they load (CacheFirst). An offline navigation the cache can't answer gets `/404.html`.
 
-Theme is controlled by `src/scripts/theme.ts` and stored in localStorage under:
+If the site seems stuck on an old version while you work on it, do a hard refresh or unregister the service worker in DevTools.
 
-- `spoonbowl-theme`
+## Deploying
 
-## Accessibility notes
+Pushing to `main` runs `.github/workflows/deploy.yml`. It installs with `pnpm install --frozen-lockfile`, then lints, typechecks, tests, builds and runs `check:dist`. After that it uploads `dist/` to Bunny Storage and purges the Bunny pull zone. A second workflow, `release.yml`, reads the `[Unreleased]` section of `CHANGELOG.md` and, when it has entries, bumps the version, tags a GitHub release and opens a PR that brings the bump back to `develop`.
 
-- `BaseLayout.astro` provides a skip link to the focusable `main` region (`#main`) for keyboard navigation.
-- Navigation is a full page load, so each new page `<title>` is announced natively by screen readers.
+The live site, `spoonbowl.gint.ing`, is currently served from Railway, and `wrangler.jsonc` sets up a Cloudflare deploy too. The project has not settled on a single host yet.
+
+## Project layout
+
+- `src/pages/` holds the routes
+- `src/layouts/BaseLayout.astro` is the shared layout, and it also links the manifest and the service worker
+- `src/components/` holds the Astro components
+- `src/lib/` holds the API client, catalogue, listing, SEO, search and cook-mode logic
+- `src/scripts/` holds the browser scripts for the theme, cook mode, search and the home showcase
+- `scripts/check-dist.mjs` is the post-build checker
+- `public/` holds the icons and `robots.txt`
+
+## Accessibility
+
+`BaseLayout.astro` has a skip link to the main region (`#main`). Moving between pages loads a full new document, so screen readers announce each page's `<title>` without extra code. ESLint runs the strict `jsx-a11y` rules on every `.astro` file.
+
+## More docs
+
+- `design.md` covers the architecture and the main decisions
+- `CHANGELOG.md` lists the releases

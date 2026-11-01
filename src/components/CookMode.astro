@@ -1,6 +1,7 @@
 ---
 import type { Recipe } from "@/lib/api"
 import { hasQuantity } from "@/lib/cook/scale"
+import CookPager from "@/components/CookPager.astro"
 import "@/styles/cook.css"
 
 export interface Props {
@@ -15,70 +16,84 @@ const hasAmounts = recipe.ingredients.some(hasQuantity)
   class="cook"
   aria-labelledby="cook-heading"
   data-cook
+  data-recipe-id={recipe.id}
   data-base-servings={recipe.servings}
   data-kcal={recipe.caloriesPerServing}
   data-has-amounts={String(hasAmounts)}
 >
-  <div class="wrap cook__inner">
-    <h2 id="cook-heading" class="section-title cook__heading">
-      Cook mode
-    </h2>
-
-    <div class="cook__servings" data-cook-servings hidden>
-      <span id="cook-servings-label">Servings</span>
-      <button
-        type="button"
-        class="cook__btn cook__btn--small"
-        data-servings-minus
-        aria-label="Fewer servings"
-        aria-describedby="cook-servings-label"
-      >
-        −
-      </button>
-      <output class="cook__count" data-servings-count>
-        {recipe.servings}
-      </output>
-      <button
-        type="button"
-        class="cook__btn cook__btn--small"
-        data-servings-plus
-        aria-label="More servings"
-        aria-describedby="cook-servings-label"
-      >
-        +
-      </button>
-      <p class="cook__kcal">
-        <span data-kcal-total>{recipe.caloriesPerServing * recipe.servings}</span> kcal in total
-      </p>
-      <p class="cook__note" data-amounts-note hidden>
-        Amounts aren't listed for these ingredients, so only servings and calories change.
-      </p>
-      <p class="cook__sr" role="status" aria-live="polite" data-servings-status></p>
+  <div class="wrap">
+    <div class="cook__head">
+      <div>
+        <h2 id="cook-heading" class="section-title">
+          Cook mode
+        </h2>
+        <p class="cook__lede">Gather first, then cook one step at a time.</p>
+      </div>
+      <div class="cook__servings" data-cook-servings hidden>
+        <span id="cook-servings-label" class="cook__servings-label">
+          Servings
+        </span>
+        <div class="cook__stepper">
+          <button
+            type="button"
+            class="cook__btn cook__btn--small"
+            data-servings-minus
+            aria-label="Fewer servings"
+            aria-describedby="cook-servings-label"
+          >
+            −
+          </button>
+          <output class="cook__count" data-servings-count aria-labelledby="cook-servings-label">
+            {recipe.servings}
+          </output>
+          <button
+            type="button"
+            class="cook__btn cook__btn--small"
+            data-servings-plus
+            aria-label="More servings"
+            aria-describedby="cook-servings-label"
+          >
+            +
+          </button>
+        </div>
+        <p class="cook__kcal">
+          <span data-kcal-total>{recipe.caloriesPerServing * recipe.servings}</span> kcal in total
+        </p>
+        <p class="cook__sr" role="status" aria-live="polite" data-servings-status></p>
+      </div>
     </div>
+    <p class="cook__note" data-amounts-note hidden>
+      Amounts aren't listed for these ingredients, so only servings and calories change.
+    </p>
 
     <div class="cook__cols">
-      <div class="cook__col">
-        <h3 class="cook__sub">Ingredients</h3>
+      <div class="cook__col cook__col--gather">
+        <div class="cook__subhead">
+          <h3 class="cook__sub">Ingredients</h3>
+          <p class="cook__progress" role="status" data-check-progress hidden></p>
+        </div>
         <ul class="cook__ingredients">
           {recipe.ingredients.map((ingredient, i) => (
             <li>
-              <input type="checkbox" id={`ingredient-${i}`} />
+              <input type="checkbox" id={`ingredient-${i}`} data-check />
               <label for={`ingredient-${i}`} data-ingredient={ingredient}>
                 {ingredient}
               </label>
             </li>
           ))}
         </ul>
+        <button type="button" class="cook__clear text-link" data-check-clear hidden>
+          Clear ticks
+        </button>
       </div>
 
-      <div class="cook__col">
+      <div class="cook__col cook__col--steps">
         <h3 class="cook__sub">Steps</h3>
         <ol class="cook__steps" data-steps>
           {recipe.instructions.map((step) => (
             <li>{step}</li>
           ))}
         </ol>
-
         <button
           type="button"
           class="cook__btn cook__btn--primary cook__start"
@@ -87,26 +102,7 @@ const hasAmounts = recipe.ingredients.some(hasQuantity)
         >
           Start cooking
         </button>
-
-        <p class="cook__sr" role="status" aria-live="polite" data-pager-status></p>
-        <div class="cook__pager" data-cook-pager hidden>
-          <p class="cook__counter" data-pager-counter></p>
-          <p class="cook__step" data-pager-text></p>
-          <div class="cook__nav">
-            <button type="button" class="cook__btn" data-pager-prev>
-              Previous
-            </button>
-            <button type="button" class="cook__btn cook__btn--primary" data-pager-next>
-              Next
-            </button>
-            <button type="button" class="cook__btn" data-pager-exit>
-              Exit
-            </button>
-            <button type="button" class="cook__btn" data-wake-toggle aria-pressed="false" hidden>
-              Keep screen on
-            </button>
-          </div>
-        </div>
+        <CookPager stepCount={recipe.instructions.length} />
       </div>
     </div>
   </div>
@@ -114,5 +110,9 @@ const hasAmounts = recipe.ingredients.some(hasQuantity)
 
 <script>
   import { initCookMode } from "@/scripts/cook-mode"
-  document.querySelectorAll<HTMLElement>("[data-cook]").forEach(initCookMode)
+  import { initChecklist } from "@/scripts/cook-checklist"
+  document.querySelectorAll<HTMLElement>("[data-cook]").forEach((root) => {
+    initCookMode(root)
+    initChecklist(root)
+  })
 </script>

@@ -11,14 +11,28 @@ const isCurrent = (to: string): boolean => (to === "/" ? pathname === "/" : path
   <div class="wrap flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
     <a
       href="/"
-      class="inline-flex min-h-12 items-center gap-2 text-lead font-bold"
+      class="inline-flex min-h-12 items-center gap-2 text-lead font-medium"
       aria-label="Spoonbowl home"
     >
       <span class="bowl-bullet" aria-hidden="true" style="width:1em;height:0.5em"></span>
       <span>Spoonbowl</span>
     </a>
-    <nav aria-label="Primary" class="order-last w-full sm:order-none sm:w-auto">
-      <ul class="flex items-center gap-x-5 overflow-x-auto whitespace-nowrap">
+    <button
+      type="button"
+      class="nav-toggle"
+      aria-expanded="false"
+      aria-controls="primary-nav"
+      data-nav-toggle
+    >
+      Menu
+    </button>
+    <nav
+      id="primary-nav"
+      aria-label="Primary"
+      class="nav-panel order-last w-full sm:order-none sm:w-auto"
+      data-nav-panel
+    >
+      <ul class="flex flex-wrap items-center gap-x-5 whitespace-nowrap">
         {browseLinks.map((link) => (
           <li>
             <a
@@ -43,3 +57,51 @@ const isCurrent = (to: string): boolean => (to === "/" ? pathname === "/" : path
     </div>
   </div>
 </header>
+
+<script>
+  import { initNavMenu } from "@/scripts/nav-menu"
+  initNavMenu()
+</script>
+
+<style>
+  .nav-toggle {
+    display: none;
+  }
+  @media (max-width: 639px) {
+    /* Without JS the links stay visible; with JS they sit behind the Menu button. */
+    :global(.js) .nav-toggle {
+      display: inline-flex;
+      min-height: 3rem;
+      min-width: 3rem;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0 0.5rem;
+      margin-left: auto;
+      font-size: var(--text-small);
+      font-weight: 500;
+    }
+    :global(.js) .nav-toggle::before {
+      content: "";
+      width: 0.75em;
+      height: 0.375em;
+      background: var(--ink);
+      border-radius: var(--bowl);
+      transition: transform 150ms ease;
+    }
+    :global(.js) .nav-toggle[aria-expanded="true"]::before {
+      background: var(--accent-fill);
+      transform: rotate(180deg);
+    }
+    :global(.js) .nav-panel:not(.is-open) {
+      display: none;
+    }
+    .nav-panel ul {
+      padding-bottom: 0.25rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    :global(.js) .nav-toggle::before {
+      transition: none;
+    }
+  }
+</style>

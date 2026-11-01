@@ -22,7 +22,7 @@
 
 ```text
 src/
-├── pages/                Astro file routes (see CLAUDE.md § Route map)
+├── pages/                Astro file routes (see the project tree in PROJECT.md)
 │   ├── recipe/[id]/[slug].astro
 │   ├── recipes/          cuisine(s), meal-type(s), tag(s), difficulty/difficulties
 │   └── search-index.json.ts   build-time search index endpoint

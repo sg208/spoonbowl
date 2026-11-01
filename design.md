@@ -2,7 +2,7 @@
 
 ## Architecture
 
-- **Shape**: Astro 5 static site (`output: static`, `build.format: directory`) — `astro.config.mjs`
+- **Shape**: Astro 7 static site (`output: static`, `build.format: directory`) — `astro.config.mjs`
 - **Pages**: `src/pages/**` → one HTML file per route; dynamic routes via `getStaticPaths` from the catalogue
 - **Client JS**: vanilla TS only — `src/scripts/{theme,cook-mode,search,showcase}.ts`; no UI framework
 - **Styles**: Tailwind v4 + tokens `src/styles/global.css`; motion `src/styles/motion.css`; cook mode `src/styles/cook.css`
@@ -23,12 +23,13 @@
 - **Plain `<img>` to cdn.dummyjson.com**: `astro:assets` remote optimisation would add ~50 files per Bunny deploy (one curl each) for little offline gain
 - **Vanilla TS over islands**: cook mode + search are ~100–150 lines each; a framework runtime is not worth it
 - **Directory URLs + identity `manifestTransforms`**: keeps `/x/` URLs from the SPA and makes `/x/` hit the precache. `astro.config.mjs`
-- **Astro pinned to 5.x**: `@vite-pwa/astro` 1.2 peers Astro ≤5
+- **`@vite-pwa/astro` held at 1.2 on Astro 7**: 1.2 peers Astro ≤5 (overridden in `package.json` `pnpm.peerDependencyRules`); 2.0 emits a `sw.js` with unresolved `@vite-pwa/workbox-swkit` imports
 - **Cook mode scaling**: DummyJSON ingredients have no quantities (0/417), so servings + kcal scale and the page says so. `src/lib/cook/scale.ts`
 
 ## Design system
 
-- **Direction**: taste-skill `one-motif` (seed 1426093563) — the bowl half-disc is the only shape: hero, photo masks, button, bullets. `.taste-skill/notes.md`
-- **Type**: Jost (self-hosted, `@fontsource/jost`)
-- **Palette**: brand orange accent on dark ground; light theme stone ground. Roles in `src/styles/global.css`
-- **Gate**: taste-skill `inspect.mjs` 0 FAIL at 1440/768/390 for `/`, `/recipes/cuisines/`, a recipe page
+- **Direction**: one-motif, refined to a quieter register: the bowl half-disc is still the only shape (photo masks, buttons, bullets, footer mark), but at smaller scale; the hero holds a real dish in the bowl instead of a flat accent field
+- **Type**: Jost (self-hosted, `@fontsource/jost`), sentence case, weight 500 for headings; page titles one step larger than section titles
+- **Palette**: warm charcoal ground (dark) / stone ground (light); one saffron accent (`#e9a03f` dark, `#8c4a0c` light) on actions, the progress bar and the motif. Every text pair ≥ 4.5:1. Roles in `src/styles/global.css`
+- **Cook mode first**: home hero and recipe header link straight to cook mode; step mode shows a segmented progress bar, a large step, 72px Prev/Next (sticky on phones), Arrow keys + Esc; ingredient ticks persist per recipe (`src/scripts/cook-checklist.ts`, `src/lib/cook/checklist.ts`)
+- **Gate**: visual check at 1440/768/390 for `/`, `/recipes/cuisine/italian/`, a recipe page

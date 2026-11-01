@@ -4,7 +4,4 @@ dist-ssr
 coverage
 .astro/
 pnpm-lock.yaml
-.taste-skill/
-.claude/**
 .claire/**
-CLAUDE.md

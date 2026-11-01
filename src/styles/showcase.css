@@ -1,7 +1,7 @@
 .showcase {
   display: grid;
   gap: 2.5rem;
-  padding-block: 6rem 4rem;
+  padding-block: 5rem 2rem;
 }
 .showcase__list {
   min-width: 0;
@@ -50,7 +50,7 @@
   padding-block: 0.25rem;
   font: inherit;
   font-size: clamp(1.75rem, 2.9vw, 2.75rem);
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.15;
   text-align: left;
   color: var(--muted);
@@ -88,19 +88,18 @@
 @media (max-width: 1023px) {
   .js .showcase__picker {
     display: flex;
-    gap: 1.5rem;
-    overflow-x: auto;
-    scroll-snap-type: x proximity;
+    flex-wrap: wrap;
+    gap: 0 1.25rem;
   }
   .showcase__picker button {
-    flex: none;
+    font-size: 1.25rem;
     white-space: nowrap;
   }
 }
 @media (min-width: 1024px) {
   .showcase {
     grid-template-columns: 1fr 1fr;
-    align-items: end;
+    align-items: center;
     gap: 4rem;
   }
   .showcase__stage {

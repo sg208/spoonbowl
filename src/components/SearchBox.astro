@@ -6,20 +6,32 @@
   <label class="search__label" for="search-input">
     Search recipes
   </label>
-  <input
-    id="search-input"
-    class="search__input"
-    type="search"
-    name="q"
-    autocomplete="off"
-    spellcheck="false"
-    placeholder="Search recipes"
-    role="combobox"
-    aria-expanded="false"
-    aria-controls="search-listbox"
-    aria-autocomplete="list"
-    data-search-input
-  />
+  <div class="search__field">
+    <input
+      id="search-input"
+      class="search__input"
+      type="search"
+      name="q"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Search recipes"
+      role="combobox"
+      aria-expanded="false"
+      aria-controls="search-listbox"
+      aria-autocomplete="list"
+      data-search-input
+    />
+    <button
+      type="button"
+      class="search__clear"
+      aria-label="Clear search"
+      aria-controls="search-input"
+      hidden
+      data-search-clear
+    >
+      <span aria-hidden="true">×</span>
+    </button>
+  </div>
   <div
     id="search-listbox"
     class="search__list"
@@ -46,20 +58,58 @@
   .search__label {
     position: absolute;
     width: 1px;
-    height: 1px; /* taste-skill-ignore: visually hidden */
+    height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;
   }
+  .search__field {
+    position: relative;
+  }
   .search__input {
     width: 100%;
     min-height: 48px;
-    padding: 0 1rem;
+    padding: 0 3rem 0 1rem;
     font: inherit;
     font-size: max(16px, 1rem);
     color: var(--ink);
     background: var(--surface);
-    border: 1px solid var(--muted); /* taste-skill-ignore: form field */
+    border: 1px solid var(--muted);
+  }
+  /* The native clear button is mouse-only and off-palette; ours is a real button. */
+  .search__input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+  .search__clear {
+    position: absolute;
+    top: 50%;
+    right: 0.25rem;
+    display: inline-flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    align-items: center;
+    justify-content: center;
+    translate: 0 -50%;
+    font-size: 1.5rem;
+    line-height: 1;
+    color: var(--muted);
+    cursor: pointer;
+    transition: color 150ms ease;
+  }
+  .search__clear[hidden] {
+    display: none;
+  }
+  .search__clear:hover {
+    color: var(--accent);
+  }
+  .search__clear:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .search__clear {
+      transition: none;
+    }
   }
   .search__input:focus-visible {
     outline: 3px solid var(--accent);
@@ -98,7 +148,7 @@
   .search__status {
     position: absolute;
     width: 1px;
-    height: 1px; /* taste-skill-ignore: visually hidden */
+    height: 1px;
     overflow: hidden;
     clip-path: inset(50%);
     white-space: nowrap;

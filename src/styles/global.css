@@ -2,37 +2,44 @@
 @import "./motion.css";
 @import "./page.css";
 
-/* Palette roles from .taste-skill/notes.md. Dark is the default; light via [data-theme]. */
+/* Palette roles (see design.md). Dark is the default; light via [data-theme]. */
 :root {
-  --ground: #150a06;
-  --surface: #201511;
-  --ink: #f5ede6;
-  --muted: #c9b8ab;
-  --accent: #ff7548;
-  --accent-fill: #ff7548;
-  --on-accent: #150a06;
+  --ground: #16110e;
+  --surface: #211a16;
+  --surface-2: #2b221d;
+  --ink: #f0ebe6;
+  --muted: #bfae9f;
+  --accent: #efab52;
+  --accent-fill: #e9a03f;
+  --on-accent: #1a120d;
   /* The one motif: a half-disc bowl, flat rim on top, round underneath. */
   --bowl: 0 0 50% 50% / 0 0 100% 100%;
   color-scheme: dark;
 }
 
 :root[data-theme="light"] {
-  --ground: #f6f1ec;
-  --surface: #ece4dc;
-  --ink: #1a0f0a;
-  --muted: #5c4a3e;
-  --accent: #c2410c;
+  --ground: #f7f3ee;
+  --surface: #efe8e0;
+  --surface-2: #e6ddd3;
+  --ink: #231a14;
+  --muted: #5f4f43;
+  --accent: #8c4a0c;
+  --accent-fill: #8c4a0c;
+  --on-accent: #fffaf5;
   color-scheme: light;
 }
 
 /* No-JS fallback: follow the system when the theme script has not set data-theme. */
 @media (prefers-color-scheme: light) {
   :root:not([data-theme]) {
-    --ground: #f6f1ec;
-    --surface: #ece4dc;
-    --ink: #1a0f0a;
-    --muted: #5c4a3e;
-    --accent: #c2410c;
+    --ground: #f7f3ee;
+    --surface: #efe8e0;
+    --surface-2: #e6ddd3;
+    --ink: #231a14;
+    --muted: #5f4f43;
+    --accent: #8c4a0c;
+    --accent-fill: #8c4a0c;
+    --on-accent: #fffaf5;
     color-scheme: light;
   }
 }
@@ -41,6 +48,7 @@
   --font-sans: "Jost", ui-sans-serif, system-ui, sans-serif;
   --color-ground: var(--ground);
   --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
   --color-ink: var(--ink);
   --color-muted: var(--muted);
   --color-accent: var(--accent);
@@ -49,8 +57,8 @@
   --text-small: 1rem;
   --text-body: clamp(1.0625rem, 1rem + 0.25vw, 1.1875rem);
   --text-lead: clamp(1.25rem, 1.1rem + 0.7vw, 1.625rem);
-  --text-head: clamp(2rem, 1rem + 4vw, 4.5rem);
-  --text-display: clamp(2.75rem, 15vw, 4rem);
+  --text-head: clamp(1.875rem, 1.1rem + 2.6vw, 3.25rem);
+  --text-display: clamp(2.5rem, 11vw, 3.5rem);
 }
 
 @layer base {
@@ -60,7 +68,11 @@
   h1,
   h2,
   h3 {
-    @apply font-bold;
+    @apply font-medium;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
   }
   :focus-visible {
     outline: 3px solid var(--accent);
@@ -76,15 +88,19 @@
     @apply mx-auto w-full max-w-[96rem] px-5 sm:px-8 lg:px-12;
   }
   .display {
-    @apply text-display font-bold uppercase;
-    letter-spacing: -0.03em;
-    line-height: 0.9;
+    @apply text-display font-medium;
+    letter-spacing: -0.035em;
+    line-height: 1;
   }
   .page-title,
   .section-title {
-    @apply text-head font-bold uppercase;
+    @apply text-head font-medium;
     letter-spacing: -0.03em;
-    line-height: 1;
+    line-height: 1.05;
+  }
+  .page-title {
+    font-size: clamp(2.25rem, 1rem + 4.2vw, 4.75rem);
+    letter-spacing: -0.035em;
   }
   .muted {
     @apply text-muted;
@@ -109,7 +125,7 @@
       filter 150ms ease-out;
   }
   .bowl-button:hover {
-    filter: brightness(1.08);
+    filter: brightness(1.1);
   }
   .bowl-button:active {
     transform: scale(0.97);

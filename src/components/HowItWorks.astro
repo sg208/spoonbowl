@@ -1,103 +1,183 @@
 ---
 import type { Recipe } from "@/lib/api"
+import { recipePath } from "@/lib/utils/slug"
 
 export interface Props {
-  recipes: Recipe[]
+  recipe: Recipe
 }
 
-const { recipes } = Astro.props
-const steps = [
-  { title: "Gather", text: "Tick off ingredients as they land on the counter." },
-  { title: "Cook", text: "Move through the method one step at a time." },
-  { title: "Plate", text: "Serve it, then pick the next recipe." },
-]
+const { recipe } = Astro.props
+const gathered = recipe.ingredients.slice(0, 4)
+const stepCount = recipe.instructions.length
+const stepNumber = Math.min(2, Math.max(1, stepCount))
+const step = recipe.instructions[stepNumber - 1] ?? ""
 ---
 
 <section class="how wrap" aria-labelledby="how-heading">
-  <h2 id="how-heading" class="section-title how__heading" data-reveal>
-    How it works
-  </h2>
-  <ol class="how__steps">
-    {steps.map((step, index) => (
-      <li class={`how__step how__step--${index + 1}`} data-reveal style={`--i: ${index}`}>
-        <div class="how__tile">
-          <img
-            src={recipes[index]?.image}
-            alt={recipes[index]?.name ?? ""}
-            width="400"
-            height="400"
-            loading="lazy"
-            decoding="async"
-            class="bowl-mask"
-          />
+  <div class="how__intro">
+    <h2 id="how-heading" class="section-title" data-reveal>
+      How cook mode works
+    </h2>
+    <p class="text-lead" data-reveal style="--i: 1">
+      Every recipe opens the same way: gather, then cook one step at a time. Here is
+      <a class="text-link" href={`${recipePath(recipe)}#cook-heading`}>
+        {recipe.name}
+      </a>
+      .
+    </p>
+  </div>
+  <ol class="how__stages">
+    <li class="how__stage" data-reveal>
+      <h3>Gather</h3>
+      <p class="muted">Tick ingredients off as they land on the counter.</p>
+      <p class="sr-only">Example checklist:</p>
+      <ul class="how__check" data-ui>
+        {gathered.map((item, index) => (
+          <li class={index < 2 ? "is-done" : ""}>
+            <span class="how__box" aria-hidden="true"></span>
+            {item}
+            {index < 2 && <span class="sr-only">(ticked)</span>}
+          </li>
+        ))}
+      </ul>
+    </li>
+    <li class="how__stage how__stage--cook" data-reveal style="--i: 1">
+      <h3>Cook</h3>
+      <p class="muted">One step fills the screen, and the screen stays awake.</p>
+      <p class="sr-only">Example step:</p>
+      <div class="how__step" data-ui>
+        <p class="how__count">
+          Step {stepNumber} of {Math.max(1, stepCount)}
+        </p>
+        <p class="how__text">{step}</p>
+        <div class="how__keys" aria-hidden="true">
+          <span>Previous</span>
+          <span class="is-primary">Next</span>
         </div>
-        <h3>{step.title}</h3>
-        <p class="muted">{step.text}</p>
-      </li>
-    ))}
+      </div>
+    </li>
+    <li class="how__stage" data-reveal style="--i: 2">
+      <h3>Plate</h3>
+      <p class="muted">Serve it. Your ticks are kept for next time.</p>
+      <div class="how__plate bowl-mask">
+        <img
+          src={recipe.image}
+          alt={recipe.name}
+          width="400"
+          height="400"
+          loading="lazy"
+          decoding="async"
+        />
+      </div>
+    </li>
   </ol>
 </section>
 
 <style>
   .how {
-    padding-block: 6rem 2rem;
+    padding-block: 7rem 2rem;
   }
-  .how__steps {
+  .how__intro {
     display: grid;
-    gap: 2rem;
-    margin-top: 2.5rem;
+    gap: 1rem 4rem;
+    max-width: 72rem;
   }
-  .how__tile {
+  .how__intro p {
+    max-width: 40rem;
+  }
+  .how__stages {
+    display: grid;
+    gap: 1rem;
+    margin-top: 3rem;
+  }
+  .how__stage {
     display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    padding: 1rem 1rem 0;
-  }
-  .how__step--1 .how__tile {
-    height: 34vw;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 1.75rem 1.5rem 2rem;
     background: var(--surface);
   }
-  .how__step--2 .how__tile {
-    height: 46vw;
-    background: var(--ink);
+  .how__stage--cook {
+    background: var(--surface-2);
   }
-  .how__step--3 .how__tile {
-    height: 62vw;
+  .how__stage h3 {
+    font-size: var(--text-lead);
+  }
+  .how__check {
+    margin-top: 1rem;
+  }
+  .how__check li {
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    min-height: 3rem;
+  }
+  .how__check .is-done {
+    color: var(--muted);
+    text-decoration: line-through;
+  }
+  .how__box {
+    width: 1.375rem;
+    height: 1.375rem;
+    flex: none;
+    border: 2px solid var(--muted);
+  }
+  .is-done .how__box {
+    border-color: var(--accent-fill);
     background: var(--accent-fill);
   }
-  .how__tile img {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-  }
-  .how__step h3 {
+  .how__step {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
     margin-top: 1rem;
+  }
+  .how__count {
+    color: var(--muted);
+  }
+  .how__text {
+    margin-top: 0.5rem;
     font-size: var(--text-lead);
     font-weight: 500;
+    line-height: 1.3;
   }
-  @media (min-width: 768px) {
-    .how__steps {
-      grid-template-columns: 3fr 4fr 5fr;
+  .how__keys {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 1.5rem;
+  }
+  .how__keys span {
+    display: inline-flex;
+    min-height: 3rem;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+    background: var(--ground);
+    border-radius: var(--bowl);
+    padding-bottom: 0.25rem;
+  }
+  .how__keys .is-primary {
+    flex: 1.4;
+    background: var(--accent-fill);
+    color: var(--on-accent);
+  }
+  .how__plate {
+    margin-top: 1rem;
+    aspect-ratio: 1 / 0.8;
+  }
+  .how__plate img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  @media (min-width: 900px) {
+    .how__intro {
+      grid-template-columns: 1fr 1fr;
       align-items: end;
-      gap: 0.625rem;
     }
-    .how__tile {
-      padding: 1.5rem 0 0;
-      aspect-ratio: 1 / 1.1;
-    }
-    .how__step--1 .how__tile,
-    .how__step--2 .how__tile,
-    .how__step--3 .how__tile {
-      height: auto;
-    }
-    .how__tile img {
-      height: auto;
-      width: 100%;
-      aspect-ratio: 1 / 0.9;
-    }
-    .how__step h3,
-    .how__step p {
-      padding-right: 1rem;
+    .how__stages {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

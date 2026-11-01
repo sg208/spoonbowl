@@ -8,20 +8,18 @@ import HowItWorks from "@/components/HowItWorks.astro"
 import HomeCta from "@/components/HomeCta.astro"
 import { getCatalog } from "@/lib/catalog"
 import { formatPageTitle } from "@/lib/seo"
-import { recipePath } from "@/lib/utils/slug"
 
 const { featured, mealTypes, recipes } = await getCatalog()
 const showcaseCuisines = ["Italian", "Japanese", "Mexican", "Thai", "Moroccan"]
 const dishes = showcaseCuisines.flatMap((cuisine) => {
-  const dish = recipes.find((recipe) => recipe.cuisine === cuisine)
+  const dish = recipes.find((recipe) => recipe.cuisine === cuisine && recipe.id !== featured.id)
   return dish ? [dish] : []
 })
 const menuGroups = [...mealTypes]
   .sort((left, right) => right.recipes.length - left.recipes.length)
   .slice(0, 4)
-const stageRecipes = [recipes[5], recipes[10], recipes[15]].flatMap((recipe) =>
-  recipe ? [recipe] : []
-)
+const walkthrough = recipes[5] ?? featured
+const closing = recipes[15] ?? featured
 const browse = [
   { to: "/recipes/cuisines/", label: "Cuisine" },
   { to: "/recipes/meal-types/", label: "Meal type" },
@@ -35,11 +33,11 @@ const browse = [
   description="Discover delicious recipes from around the world. Explore cuisines, meal types, and difficulty levels — then cook something worth eating."
   path="/"
 >
-  <HomeHero count={recipes.length} href={recipePath(featured)} />
+  <HomeHero count={recipes.length} recipe={featured} />
   <Showcase dishes={dishes} />
   <MenuList groups={menuGroups} />
   <Features recipe={recipes[20] ?? featured} />
-  <HowItWorks recipes={stageRecipes} />
+  <HowItWorks recipe={walkthrough} />
   <section class="wrap browse" aria-labelledby="browse-heading">
     <h2 id="browse-heading" class="section-title" data-reveal>
       Browse by
@@ -52,7 +50,7 @@ const browse = [
       ))}
     </p>
   </section>
-  <HomeCta recipe={featured} />
+  <HomeCta recipe={closing} />
 </BaseLayout>
 
 <style>
