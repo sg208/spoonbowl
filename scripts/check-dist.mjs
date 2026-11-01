@@ -152,6 +152,14 @@ const checkTitles = (htmlFiles) => {
   })
 }
 
+const FOOTER_LINKS = [
+  "/accessibility/",
+  "/privacy/",
+  "/terms/",
+  "/disclaimer/",
+  "https://github.com/sg208/spoonbowl",
+]
+
 const checkLandmarks = (label, path) => {
   if (!has(path)) return
   const html = read(path)
@@ -170,6 +178,10 @@ const checkLandmarks = (label, path) => {
   ;['rel="manifest"', "/registerSW.js"].forEach((needle) => {
     if (!html.includes(needle))
       fail(`${label}: missing PWA hook ${needle} — add it to src/layouts/BaseLayout.astro <head>`)
+  })
+  const footer = html.match(/<footer[\s>][\s\S]*<\/footer>/)?.[0] ?? ""
+  FOOTER_LINKS.forEach((href) => {
+    if (!footer.includes(`href="${href}"`)) fail(`${label}: footer missing link to ${href}`)
   })
 }
 
@@ -195,6 +207,9 @@ const run = () => {
   checkTitles(files.filter((file) => file.endsWith(".html")))
   checkLandmarks("home", "index.html")
   checkLandmarks("listing page", "recipes/cuisines/index.html")
+  ;["accessibility", "privacy", "terms", "disclaimer"].forEach((name) =>
+    checkLandmarks(`${name} page`, `${name}/index.html`)
+  )
 }
 
 run()

@@ -1,5 +1,5 @@
 export const SITE_NAME = "Spoonbowl"
-export const SITE_URL = "https://spoonbowl.gint.ing"
+export const SITE_URL = "https://spoonbowl.engg.app"
 
 export const formatPageTitle = (title: string): string => `${title} | ${SITE_NAME}`
 

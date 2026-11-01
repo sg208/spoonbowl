@@ -10,18 +10,18 @@ Repository mini-memory and shared context for planning, onboarding, and **AI-ass
 
 ## Quick facts
 
-| Key            | Value                                                                                                                        |
-| -------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| **Stack**      | Astro 7.4 static (`output: static`, `build.format: directory`) + TypeScript + Tailwind CSS v4 (Vite plugin)                  |
-| **Pages**      | File-based in `src/pages/*`; shell in `src/layouts/BaseLayout.astro`                                                         |
-| **Data**       | Build time only: `src/lib/api.ts` `fetchAllRecipes` (one `limit=0` fetch, Zod 4 parse) → `src/lib/catalog.ts` `getCatalog()` |
-| **Client JS**  | Vanilla TS only: `src/scripts/{theme,cook-mode,search}.ts`                                                                   |
-| **PWA**        | `@vite-pwa/astro` 1.2 — manifest + Workbox in `astro.config.mjs`; `navigateFallback` `/404.html`                             |
-| **SEO**        | `@astrojs/sitemap` → `/sitemap-index.xml`; `public/robots.txt` points to it                                                  |
-| **Tooling**    | pnpm 10.34.8 (`packageManager`), vitest 5, ESLint 10 (+ astro, jsx-a11y), Prettier (+ astro plugin)                          |
-| **Deploy**     | **Cloudflare** (DNS + network) → **Bunny.net** (storage + CDN); GitHub Actions on push to `main` (`deploy.yml`)              |
-| **Path alias** | `@` → `./src` (`tsconfig.json`, `vitest.config.ts`)                                                                          |
-| **Design**     | One-motif direction (bowl half-disc) — `design.md`; competitive report `docs/competitive-report.md`                          |
+| Key            | Value                                                                                                                         |
+| -------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| **Stack**      | Astro 7.4 static (`output: static`, `build.format: directory`) + TypeScript + Tailwind CSS v4 (Vite plugin)                   |
+| **Pages**      | File-based in `src/pages/*`; shell in `src/layouts/BaseLayout.astro`                                                          |
+| **Data**       | Build time only: `src/lib/api.ts` `fetchAllRecipes` (one `limit=0` fetch, Zod 4 parse) → `src/lib/catalog.ts` `getCatalog()`  |
+| **Client JS**  | Vanilla TS only: `src/scripts/{theme,cook-mode,search}.ts`                                                                    |
+| **PWA**        | `@vite-pwa/astro` 1.2 — manifest + Workbox in `astro.config.mjs`; `navigateFallback` `/404.html`                              |
+| **SEO**        | `@astrojs/sitemap` → `/sitemap-index.xml`; `public/robots.txt` points to it                                                   |
+| **Tooling**    | pnpm 10.34.8 (`packageManager`), vitest 5, ESLint 10 (+ astro, jsx-a11y), Prettier (+ astro plugin)                           |
+| **Deploy**     | Cloudflare Worker static assets (`wrangler.jsonc`) at spoonbowl.engg.app; `pnpm run deploy`. `deploy.yml` (Bunny) is separate |
+| **Path alias** | `@` → `./src` (`tsconfig.json`, `vitest.config.ts`)                                                                           |
+| **Design**     | One-motif direction (bowl half-disc) — `design.md`; competitive report `docs/competitive-report.md`                           |
 
 Astro 7 runs with `@vite-pwa/astro` 1.2 via a `pnpm.peerDependencyRules` override (1.2 peers Astro ≤5; 2.0 emits a broken `sw.js`).
 
@@ -41,7 +41,7 @@ Astro 7 runs with `@vite-pwa/astro` 1.2 via a `pnpm.peerDependencyRules` overrid
 | `pnpm check:dist` | `scripts/check-dist.mjs` — post-build assertions on `dist/` |
 | `pnpm check`      | lint + typecheck + format:check + test                      |
 | `pnpm fix`        | lint:fix + format — before commit                           |
-| `pnpm deploy`     | `pnpm build` + `wrangler deploy`                            |
+| `pnpm run deploy` | `pnpm build` + `wrangler deploy`                            |
 
 ---
 
@@ -126,5 +126,5 @@ See the project tree above and the folder map in [`STRUCTURE.md`](STRUCTURE.md).
 
 ### Deploy risks
 
-- Bunny must serve `/x/` → `x/index.html`; verify on the pull zone before merging to `main`.
+- Bunny upload (`deploy.yml`) is not the live host; if it is used, the pull zone must serve `/x/` → `x/index.html`.
 - `/sitemap.xml` is replaced by `/sitemap-index.xml`.

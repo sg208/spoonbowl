@@ -11,7 +11,7 @@ Repository-wide context for Copilot Chat, PR review, and coding agents. This fil
 | Data      | Build time only — `src/lib/api.ts` `fetchAllRecipes`, `src/lib/catalog.ts`  |
 | Client JS | Vanilla TS only — `src/scripts/{theme,cook-mode,search}.ts`                 |
 | PWA       | `@vite-pwa/astro` — `astro.config.mjs` Workbox                              |
-| Hosting   | **Cloudflare** (DNS / network edge) + **Bunny.net** (storage + CDN)         |
+| Hosting   | Cloudflare Worker static assets (`wrangler.jsonc`) — spoonbowl.engg.app     |
 | Tooling   | pnpm 10.34.8, vitest 5, Zod 4; alias `@` → `./src`                          |
 
 ## Commands

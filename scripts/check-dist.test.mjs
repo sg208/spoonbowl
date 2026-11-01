@@ -17,12 +17,24 @@ const write = (root, path, content) => {
 const pwaHead =
   '<link rel="manifest" href="/manifest.webmanifest" /><script src="/registerSW.js"></script>'
 
-const page = (title, { skip = true, h1 = 1, main = 1, pwa = true } = {}) =>
+const footer = (hrefs) =>
+  `<footer>${hrefs.map((href) => `<a href="${href}">x</a>`).join("")}</footer>`
+
+const footerHrefs = [
+  "/accessibility/",
+  "/privacy/",
+  "/terms/",
+  "/disclaimer/",
+  "https://github.com/sg208/spoonbowl",
+]
+
+const page = (title, { skip = true, h1 = 1, main = 1, pwa = true, links = footerHrefs } = {}) =>
   `<!doctype html><html><head><title>${title}</title>${pwa ? pwaHead : ""}</head><body>` +
   (skip ? '<a href="#main">Skip</a>' : '<a href="/x">x</a>') +
   '<main id="main">'.repeat(main) +
   "<h1>H</h1>".repeat(h1) +
   "</main>".repeat(main) +
+  footer(links) +
   "</body></html>"
 
 const sw = (recipeCount) =>
@@ -76,7 +88,7 @@ const makeDist = () => {
   write(root, "icons/icon-512x512.png", "x")
   write(root, "sw.js", sw(50))
   write(root, "sitemap-index.xml", "<sitemapindex/>")
-  write(root, "robots.txt", "Sitemap: https://spoonbowl.gint.ing/sitemap-index.xml\n")
+  write(root, "robots.txt", "Sitemap: https://spoonbowl.engg.app/sitemap-index.xml\n")
   return root
 }
 
@@ -100,6 +112,7 @@ describe("check-dist", () => {
     write(root, "robots.txt", "User-agent: *\n")
     write(root, "gdpr/index.html", "<p>no redirect</p>")
     write(root, "recipes/cuisines/index.html", page("cuisines | Spoonbowl", { pwa: false }))
+    write(root, "terms/index.html", page("terms | Spoonbowl", { links: ["/privacy/"] }))
     const result = run(root)
     expect(result.status).toBe(1)
     ;[
@@ -111,6 +124,7 @@ describe("check-dist", () => {
       "robots.txt",
       "gdpr",
       "listing page: missing PWA hook",
+      "terms page: footer missing link to https://github.com/sg208/spoonbowl",
     ].forEach((fragment) => expect(result.stderr).toContain(fragment))
   })
 })

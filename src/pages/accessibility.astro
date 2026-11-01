@@ -1,11 +1,13 @@
 ---
 import BaseLayout from "@/layouts/BaseLayout.astro"
 import { formatPageTitle } from "@/lib/seo"
+
+const linkClass = "underline underline-offset-4 hover:text-accent"
 ---
 
 <BaseLayout
   title={formatPageTitle("Accessibility")}
-  description="Spoonbowl's accessibility statement — our commitment to WCAG 2.1 Level AA compliance."
+  description="Spoonbowl's accessibility statement: the WCAG 2.2 AA target, what is in place, known gaps and how to report a problem."
   path="/accessibility/"
 >
   <div class="wrap py-12">
@@ -13,75 +15,69 @@ import { formatPageTitle } from "@/lib/seo"
       <header class="mb-8">
         <h1 class="page-title">Accessibility</h1>
         <p class="muted">
-          When we say &quot;accessibility,&quot; we mean the basics: more people can find their way
-          around, read the text, use a keyboard where it matters, and not get lost in layout or
-          wording. Spoonbowl treats that as part of doing the project well — not as an extra polish
-          layer at the end.
+          Spoonbowl aims to meet the Web Content Accessibility Guidelines (WCAG) 2.2 at level AA.
+          This statement was written on <time datetime="2026-11-01">1 November 2026</time>.
         </p>
       </header>
 
       <div class="space-y-8">
-        <section aria-labelledby="accessibility-today">
-          <h2 id="accessibility-today" class="mb-3 text-lead font-bold">
-            What we aim for today
+        <section aria-labelledby="accessibility-done">
+          <h2 id="accessibility-done" class="mb-3 text-lead font-bold">
+            What is in place
           </h2>
           <ul class="muted list-disc space-y-2 pl-6">
             <li>
-              Clear page structure (landmarks such as header, main navigation, main content, and
-              footer).
+              Every page has a skip link to the main content, plus header, navigation, main and
+              footer landmarks.
+            </li>
+            <li>Each page loads as a full document with its own title and one main heading.</li>
+            <li>Keyboard focus is always visible.</li>
+            <li>
+              Search is a combobox you can drive from the keyboard, and it announces the number of
+              results to screen readers.
             </li>
             <li>
-              Interactive pieces (such as the menu) built so keyboard and screen-reader users can
-              open, move through, and close them where applicable.
+              Cook mode announces step changes, and its ingredient checklist uses real checkboxes.
             </li>
+            <li>Animations are reduced when your system asks for reduced motion.</li>
+            <li>The theme follows your system setting, and you can switch to light or dark.</li>
             <li>
-              Readable type and color choices we control, with calm contrast so browsing stays easy
-              on the eyes.
+              Every <code>.astro</code> file is linted with the strict
+              <code>jsx-a11y</code> rules before it ships.
             </li>
-            <li>Meaningful headings on list and detail pages so you can skim and jump.</li>
           </ul>
         </section>
 
-        <section aria-labelledby="accessibility-imperfect">
-          <h2 id="accessibility-imperfect" class="mb-3 text-lead font-bold">
-            We are not perfect
+        <section aria-labelledby="accessibility-limits">
+          <h2 id="accessibility-limits" class="mb-3 text-lead font-bold">
+            Known limitations
           </h2>
-          <p class="muted">
-            Spoonbowl is small and changes over time. We test in browsers and with automated checks,
-            but we do not catch everything. A combination of device, assistive technology, and
-            personal preference can still surface barriers we have not seen yet. If you hit one, it
-            is real, even if this page says we try hard.
-          </p>
+          <ul class="muted list-disc space-y-2 pl-6">
+            <li>
+              Recipe text and photos come from DummyJSON, which provides no image descriptions.
+              Photos next to a recipe name, and purely decorative ones, have empty alt text; the
+              rest use the recipe name.
+            </li>
+            <li>Recipes are only available in English.</li>
+          </ul>
         </section>
 
-        <section aria-labelledby="accessibility-improving">
-          <h2 id="accessibility-improving" class="mb-3 text-lead font-bold">
-            Still improving
+        <section aria-labelledby="accessibility-report">
+          <h2 id="accessibility-report" class="mb-3 text-lead font-bold">
+            Reporting a problem
           </h2>
           <p class="muted">
-            We revisit layouts, copy, and behavior as the site grows. When we learn about a problem,
-            we want to fix it or explain honestly if a fix will take longer. Accessibility is
-            ongoing work, not a one-time checkbox.
-          </p>
-        </section>
-
-        <section aria-labelledby="accessibility-feedback">
-          <h2 id="accessibility-feedback" class="mb-3 text-lead font-bold">
-            If something is hard to use
-          </h2>
-          <p class="muted">
-            You can report barriers on
+            If something gets in your way, open an issue on
             <a
               href="https://github.com/sg208/spoonbowl/issues"
+              class={linkClass}
               target="_blank"
               rel="noopener noreferrer"
-              aria-label="Report an accessibility issue for Spoonbowl on GitHub (opens in a new tab)"
             >
-              GitHub Issues
+              GitHub<span class="sr-only"> (opens GitHub issues in a new tab)</span>
             </a>
-            . Include what you were trying to do, what blocked you, and—if you know them—your
-            device, browser, and assistive technology (for example VoiceOver or NVDA). A public
-            GitHub account is required to open an issue.
+            . Say which page you were on, what you were trying to do, and your browser and any
+            assistive technology you use. Opening an issue needs a free GitHub account.
           </p>
         </section>
       </div>
