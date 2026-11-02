@@ -131,6 +131,13 @@ describe("check-dist", () => {
         repo: '<a href="https://github.com/sg208/spoonbowl">Source on GitHub</a>',
       })
     )
+    write(
+      root,
+      "accessibility/index.html",
+      page("accessibility | Spoonbowl", {
+        repo: repoIcon.replace("sg208/spoonbowl", "sg208/other"),
+      })
+    )
     const result = run(root)
     expect(result.status).toBe(1)
     ;[
@@ -146,6 +153,7 @@ describe("check-dist", () => {
       "terms page: footer missing link to /disclaimer/",
       "privacy page: expected exactly 1 GitHub link outside <main>, found 2",
       "disclaimer page: footer GitHub link needs aria-label",
+      "accessibility page: footer missing link to https://github.com/sg208/spoonbowl",
     ].forEach((fragment) => expect(result.stderr).toContain(fragment))
   })
 })
