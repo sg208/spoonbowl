@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.2] - 2026-11-02
+
+### Changed
+
+- **Quieter source link**: the footer's "Source on GitHub" text link is now a small GitHub icon next to the copyright, the only GitHub link in the site chrome. `pnpm check:dist` checks there is exactly one.
+
 ## [2.2.1] - 2026-11-01
 
 ### Changed

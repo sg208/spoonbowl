@@ -17,24 +17,24 @@ const write = (root, path, content) => {
 const pwaHead =
   '<link rel="manifest" href="/manifest.webmanifest" /><script src="/registerSW.js"></script>'
 
-const footer = (hrefs) =>
-  `<footer>${hrefs.map((href) => `<a href="${href}">x</a>`).join("")}</footer>`
+const repoIcon =
+  '<a href="https://github.com/sg208/spoonbowl" aria-label="Source code on GitHub (opens in a new tab)" target="_blank"><svg aria-hidden="true"></svg></a>'
 
-const footerHrefs = [
-  "/accessibility/",
-  "/privacy/",
-  "/terms/",
-  "/disclaimer/",
-  "https://github.com/sg208/spoonbowl",
-]
+const footer = (hrefs, repo) =>
+  `<footer>${hrefs.map((href) => `<a href="${href}">x</a>`).join("")}${repo}</footer>`
 
-const page = (title, { skip = true, h1 = 1, main = 1, pwa = true, links = footerHrefs } = {}) =>
+const footerHrefs = ["/accessibility/", "/privacy/", "/terms/", "/disclaimer/"]
+
+const page = (
+  title,
+  { skip = true, h1 = 1, main = 1, pwa = true, links = footerHrefs, repo = repoIcon } = {}
+) =>
   `<!doctype html><html><head><title>${title}</title>${pwa ? pwaHead : ""}</head><body>` +
   (skip ? '<a href="#main">Skip</a>' : '<a href="/x">x</a>') +
   '<main id="main">'.repeat(main) +
   "<h1>H</h1>".repeat(h1) +
   "</main>".repeat(main) +
-  footer(links) +
+  footer(links, repo) +
   "</body></html>"
 
 const swRedirect = "{denylist:[]};Response.redirect(url,301);"
@@ -117,6 +117,27 @@ describe("check-dist", () => {
     write(root, "gdpr/index.html", "<p>no redirect</p>")
     write(root, "recipes/cuisines/index.html", page("cuisines | Spoonbowl", { pwa: false }))
     write(root, "terms/index.html", page("terms | Spoonbowl", { links: ["/privacy/"] }))
+    write(
+      root,
+      "privacy/index.html",
+      page("privacy | Spoonbowl", {
+        repo: `<a href="https://github.com/sg208/spoonbowl">Source on GitHub</a>${repoIcon}`,
+      })
+    )
+    write(
+      root,
+      "disclaimer/index.html",
+      page("disclaimer | Spoonbowl", {
+        repo: '<a href="https://github.com/sg208/spoonbowl">Source on GitHub</a>',
+      })
+    )
+    write(
+      root,
+      "accessibility/index.html",
+      page("accessibility | Spoonbowl", {
+        repo: repoIcon.replace("sg208/spoonbowl", "sg208/other"),
+      })
+    )
     const result = run(root)
     expect(result.status).toBe(1)
     ;[
@@ -129,7 +150,10 @@ describe("check-dist", () => {
       "robots.txt",
       "gdpr",
       "listing page: missing PWA hook",
-      "terms page: footer missing link to https://github.com/sg208/spoonbowl",
+      "terms page: footer missing link to /disclaimer/",
+      "privacy page: expected exactly 1 GitHub link outside <main>, found 2",
+      "disclaimer page: footer GitHub link needs aria-label",
+      "accessibility page: footer missing link to https://github.com/sg208/spoonbowl",
     ].forEach((fragment) => expect(result.stderr).toContain(fragment))
   })
 })

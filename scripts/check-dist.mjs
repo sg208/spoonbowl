@@ -156,13 +156,25 @@ const checkTitles = (htmlFiles) => {
   })
 }
 
-const FOOTER_LINKS = [
-  "/accessibility/",
-  "/privacy/",
-  "/terms/",
-  "/disclaimer/",
-  "https://github.com/sg208/spoonbowl",
-]
+const FOOTER_LINKS = ["/accessibility/", "/privacy/", "/terms/", "/disclaimer/"]
+const REPO_URL = "https://github.com/sg208/spoonbowl"
+const REPO_LABEL = "Source code on GitHub (opens in a new tab)"
+const GITHUB_LINK = /<a\s[^>]*href=["']https:\/\/github\.com[^"']*["'][^>]*>/gi
+
+// Site chrome carries exactly one GitHub link: the footer icon to the repo.
+const checkRepoLink = (label, html, footer) => {
+  const chrome = html.replace(/<main[\s>][\s\S]*<\/main>/, "")
+  const chromeLinks = chrome.match(GITHUB_LINK) ?? []
+  if (chromeLinks.length !== 1)
+    return fail(
+      `${label}: expected exactly 1 GitHub link outside <main>, found ${chromeLinks.length}`
+    )
+  const footerLink = footer.match(GITHUB_LINK)?.[0]
+  if (!footerLink?.includes(`href="${REPO_URL}"`))
+    return fail(`${label}: footer missing link to ${REPO_URL}`)
+  if (!footerLink.includes(`aria-label="${REPO_LABEL}"`))
+    fail(`${label}: footer GitHub link needs aria-label="${REPO_LABEL}"`)
+}
 
 const checkLandmarks = (label, path) => {
   if (!has(path)) return
@@ -187,6 +199,7 @@ const checkLandmarks = (label, path) => {
   FOOTER_LINKS.forEach((href) => {
     if (!footer.includes(`href="${href}"`)) fail(`${label}: footer missing link to ${href}`)
   })
+  checkRepoLink(label, html, footer)
 }
 
 const run = () => {
