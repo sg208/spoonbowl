@@ -1,6 +1,10 @@
 import { filterRecipes, type SearchEntry } from "@/lib/search/filterRecipes"
 
 const INDEX_URL = "/search-index.json"
+// WHY: a stalled connection would leave the load promise pending and search dead until reload.
+const INDEX_TIMEOUT_MS = 10_000
+const NO_MATCH_MESSAGE = "No recipes match"
+const UNAVAILABLE_MESSAGE = "Search is unavailable. Keep typing to retry."
 
 export const initSearch = (root: HTMLElement): void => {
   const input = root.querySelector<HTMLInputElement>("[data-search-input]")
@@ -18,11 +22,11 @@ export const initSearch = (root: HTMLElement): void => {
 
   const getOptions = (): HTMLElement[] => [...list.querySelectorAll<HTMLElement>('[role="option"]')]
 
-  const setActive = (next: number): void => {
+  const setActive = (activeIndex: number): void => {
     const options = getOptions()
-    options.forEach((option, i) => option.setAttribute("aria-selected", String(i === next)))
-    state.active = next
-    const id = options[next]?.id
+    options.forEach((option, i) => option.setAttribute("aria-selected", String(i === activeIndex)))
+    state.active = activeIndex
+    const id = options[activeIndex]?.id
     if (id) input.setAttribute("aria-activedescendant", id)
     else input.removeAttribute("aria-activedescendant")
   }
@@ -52,18 +56,20 @@ export const initSearch = (root: HTMLElement): void => {
       })
     )
     const hasMatches = matches.length > 0
+    empty.textContent = NO_MATCH_MESSAGE
     list.hidden = !hasMatches
     empty.hidden = hasMatches
     input.setAttribute("aria-expanded", String(hasMatches))
     status.textContent = hasMatches
       ? `${matches.length} ${matches.length === 1 ? "recipe" : "recipes"}`
-      : "No recipes match"
+      : NO_MATCH_MESSAGE
     setActive(-1)
   }
 
   const fetchIndex = async (): Promise<void> => {
     try {
-      const response = await fetch(INDEX_URL)
+      const response = await fetch(INDEX_URL, { signal: AbortSignal.timeout(INDEX_TIMEOUT_MS) })
+      if (!response.ok) throw new Error(`search index HTTP ${response.status}`)
       // same-origin build artefact; shape defined by search-index.json.ts
       state.index = (await response.json()) as SearchEntry[]
     } catch {
@@ -91,27 +97,44 @@ export const initSearch = (root: HTMLElement): void => {
     syncClear()
     if (!input.value.trim()) return close()
     await load()
-    if (state.index) render(filterRecipes(state.index, input.value))
+    // WHY: the user may have cleared the box while the index was loading.
+    if (!input.value.trim()) return
+    if (state.index) return render(filterRecipes(state.index, input.value))
+    empty.textContent = UNAVAILABLE_MESSAGE
+    empty.hidden = false
+    status.textContent = UNAVAILABLE_MESSAGE
+  }
+
+  const handleArrow = (event: KeyboardEvent, step: 1 | -1): void => {
+    const count = getOptions().length
+    if (count === 0) return
+    event.preventDefault()
+    setActive((state.active + step + count) % count)
+  }
+
+  const handleEnter = (event: KeyboardEvent): void => {
+    const options = getOptions()
+    const href = options[Math.max(state.active, 0)]?.querySelector("a")?.href
+    event.preventDefault()
+    if (href && options.length > 0) window.location.assign(href)
+  }
+
+  const handleEscape = (event: KeyboardEvent): void => {
+    if (!list.hidden || !empty.hidden || input.value) event.preventDefault()
+    input.value = ""
+    syncClear()
+    close()
+  }
+
+  const keyHandlers: Record<string, (event: KeyboardEvent) => void> = {
+    ArrowDown: (event) => handleArrow(event, 1),
+    ArrowUp: (event) => handleArrow(event, -1),
+    Enter: handleEnter,
+    Escape: handleEscape,
   }
 
   const handleKeydown = (event: KeyboardEvent): void => {
-    const count = getOptions().length
-    if (event.key === "ArrowDown" && count > 0) {
-      event.preventDefault()
-      setActive((state.active + 1) % count)
-    } else if (event.key === "ArrowUp" && count > 0) {
-      event.preventDefault()
-      setActive((state.active - 1 + count) % count)
-    } else if (event.key === "Enter") {
-      const href = getOptions()[Math.max(state.active, 0)]?.querySelector("a")?.href
-      event.preventDefault()
-      if (href && count > 0) window.location.assign(href)
-    } else if (event.key === "Escape") {
-      if (!list.hidden || !empty.hidden || input.value) event.preventDefault()
-      input.value = ""
-      syncClear()
-      close()
-    }
+    keyHandlers[event.key]?.(event)
   }
 
   input.addEventListener("focus", () => void load())

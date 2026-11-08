@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [2.2.3] - 2026-11-08
+
+### Changed
+
+- **Plain listing copy**: cuisine, difficulty, meal-type and tag pages, the home page and the footer now describe the recipes in plain words instead of marketing filler.
+
+### Fixed
+
+- **Build cannot hang on the recipe API**: the build-time DummyJSON fetch now gives up after 30 seconds, and a failed fetch reports its HTTP status.
+- **Search index errors**: the search box now treats an error response for `/search-index.json` as a failed load, gives up after 10 seconds, says "Search is unavailable. Keep typing to retry." on screen and to screen readers, and retries on the next keystroke, instead of trying to read the error page as JSON.
+- **Wake lock wording**: the home page description now calls the screen wake lock optional, since not every browser supports it.
+
 ## [2.2.2] - 2026-11-02
 
 ### Changed
