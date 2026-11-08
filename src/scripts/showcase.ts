@@ -5,7 +5,7 @@ export const initShowcase = (root: HTMLElement): void => {
   const buttons = [...root.querySelectorAll<HTMLButtonElement>("[data-showcase-picker] button")]
   if (!photo || !minutes || !open || buttons.length === 0) return
 
-  const select = (button: HTMLButtonElement): void => {
+  const showDish = (button: HTMLButtonElement): void => {
     buttons.forEach((other) => other.setAttribute("aria-pressed", String(other === button)))
     minutes.textContent = button.dataset.minutes ?? ""
     open.href = button.dataset.href ?? open.href
@@ -22,5 +22,5 @@ export const initShowcase = (root: HTMLElement): void => {
     next.src = button.dataset.image ?? photo.src
   }
 
-  buttons.forEach((button) => button.addEventListener("click", () => select(button)))
+  buttons.forEach((button) => button.addEventListener("click", () => showDish(button)))
 }

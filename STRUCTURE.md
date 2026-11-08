@@ -2,21 +2,21 @@
 
 ## Quick Navigation
 
-| Looking for…           | Go to                                     |
-| ---------------------- | ----------------------------------------- |
-| Pages / routes         | `src/pages/`                              |
-| Document shell + head  | `src/layouts/BaseLayout.astro`            |
-| Shared components      | `src/components/`                         |
-| Client scripts         | `src/scripts/{theme,cook-mode,search}.ts` |
-| API client + types     | `src/lib/api.ts`                          |
-| Catalogue (build time) | `src/lib/catalog.ts`                      |
-| Slugs / recipe paths   | `src/lib/utils/slug.ts`                   |
-| Cook mode logic        | `src/lib/cook/`                           |
-| Search filter          | `src/lib/search/filterRecipes.ts`         |
-| App-wide config        | `src/lib/config/`                         |
-| Global styles + tokens | `src/styles/global.css`                   |
-| PWA + sitemap config   | `astro.config.mjs`                        |
-| Dist assertions        | `scripts/check-dist.mjs`                  |
+| Looking for…           | Go to                                                                      |
+| ---------------------- | -------------------------------------------------------------------------- |
+| Pages / routes         | `src/pages/`                                                               |
+| Document shell + head  | `src/layouts/BaseLayout.astro`                                             |
+| Shared components      | `src/components/`                                                          |
+| Client scripts         | `src/scripts/{theme,cook-mode,cook-checklist,search,showcase,nav-menu}.ts` |
+| API client + types     | `src/lib/api.ts`                                                           |
+| Catalogue (build time) | `src/lib/catalog.ts`                                                       |
+| Slugs / recipe paths   | `src/lib/utils/slug.ts`                                                    |
+| Cook mode logic        | `src/lib/cook/`                                                            |
+| Search filter          | `src/lib/search/filterRecipes.ts`                                          |
+| App-wide config        | `src/lib/config/`                                                          |
+| Global styles + tokens | `src/styles/global.css`                                                    |
+| PWA + sitemap config   | `astro.config.mjs`                                                         |
+| Dist assertions        | `scripts/check-dist.mjs`                                                   |
 
 ## Folder Map
 

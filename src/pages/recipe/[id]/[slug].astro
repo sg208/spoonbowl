@@ -30,7 +30,7 @@ export interface Props {
 
 const { recipe, related } = Astro.props
 const totalTime = totalMinutes(recipe)
-const description = `${recipe.name} — a ${recipe.difficulty.toLowerCase()} ${recipe.cuisine} recipe. Ready in ${totalTime} minutes, serves ${recipe.servings}. Full ingredients and step-by-step instructions on Spoonbowl.`
+const description = `${recipe.name}: a ${recipe.difficulty.toLowerCase()} ${recipe.cuisine} recipe. Ready in ${totalTime} minutes, serves ${recipe.servings}. Full ingredients and step-by-step instructions on Spoonbowl.`
 ---
 
 <BaseLayout

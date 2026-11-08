@@ -21,7 +21,7 @@ export default defineConfig({
       manifest: {
         name: "Spoonbowl - Recipe Discovery",
         short_name: "Spoonbowl",
-        description: "Discover delicious recipes from around the world",
+        description: "Recipes you can cook from, online or offline.",
         theme_color: "#16110e",
         background_color: "#16110e",
         display: "standalone",

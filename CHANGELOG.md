@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Plain listing copy**: cuisine, difficulty, meal-type and tag pages, the home page and the footer now describe the recipes in plain words instead of marketing filler.
+
+### Fixed
+
+- **Build cannot hang on the recipe API**: the build-time DummyJSON fetch now gives up after 30 seconds, and a failed fetch reports its HTTP status.
+- **Search index errors**: the search box now treats an error response for `/search-index.json` as a failed load and retries on the next keystroke, instead of trying to read the error page as JSON.
+
 ## [2.2.2] - 2026-11-02
 
 ### Changed

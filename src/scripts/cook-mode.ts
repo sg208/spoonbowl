@@ -76,7 +76,7 @@ export const initCookMode = (root: HTMLElement): void => {
     setDisabled(plus, state.servings >= MAX_SERVINGS, minus)
   }
 
-  const handleServings = (delta: number): void => {
+  const changeServings = (delta: number): void => {
     state.servings = clampServings(state.servings + delta)
     renderServings()
     servingsStatus.textContent = `Serves ${state.servings}`
@@ -121,18 +121,23 @@ export const initCookMode = (root: HTMLElement): void => {
     void setWake(false)
   }
 
-  const handleStep = (delta: number): void => {
+  const moveStep = (delta: number): void => {
     if (delta > 0 && state.position >= steps.length) return handleExit()
     state.position = Math.min(steps.length, Math.max(0, state.position + delta))
     renderPager()
   }
 
+  const stepKeyActions: Record<string, () => void> = {
+    ArrowRight: () => moveStep(1),
+    ArrowLeft: () => moveStep(-1),
+    Escape: handleExit,
+  }
+
   const handleKeydown = (event: KeyboardEvent): void => {
     if (root.dataset.mode !== "step" || event.altKey || event.ctrlKey || event.metaKey) return
-    if (event.key === "ArrowRight") handleStep(1)
-    else if (event.key === "ArrowLeft") handleStep(-1)
-    else if (event.key === "Escape") handleExit()
-    else return
+    const action = stepKeyActions[event.key]
+    if (!action) return
+    action()
     event.preventDefault()
   }
 
@@ -141,12 +146,12 @@ export const initCookMode = (root: HTMLElement): void => {
   start.hidden = false
   wakeToggle.hidden = !wakeLock.isSupported
   renderServings()
-  minus.addEventListener("click", () => handleServings(-1))
-  plus.addEventListener("click", () => handleServings(1))
+  minus.addEventListener("click", () => changeServings(-1))
+  plus.addEventListener("click", () => changeServings(1))
   start.addEventListener("click", handleStart)
   exit.addEventListener("click", handleExit)
-  prev.addEventListener("click", () => handleStep(-1))
-  next.addEventListener("click", () => handleStep(1))
+  prev.addEventListener("click", () => moveStep(-1))
+  next.addEventListener("click", () => moveStep(1))
   wakeToggle.addEventListener("click", () => void setWake(!state.isWakeOn))
   root.addEventListener("keydown", handleKeydown)
 }
