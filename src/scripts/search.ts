@@ -1,6 +1,8 @@
 import { filterRecipes, type SearchEntry } from "@/lib/search/filterRecipes"
 
 const INDEX_URL = "/search-index.json"
+// WHY: a stalled connection would leave the load promise pending and search dead until reload.
+const INDEX_TIMEOUT_MS = 10_000
 
 export const initSearch = (root: HTMLElement): void => {
   const input = root.querySelector<HTMLInputElement>("[data-search-input]")
@@ -63,7 +65,7 @@ export const initSearch = (root: HTMLElement): void => {
 
   const fetchIndex = async (): Promise<void> => {
     try {
-      const response = await fetch(INDEX_URL)
+      const response = await fetch(INDEX_URL, { signal: AbortSignal.timeout(INDEX_TIMEOUT_MS) })
       if (!response.ok) throw new Error(`search index HTTP ${response.status}`)
       // same-origin build artefact; shape defined by search-index.json.ts
       state.index = (await response.json()) as SearchEntry[]
@@ -93,6 +95,7 @@ export const initSearch = (root: HTMLElement): void => {
     if (!input.value.trim()) return close()
     await load()
     if (state.index) render(filterRecipes(state.index, input.value))
+    else status.textContent = "Search is unavailable. Keep typing to retry."
   }
 
   const handleArrow = (event: KeyboardEvent, step: 1 | -1): void => {
