@@ -3,6 +3,8 @@ import { filterRecipes, type SearchEntry } from "@/lib/search/filterRecipes"
 const INDEX_URL = "/search-index.json"
 // WHY: a stalled connection would leave the load promise pending and search dead until reload.
 const INDEX_TIMEOUT_MS = 10_000
+const NO_MATCH_MESSAGE = "No recipes match"
+const UNAVAILABLE_MESSAGE = "Search is unavailable. Keep typing to retry."
 
 export const initSearch = (root: HTMLElement): void => {
   const input = root.querySelector<HTMLInputElement>("[data-search-input]")
@@ -54,12 +56,13 @@ export const initSearch = (root: HTMLElement): void => {
       })
     )
     const hasMatches = matches.length > 0
+    empty.textContent = NO_MATCH_MESSAGE
     list.hidden = !hasMatches
     empty.hidden = hasMatches
     input.setAttribute("aria-expanded", String(hasMatches))
     status.textContent = hasMatches
       ? `${matches.length} ${matches.length === 1 ? "recipe" : "recipes"}`
-      : "No recipes match"
+      : NO_MATCH_MESSAGE
     setActive(-1)
   }
 
@@ -94,8 +97,12 @@ export const initSearch = (root: HTMLElement): void => {
     syncClear()
     if (!input.value.trim()) return close()
     await load()
-    if (state.index) render(filterRecipes(state.index, input.value))
-    else status.textContent = "Search is unavailable. Keep typing to retry."
+    // WHY: the user may have cleared the box while the index was loading.
+    if (!input.value.trim()) return
+    if (state.index) return render(filterRecipes(state.index, input.value))
+    empty.textContent = UNAVAILABLE_MESSAGE
+    empty.hidden = false
+    status.textContent = UNAVAILABLE_MESSAGE
   }
 
   const handleArrow = (event: KeyboardEvent, step: 1 | -1): void => {
